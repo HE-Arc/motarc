@@ -19,7 +19,7 @@ jobs:
           echo "$MOTARC_PRIVATE_KEY" > ~/.ssh/motarc_private
           sudo chmod 600 ~/.ssh/motarc_private
           eval "$(ssh-agent -s)" && ssh-add ~/.ssh/motarc_private
-          ssh -tt -o StrictHostKeyChecking=no ${{secrets.MOTARC_SERVER_USER}}@${{secrets.MOTARC_SERVER}} -p${{secrets.MOTARC_SERVER_PORT}}
+          ssh -vvv -tt -o StrictHostKeyChecking=no ${{secrets.MOTARC_SERVER_USER}}@${{secrets.MOTARC_SERVER}} -p${{secrets.MOTARC_SERVER_PORT}}
           cd project/motarc
           echo pulling repos...
           sudo git checkout main
