@@ -18,7 +18,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$MOTARC_PRIVATE_KEY" > ~/.ssh/motarc_private
           sudo chmod 600 ~/.ssh/motarc_private
-          eval "$(ssh-agent -s)" && ssh-add.exe ~/.ssh/motarc_private
+          eval "$(ssh-agent -s)" && ssh-add ~/.ssh/motarc_private
           ssh laravel@157.26.64.211 -p30822
           cd project/motarc
           sudo git pull
