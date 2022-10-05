@@ -19,7 +19,7 @@ jobs:
           echo "$MOTARC_PRIVATE_KEY" > ~/.ssh/motarc_private
           sudo chmod 600 ~/.ssh/motarc_private
           eval "$(ssh-agent -s)" && ssh-add ~/.ssh/motarc_private
-          ssh -tt {{secrets.MOTARC_SERVER}} -p{{secrets.MOTARC_SERVER_PORT}}
+          ssh -tt ${{secrets.MOTARC_SERVER}} -p${{secrets.MOTARC_SERVER_PORT}}
           cd project/motarc
           sudo git pull
           exit
