@@ -25,4 +25,4 @@ jobs:
           exit
         shell: bash
         env:
-          DO_GITHUB_PRIVATE_KEY: ${{secrets.MOTARC_SERVER_TOKEN}}
+          MOTARC_PRIVATE_KEY: ${{secrets.MOTARC_SERVER_TOKEN}}
