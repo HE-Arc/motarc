@@ -21,6 +21,8 @@ jobs:
           eval "$(ssh-agent -s)" && ssh-add ~/.ssh/motarc_private
           ssh -tt ${{secrets.MOTARC_SERVER}} -p${{secrets.MOTARC_SERVER_PORT}}
           cd project/motarc
+          echo pulling repos...
+          sudo git checkout main
           sudo git pull
           exit
         shell: bash
