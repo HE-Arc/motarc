@@ -22,9 +22,9 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|max:50',
-            'email' => 'required|email',
+            'email' => 'required|email|max:50',
             'password' => 'required|min:8|max:255',
-            'npa' => 'required|integer|min:4|max:4',
+            'npa' => 'required|integer|digits:4',
         ]);
 
         User::create($request->all());
