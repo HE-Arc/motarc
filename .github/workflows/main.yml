@@ -19,7 +19,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/motarc_private
           sudo chmod 600 ~/.ssh/motarc_private
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -tt -i ~/.ssh/motarc_private ${{secrets.MOTARC_SERVER_USER}}@${{secrets.MOTARC_SERVER}} -p${{secrets.MOTARC_SERVER_PORT}}
+          ssh -vvv -tt -i ~/.ssh/motarc_private ${{secrets.MOTARC_SERVER_USER}}@${{secrets.MOTARC_SERVER}} -p${{secrets.MOTARC_SERVER_PORT}}
           cd project/motarc
           echo pulling repos...
           sudo git checkout main
