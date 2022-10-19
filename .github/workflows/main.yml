@@ -18,7 +18,8 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$MOTARC_PRIVATE_KEY" > ~/.ssh/motarc_private
           sudo chmod 600 ~/.ssh/motarc_private
-          ssh -vvv -tt -o StrictHostKeyChecking=no -i ~/.ssh/motarc_private ${{secrets.MOTARC_SERVER_USER}}@${{secrets.MOTARC_SERVER}} -p${{secrets.MOTARC_SERVER_PORT}}
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -tt -i ~/.ssh/motarc_private ${{secrets.MOTARC_SERVER_USER}}@${{secrets.MOTARC_SERVER}} -p${{secrets.MOTARC_SERVER_PORT}}
           cd project/motarc
           echo pulling repos...
           sudo git checkout main
@@ -26,4 +27,5 @@ jobs:
           exit
         shell: bash
         env:
-          MOTARC_PRIVATE_KEY: ${{secrets.MOTARC_SERVER_TOKEN}}
+          SSH_PRIVATE_KEY: ${{secrets.MOTARC_SERVER_TOKEN}}
+          SSH_KNOWN_HOSTS: ${{secrets.MOTARC_KNOWN_HOSTS}}
