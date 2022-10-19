@@ -21,39 +21,39 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:50',
             'email' => 'required|email',
-            'password' => 'required',
-            'npa' => 'required|integer',
+            'password' => 'required|min:8|max:255',
+            'npa' => 'required|integer|min:4|max:4',
         ]);
 
-        \App\Models\User::create($request->all());
+        User::create($request->all());
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     public function show($userId)
     {
-        $user = \App\Models\User::findOrFail($userId);
+        $user = User::findOrFail($userId);
         return view('users.show', ['user' => $user]);
     }
 
     public function edit($userId)
     {
-        $user = \App\Models\User::where('id', $userId)->firstOrFail();
+        $user = User::where('id', $userId)->firstOrFail();
         return view('users.edit', ['user' => $user]);
     }
 
     public function update(Request $request, $userId)
     {
-        \App\Models\User::findOrFail($userId)->update($request->all());
+        User::findOrFail($userId)->update($request->all());
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     public function destroy($userId)
     {
-        $user = \App\Models\User::find($userId);
+        $user = User::find($userId);
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
