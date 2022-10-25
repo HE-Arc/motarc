@@ -18,6 +18,12 @@
 <body>
     <h1>Motarc</h1>
 
+    <!-- logout button -->
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+
     <!-- Begin page content -->
     <div class="container mt-3">
         @if ($message = Session::get('success'))

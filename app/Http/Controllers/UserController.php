@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -27,6 +28,9 @@ class UserController extends Controller
             'npa' => 'required|integer|digits:4',
         ]);
 
+        // hash password before storing it in the database
+        $request->merge(['password' => Hash::make($request->password)]);
+
         User::create($request->all());
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
@@ -46,6 +50,9 @@ class UserController extends Controller
 
     public function update(Request $request, $userId)
     {
+        // hash password before storing it in the database
+        $request->merge(['password' => Hash::make($request->password)]);
+
         User::findOrFail($userId)->update($request->all());
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
@@ -58,4 +65,6 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
+
+    // login function
 }
