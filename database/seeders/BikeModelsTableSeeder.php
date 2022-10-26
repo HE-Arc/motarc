@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ModelsTableSeeder extends Seeder
+class BikeModelsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class ModelsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('models')->insert([
+        DB::table('bike_models')->insert([
             'brand' => 'Honda',
             'model' => 'CBR 500 R',
             'year' => 2019,
@@ -23,7 +23,7 @@ class ModelsTableSeeder extends Seeder
             'category' => 'Sportive'
         ]);
 
-        DB::table('models')->insert([
+        DB::table('bike_models')->insert([
             'brand' => 'Honda',
             'model' => 'CB 500 F',
             'year' => 2017,
@@ -31,7 +31,7 @@ class ModelsTableSeeder extends Seeder
             'category' => 'Naked'
         ]);
 
-        DB::table('models')->insert([
+        DB::table('bike_models')->insert([
             'brand' => 'Honda',
             'model' => 'CB 650 F',
             'year' => 2018,
@@ -39,7 +39,7 @@ class ModelsTableSeeder extends Seeder
             'category' => 'Naked'
         ]);
 
-        DB::table('models')->insert([
+        DB::table('bike_models')->insert([
             'brand' => 'Brixton',
             'model' => 'Felsberg 125 Scrambler',
             'year' => 2018,
@@ -47,7 +47,7 @@ class ModelsTableSeeder extends Seeder
             'category' => '125'
         ]);
 
-        DB::table('models')->insert([
+        DB::table('bike_models')->insert([
             'brand' => 'Kawasaki',
             'model' => 'Versys 650',
             'year' => 2020,
@@ -55,7 +55,7 @@ class ModelsTableSeeder extends Seeder
             'category' => 'Touring'
         ]);
 
-        DB::table('models')->insert([
+        DB::table('bike_models')->insert([
             'brand' => 'Kawasaki',
             'model' => 'Ninja 1000 SX',
             'year' => 2021,

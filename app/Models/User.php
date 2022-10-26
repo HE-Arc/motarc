@@ -8,10 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Ad;
+use App\Models\Favourite;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    public function ads()
+    {
+        return $this->hasMany(Ad::class);
+    }
+
+    public function favourites()
+    {
+        return $this->belongsToMany(Ad::class, 'ad_user', 'user_id', 'ad_id');
+    }
 
     /**
      * The attributes that are mass assignable.

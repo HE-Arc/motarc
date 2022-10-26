@@ -20,15 +20,14 @@ class LoginController extends Controller
      */
     public function authenticate(Request $request)
     {
-        print("LoginController::authenticate()");
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
             $request->session()->regenerate();
+            // TODO : redirect to where the user was going to before
             return redirect()->route('users.index');
         }
 

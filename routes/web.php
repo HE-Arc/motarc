@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FavouriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,11 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::resource('users', UserController::class)->middleware('auth');
-//Route::resource('ads', AdController::class);
-//Route::resource('favourites', FavouriteController::class);
+// Groupes de routes avec middleware
+Route::resource('users', UserController::class)->except(['index, show'])->middleware('auth');
+Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites')->middleware('auth');
 
 
-// TODO : add ->middleware('auth.basic') for create and edit ad, and for favourites
+Route::resource('users', UserController::class)->only(['index, show']);
+
+// TODO : add ->middleware('auth') for create and edit ad, and for favourites

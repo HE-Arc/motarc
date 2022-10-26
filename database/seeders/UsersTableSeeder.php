@@ -48,7 +48,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Jonas',
             'email' => 'jonas.allemann@he-arc.ch',
             'password' => Hash::make('jonas123'),
-            'npa' => 2353
+            'npa' => 2735
         ]);
     }
 }

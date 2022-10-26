@@ -22,7 +22,7 @@ class AdsTableSeeder extends Seeder
             'power_kw' => 104.5,
             'color_hexa' => 'green',
             'model_id' => 6,
-            'user_id' => 13,
+            'user_id' => 3,
         ]);
 
         // Titus Kawasaki Versys 650
@@ -32,7 +32,7 @@ class AdsTableSeeder extends Seeder
             'power_kw' => 35,
             'color_hexa' => 'white',
             'model_id' => 5,
-            'user_id' => 11,
+            'user_id' => 1,
         ]);
 
         // Nico Brixton Flesberg
@@ -42,7 +42,7 @@ class AdsTableSeeder extends Seeder
             'power_kw' => 8.2,
             'color_hexa' => 'black',
             'model_id' => 4,
-            'user_id' => 12,
+            'user_id' => 2,
         ]);
 
         // Jonas CB 650 F
@@ -52,7 +52,7 @@ class AdsTableSeeder extends Seeder
             'power_kw' => 67,
             'color_hexa' => 'red',
             'model_id' => 3,
-            'user_id' => 15,
+            'user_id' => 5,
         ]);
 
         // Jeanne CBR 500 R
@@ -62,7 +62,7 @@ class AdsTableSeeder extends Seeder
             'power_kw' => 35,
             'color_hexa' => 'red',
             'model_id' => 1,
-            'user_id' => 14,
+            'user_id' => 4,
         ]);
 
         // Jeanne CB 500 F
@@ -72,7 +72,7 @@ class AdsTableSeeder extends Seeder
             'power_kw' => 35,
             'color_hexa' => 'white',
             'model_id' => 2,
-            'user_id' => 14,
+            'user_id' => 4,
         ]);
     }
 }
