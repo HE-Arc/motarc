@@ -4,39 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ad;
-use App\Models\BikeModel;
+use Illuminate\Support\Facades\DB;
 
 class AdController extends Controller
 {
 
     public function index(Request $request)
     {
-        if (empty($request->all()))
-        {
+        print($request->term);
+        if (empty($request->all())) {
             $ads = Ad::with('model')->with('user')->get();
-            return view('ads.index', compact('ads'));
+
+            return $ads;
+            // return view('ads.index', compact('ads'));
         }
 
         $filters = array();
 
-        foreach ($request->all() as $name => $value)
-        {
-            if(str_contains($name, "from"))
-            {
+        foreach ($request->all() as $name => $value) {
+            if (str_contains($name, "from")) {
                 array_push($filters, [substr($name, 4), '>=', $value]);
-            }
-            elseif(str_contains($name, "to"))
-            {
+            } elseif (str_contains($name, "to")) {
                 array_push($filters, [substr($name, 2), '<=', $value]);
-            }
-            else
-            {
+            } else {
                 array_push($filters, [$name, '=', $value]);
             }
         }
 
-        // filtrer les annonces en fonction des paramètres
-        return Ad::with('model')->with('user')->where($filters)->get();
+        $ads = DB::table('ads')
+            ->join('bike_models', 'ads.model_id', '=', 'bike_models.id')
+            ->join('users', 'ads.user_id', '=', 'users.id')
+            ->select('ads.*', 'bike_models.*', 'users.*')
+            ->where($filters)
+            ->get();
+
+        return $ads;
     }
 
     public function show($id)
