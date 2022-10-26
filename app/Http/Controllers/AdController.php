@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ad;
+use App\Models\BikeModel;
 use Illuminate\Support\Facades\DB;
 
 class AdController extends Controller
