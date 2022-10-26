@@ -9,6 +9,10 @@ class Ad extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'price', 'km', 'power_kw', 'color_hexa', 'model_id', 'user_id'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

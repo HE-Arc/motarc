@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ad;
+use App\Models\BikeModel;
 
 class AdController extends Controller
 {
@@ -46,7 +47,23 @@ class AdController extends Controller
 
     public function create()
     {
-        return view('ads.create');
+        $user = auth()->user();
+        $models = BikeModel::all();
+        return view('ads.create', compact("models"), compact("user"));
+    }
+
+    public function store(Request $request)
+    {
+        // TODO
+        // $request->validate([
+
+        // ]);
+
+        Ad::create($request->all());
+
+        return redirect()
+            ->route("ads.index")
+            ->with("success", "Ad created successfully");
     }
 
     public function edit($id)

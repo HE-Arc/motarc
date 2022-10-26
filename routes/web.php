@@ -32,8 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('favourites', Favouritecontroller::class)->except(['update', 'create', 'show', 'edit']);
 
     Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites');
+
+    Route::resource('ads', AdController::class)->except(['index', 'show']);
 });
 
-Route::resource('users', UserController::class)->only(['index, show']);
+Route::resource('users', UserController::class)->only(['index', 'show']);
 
-Route::resource('ads', AdController::class);
+Route::resource('ads', AdController::class)->only(['index', 'show']);
