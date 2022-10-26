@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -24,11 +25,15 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Groupes de routes avec middleware
-Route::resource('users', UserController::class)->except(['index, show'])->middleware('auth');
-Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    // Groupes de routes avec middleware
+    Route::resource('users', UserController::class)->except(['index, show']);
 
+    Route::resource('favourites', Favouritecontroller::class)->except(['update', 'create', 'show', 'edit']);
+
+    Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites');
+});
 
 Route::resource('users', UserController::class)->only(['index, show']);
 
-// TODO : add ->middleware('auth') for create and edit ad, and for favourites
+Route::resource('ads', AdController::class)->only(['index']);

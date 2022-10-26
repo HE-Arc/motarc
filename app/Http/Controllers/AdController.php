@@ -8,10 +8,36 @@ use App\Models\Ad;
 class AdController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $ads = Ad::all();
-        return view('ads.index', compact('ads'));
+        print($request->term);
+        if (empty($request->all()))
+        {
+            $ads = Ad::all();
+            return $ads;
+            // return view('ads.index', compact('ads'));
+        }
+
+        $filters = array();
+
+        foreach ($request->all() as $name => $value)
+        {
+            if(str_contains($name, "from"))
+            {
+                array_push($filters, [substr($name, 4), '>=', $value]);
+            }
+            elseif(str_contains($name, "to"))
+            {
+                array_push($filters, [substr($name, 2), '<=', $value]);
+            }
+            else
+            {
+                array_push($filters, [$name, '=', $value]);
+            }
+        }
+
+        // filtrer les annonces en fonction des paramètres
+        return Ad::with('model')->with('user')->where($filters)->get();
     }
 
     public function show($id)
