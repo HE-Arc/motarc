@@ -10,12 +10,10 @@ class AdController extends Controller
 
     public function index(Request $request)
     {
-        print($request->term);
         if (empty($request->all()))
         {
-            $ads = Ad::all();
-            return $ads;
-            // return view('ads.index', compact('ads'));
+            $ads = Ad::with('model')->with('user')->get();
+            return view('ads.index', compact('ads'));
         }
 
         $filters = array();
@@ -43,7 +41,7 @@ class AdController extends Controller
     public function show($id)
     {
         $ad = Ad::findOrFail($id);
-        return view('ad.show', compact('ad'));
+        return view('ads.show', compact('ad'));
     }
 
     public function create()
@@ -54,13 +52,13 @@ class AdController extends Controller
     public function edit($id)
     {
         $ad = Ad::where('id', $id)->firstOrFail();
-        return view('ad.edit', ['ad' => $ad]);
+        return view('ads.edit', ['ad' => $ad]);
     }
 
     public function update(Request $request, $id)
     {
         Ad::findOrFail($id)->update($request->all());
 
-        return redirect()->route('ad.index')->with('success', 'Ad updated successfully');
+        return redirect()->route('ads.index')->with('success', 'Ad updated successfully');
     }
 }

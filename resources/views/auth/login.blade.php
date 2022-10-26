@@ -1,3 +1,7 @@
+@extends("layout.app")
+
+@section("content")
+
 <!-- Login form -->
 <form method="POST" action="{{ route('login') }}">
     @csrf
@@ -11,3 +15,5 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+@endsection

@@ -36,4 +36,4 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('users', UserController::class)->only(['index, show']);
 
-Route::resource('ads', AdController::class)->only(['index']);
+Route::resource('ads', AdController::class);
