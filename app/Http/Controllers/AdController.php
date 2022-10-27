@@ -69,6 +69,15 @@ class AdController extends Controller
             ->with("success", "Ad created successfully");
     }
 
+    public function destroy($id)
+    {
+        $ad = Ad::findOrFail($id)->delete();
+
+        return redirect()
+            ->route("ads.index")
+            ->with("success", "Ad deleted successfully");
+    }
+
     public function edit($id)
     {
         $ad = Ad::where('id', $id)->firstOrFail();

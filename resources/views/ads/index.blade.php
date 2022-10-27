@@ -37,12 +37,14 @@
                 <td>{{ $ad->user->name }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ route('ads.show', $ad->id) }}">Afficher</a>
-                    <a class="btn btn-primary" href="{{ route('ads.edit', $ad->id) }}">Modifier</a>
-                    <form action="{{ route('ads.destroy', $ad->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                    </form>
+                    @if (auth()->user()->id == $ad->user_id)
+                        <a class="btn btn-primary" href="{{ route('ads.edit', $ad->id) }}">Modifier</a>
+                        <form action="{{ route('ads.destroy', $ad->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </form>
+                    @endif
                 </td>
             </tr>
             @endforeach
