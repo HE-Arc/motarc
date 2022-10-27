@@ -72,7 +72,15 @@ class AdController extends Controller
     public function edit($id)
     {
         $ad = Ad::where('id', $id)->firstOrFail();
-        return view('ads.edit', ['ad' => $ad]);
+
+        if($ad->user_id != auth()->user()->id)
+        {
+            return redirect()->route('ads.index')->with('Access failed', 'You are not the owrner of this ad.');
+        }
+
+        $models = BikeModel::all();
+
+        return view('ads.edit', ['ad' => $ad], compact("models"));
     }
 
     public function update(Request $request, $id)
