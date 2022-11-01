@@ -16,8 +16,7 @@ class AdController extends Controller
         if (empty($request->all())) {
             $ads = Ad::with('model')->with('user')->get();
 
-            return $ads;
-            // return view('ads.index', compact('ads'));
+        return view('ads.index', compact('ads'));
         }
 
         $filters = array();
