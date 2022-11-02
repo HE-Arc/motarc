@@ -16,7 +16,7 @@ class AdController extends Controller
         if (empty($request->all())) {
             $ads = Ad::with('model')->with('user')->get();
 
-        return view('ads.index', compact('ads'));
+            return view('ads.index', compact('ads'));
         }
 
         $filters = array();
@@ -56,10 +56,14 @@ class AdController extends Controller
 
     public function store(Request $request)
     {
-        // TODO
-        // $request->validate([
-
-        // ]);
+        $request->validate([
+            'price' => 'required|integer',
+            'km' => 'required|integer',
+            'power_kw' => 'required|numeric',
+            'color_hexa' => 'required',
+            'model_id' => 'required|integer',
+            'user_id' => 'required|integer',
+        ]);
 
         Ad::create($request->all());
 
@@ -81,8 +85,7 @@ class AdController extends Controller
     {
         $ad = Ad::where('id', $id)->firstOrFail();
 
-        if($ad->user_id != auth()->user()->id)
-        {
+        if ($ad->user_id != auth()->user()->id) {
             return redirect()->route('ads.index')->with('Access failed', 'You are not the owrner of this ad.');
         }
 

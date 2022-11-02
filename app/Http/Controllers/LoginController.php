@@ -29,7 +29,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             // Authentication passed...
             $request->session()->regenerate();
-            return redirect()->route('users.index');
+            return redirect()->route('users.index')->with('success', 'User logged in successfully.');
         }
 
         return back()->withErrors([
@@ -42,6 +42,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/')->with('success', 'User logged out successfully.');
     }
 }
