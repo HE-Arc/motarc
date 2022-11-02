@@ -27,8 +27,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 
 Route::middleware('auth')->group(function () {
-    // Groupes de routes avec middleware
-    Route::resource('users', UserController::class)->except(['index, show']);
+    //Route::resource('users', UserController::class)->except(['index, show']);
 
     Route::resource('favourites', Favouritecontroller::class)->except(['update', 'create', 'show', 'edit']);
 
@@ -37,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('ads', AdController::class)->except(['index', 'show']);
 });
 
-Route::resource('users', UserController::class)->only(['index', 'show']);
+//Route::resource('users', UserController::class)->only(['index', 'show']);
+Route::resource('users', UserController::class);
 
 Route::resource('ads', AdController::class)->only(['index', 'show']);
