@@ -12,6 +12,11 @@ class LoginController extends Controller
         return view('./auth/login');
     }
 
+    public function register()
+    {
+        return view('users.create');
+    }
+
     /**
      * Handle an authentication attempt.
      *
@@ -42,6 +47,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/')->with('success', 'User logged out successfully.');
+        return redirect()->route('users.index')->with('success', 'User logged out successfully.');
     }
 }

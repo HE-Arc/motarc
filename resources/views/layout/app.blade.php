@@ -16,13 +16,48 @@
 </head>
 
 <body>
-    <h1>Motarc</h1>
 
-    <!-- logout button -->
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit" class="btn btn-primary">Logout</button>
-    </form>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ route('users.index') }}">MotArc</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('ads.index') }}">Annonces</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('users.index') }}">Utilisateurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('favourites') }}">Favoris</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                @if (Auth::check())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('users.show', Auth::user()->id) }}">Mon compte</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit">Déconnexion</button>
+                        </form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Inscription</a>
+                    </li>
+                @endif
+            </ul>
+        </div>
+    </nav>
 
     <!-- Begin page content -->
     <div class="container mt-3">
