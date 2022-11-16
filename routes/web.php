@@ -29,7 +29,7 @@ Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::middleware('auth')->group(function () {
     //Route::resource('users', UserController::class)->except(['index, show']);
 
-    Route::resource('favourites', Favouritecontroller::class)->except(['update', 'create', 'show', 'edit']);
+    Route::resource('favourites', Favouritecontroller::class)->except(['index', 'update', 'create', 'show', 'edit']);
 
     Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites');
 

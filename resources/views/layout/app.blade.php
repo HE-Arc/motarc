@@ -37,6 +37,11 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
+                @auth
+                    <li class="nav-item">
+                        Auth works !
+                    </li>
+                @endauth
                 @if (Auth::check())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('users.show', Auth::user()->id) }}">Mon compte</a>
