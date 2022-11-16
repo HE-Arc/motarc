@@ -1,32 +1,30 @@
 name: SSH Deployment
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Run a multi-line script
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_motarc_rsa
-          sudo chmod 600 ~/.ssh/id_motarc_rsa
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_motarc_rsa
-          ssh -vvv -tt -i ~/.ssh/id_motarc_rsa -p ${{secrets.MOTARC_SERVER_PORT}} ${{secrets.MOTARC_SERVER_USER}}@${{secrets.MOTARC_SERVER}}
-          cd project/motarc
-          echo pulling repos...
-          sudo git checkout main
-          sudo git pull
-          exit
-        shell: bash
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.MOTARC_SERVER_TOKEN}}
-          SSH_KNOWN_HOSTS: ${{secrets.MOTARC_KNOWN_HOSTS}}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.MOTARC_SERVER}}
+          key: ${{secrets.MOTARC_SERVER_TOKEN}}
+          port: ${{secrets.MOTARC_SERVER_PORT}}
+          username: ${{secrets.MOTARC_SERVER_USER}}
+          script: |
+            cd project/motarc
+            echo pulling repos...
+            sudo git restore .
+            sudo git pull --ff-only
+            cd ..
+            echo running deployment script...
+            sudo ./artisan.sh

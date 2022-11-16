@@ -39,11 +39,6 @@
             <ul class="navbar-nav">
                 @auth
                     <li class="nav-item">
-                        Auth works !
-                    </li>
-                @endauth
-                @if (Auth::check())
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('users.show', Auth::user()->id) }}">Mon compte</a>
                     </li>
                     <li class="nav-item">
@@ -52,14 +47,15 @@
                             <button type="submit">Déconnexion</button>
                         </form>
                     </li>
-                @else
+                @endauth
+                @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Connexion</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('register') }}">Inscription</a>
                     </li>
-                @endif
+                @endguest
             </ul>
         </div>
     </nav>
