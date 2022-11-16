@@ -15,6 +15,20 @@ class BikeModelsTableSeeder extends Seeder
      */
     public function run()
     {
+
+        // fill the bike_models table with csv file data
+        /* $file = fopen("database/seeders/bike_models.csv", "r");
+        while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+            DB::table('bike_models')->insert([
+                'brand' => $data[0],
+                'model' => $data[1],
+                'power' => $data[2],
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
+        */
+
         DB::table('bike_models')->insert([
             'brand' => 'Honda',
             'model' => 'CBR 500 R',
