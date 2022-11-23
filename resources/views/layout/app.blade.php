@@ -13,13 +13,19 @@
 
     <!-- Option 1: Include in HTML -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    @vite('resources/js/app.js')
 </head>
 
 <body>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ route('users.index') }}">MotArc</a>
+        <!-- navbar brand and logo image -->
+        <a class="navbar-brand" href="{{ route('users.index') }}">
+            <img src="storage/images/moto.png" height="30" class="d-inline-block align-top" alt="">
+            MotArc
+        </a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

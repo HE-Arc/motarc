@@ -14,14 +14,11 @@ export default defineConfig({
         }),
         vue({
             template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
+                transformAssetUrls: {}
             },
         }),
         quasar({
-            sassVariables: 'resources/sass/quasar-variables.sass',
+            sassVariables: 'resources/sass/quasar-variables.scss',
         }),
     ],
     resolve: {

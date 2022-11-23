@@ -5,6 +5,8 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@inertiajs/inertia": "^0.11.1",
+        "@inertiajs/inertia-vue3": "^0.6.0",
         "@popperjs/core": "^2.10.2",
         "@quasar/vite-plugin": "^1.2.3",
         "@vitejs/plugin-vue": "^3.0.1",
