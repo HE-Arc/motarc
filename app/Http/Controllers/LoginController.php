@@ -16,7 +16,8 @@ class LoginController extends Controller
 
     public function register()
     {
-        return view('users.create');
+        //return view('users.create');
+        return Inertia::render('Auth/Register');
     }
 
     /**
@@ -27,7 +28,6 @@ class LoginController extends Controller
      */
     public function authenticate(Request $request)
     {
-        print("LoginController::authenticate()");
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
