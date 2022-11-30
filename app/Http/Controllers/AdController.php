@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ad;
 use App\Models\BikeModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class AdController extends Controller
@@ -101,7 +102,20 @@ class AdController extends Controller
 
     public function destroy($id)
     {
-        $ad = Ad::findOrFail($id)->delete();
+        $ad = Ad::findOrFail($id);
+
+        // Delete images from public/images folder
+        foreach ($ad->images as $image)
+        {
+            $image_path = public_path("images") . '\\' . $image->image_url;
+
+            if (File::exists($image_path))
+            {
+                File::delete($image_path);
+            }
+        }
+
+        $ad->delete();
 
         return redirect()
             ->route("ads.index")
