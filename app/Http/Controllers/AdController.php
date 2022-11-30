@@ -138,7 +138,36 @@ class AdController extends Controller
 
     public function update(Request $request, $id)
     {
-        Ad::findOrFail($id)->update($request->all());
+        $ad = Ad::findOrFail($id);
+
+        $ad->update($request->all());
+
+        if ($request->hasFile('images'))
+        {
+            // Remove old images
+            foreach ($ad->images as $image)
+            {
+                $image_path = public_path("images") . '\\' . $image->image_url;
+
+                if (File::exists($image_path))
+                {
+                    File::delete($image_path);
+                }
+            }
+
+            // Remove old images from database
+            $ad->images()->delete();
+
+            // Add new images
+            foreach ($request->file('images') as $image)
+            {
+                $imageName = time() . Str::random(40) . '.' . $image->extension();
+
+                $image->move(public_path('images'), $imageName);
+
+                $ad->images()->create(['image_url' => $imageName]);
+            }
+        }
 
         return redirect()->route('ads.index')->with('success', 'Ad updated successfully');
     }
