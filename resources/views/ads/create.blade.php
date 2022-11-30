@@ -7,7 +7,22 @@
         </div>
     </div>
 
-    <form action="{{ route('ads.store') }}" method="POST">
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('ads.store') }}" method="POST" enctype="multipart/form-data" >
         @csrf
 
         <div class="row">
@@ -51,6 +66,8 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <input type="file" name="images[]" id="images" class="form-control" multiple>
 
                             <button type="submit" class="btn btn-primary mt-3">Créer</button>
                         </div>

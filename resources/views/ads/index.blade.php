@@ -18,6 +18,7 @@
                 <th scope="col">Année</th>
                 <th scope="col">Capacité</th>
                 <th scope="col">Propriétaire</th>
+                <th scope="col">Images</th>
                 <th scope="col">&nbsp;</th>
             </tr>
         </thead>
@@ -34,6 +35,11 @@
                     <td>{{ $ad->model->year }}</td>
                     <td>{{ $ad->model->capacity }}</td>
                     <td>{{ $ad->user->name }}</td>
+                    <td>
+                        @foreach ($ad->images as $image)
+                            <img style="max-width:600px;" src="images/{{ $image->image_url }}" />
+                        @endforeach
+                    </td>
                     <td>
                         <a class="btn btn-info" href="{{ route('ads.show', $ad->id) }}">Afficher</a>
                         @if (Auth::check())

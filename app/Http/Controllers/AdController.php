@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Ad;
 use App\Models\BikeModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AdController extends Controller
 {
 
     public function index(Request $request)
     {
-        print($request->term);
-        if (empty($request->all())) {
+        if (empty($request->all()))
+        {
             $ads = Ad::with('model')->with('user')->get();
 
             return view('ads.index', compact('ads'));
@@ -21,12 +22,18 @@ class AdController extends Controller
 
         $filters = array();
 
-        foreach ($request->all() as $name => $value) {
-            if (str_contains($name, "from")) {
+        foreach ($request->all() as $name => $value)
+        {
+            if (str_contains($name, "from"))
+            {
                 array_push($filters, [substr($name, 4), '>=', $value]);
-            } elseif (str_contains($name, "to")) {
+            }
+            elseif (str_contains($name, "to"))
+            {
                 array_push($filters, [substr($name, 2), '<=', $value]);
-            } else {
+            }
+            else
+            {
                 array_push($filters, [$name, '=', $value]);
             }
         }
@@ -63,9 +70,29 @@ class AdController extends Controller
             'color_hexa' => 'required',
             'model_id' => 'required|integer',
             'user_id' => 'required|integer',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000' // max : Max size in KB = 10MB
         ]);
 
-        Ad::create($request->all());
+        $ad = new Ad();
+        $ad->price = $request->price;
+        $ad->km = $request->km;
+        $ad->power_kw = $request->power_kw;
+        $ad->color_hexa = $request->color_hexa;
+        $ad->model_id = $request->model_id;
+        $ad->user_id = $request->user_id;
+        $ad->save();
+
+        if ($request->hasFile('images'))
+        {
+            foreach ($request->file('images') as $image)
+            {
+                $imageName = time() . Str::random(40) . '.' . $image->extension();
+
+                $image->move(public_path('images'), $imageName);
+
+                $ad->images()->create(['image_url' => $imageName]);
+            }
+        }
 
         return redirect()
             ->route("ads.index")
@@ -85,7 +112,8 @@ class AdController extends Controller
     {
         $ad = Ad::where('id', $id)->firstOrFail();
 
-        if ($ad->user_id != auth()->user()->id) {
+        if ($ad->user_id != auth()->user()->id)
+        {
             return redirect()->route('ads.index')->with('Access failed', 'You are not the owrner of this ad.');
         }
 

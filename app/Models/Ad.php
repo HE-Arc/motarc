@@ -22,4 +22,9 @@ class Ad extends Model
     {
         return $this->belongsTo(BikeModel::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 }
