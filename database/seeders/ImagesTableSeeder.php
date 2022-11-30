@@ -18,8 +18,17 @@ class ImagesTableSeeder extends Seeder
         Image::truncate(); // Supprimer toutes les données se trouvant dans la table Book
 
         $images = [
-            ['image_url' => 'image_example.jpg', 'ad_id' => 1],
-            ['image_url' => 'image_example.jpg', 'ad_id' => 1],
+            ['image_url' => 'vincent1.jpg', 'ad_id' => 1],
+            ['image_url' => 'vincent2.jpg', 'ad_id' => 1],
+            ['image_url' => 'jeanne1.jpg', 'ad_id' => 5],
+            ['image_url' => 'jeanne2.jpeg', 'ad_id' => 6],
+            ['image_url' => 'jeanne3.jpeg', 'ad_id' => 6],
+            ['image_url' => 'jeanne4.jpeg', 'ad_id' => 6],
+            ['image_url' => 'jeanne5.jpeg', 'ad_id' => 6],
+            ['image_url' => 'jeanne6.jpeg', 'ad_id' => 6],
+            ['image_url' => 'jeanne7.jpeg', 'ad_id' => 6],
+            ['image_url' => 'titus1.jpg', 'ad_id' => 2],
+            ['image_url' => 'jonas1.jpg', 'ad_id' => 4],
         ];
 
         foreach ($images as $image){
