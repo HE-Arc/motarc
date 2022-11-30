@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<form action="{{ route('ads.update', $ad->id ) }}" method="POST">
+<form action="{{ route('ads.update', $ad->id ) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -49,6 +49,13 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        @foreach ($ad->images as $image)
+                            <img style="max-width:600px;" src="/images/{{ $image->image_url }}" />
+                        @endforeach
+
+                        <input type="file" name="images[]" id="images" class="form-control" multiple>
+
                         <button type="submit" class="btn btn-primary mt-3">Modifier</button>
                     </div>
                 </div>
