@@ -8,58 +8,77 @@ use App\Models\BikeModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class AdController extends Controller
 {
 
     public function index(Request $request)
     {
-        if (empty($request->all()))
-        {
+        if (empty($request->all())) {
             $ads = Ad::with('model')->with('user')->get();
 
-            return view('ads.index', compact('ads'));
+            //return view('ads.index', compact('ads'));
+
+            return Inertia::render('Ads/Index', [
+                'ads' => $ads,
+            ]);
         }
 
         $filters = array();
 
-        foreach ($request->all() as $name => $value)
-        {
-            if (str_contains($name, "from"))
-            {
+        foreach ($request->all() as $name => $value) {
+            if (str_contains($name, "from")) {
                 array_push($filters, [substr($name, 4), '>=', $value]);
-            }
-            elseif (str_contains($name, "to"))
-            {
+            } elseif (str_contains($name, "to")) {
                 array_push($filters, [substr($name, 2), '<=', $value]);
-            }
-            else
-            {
+            } else {
                 array_push($filters, [$name, '=', $value]);
             }
         }
 
-        $ads = DB::table('ads')
+        $ads = DB::table('ads') // Ad::where($filters)
             ->join('bike_models', 'ads.model_id', '=', 'bike_models.id')
             ->join('users', 'ads.user_id', '=', 'users.id')
             ->select('ads.*', 'bike_models.*', 'users.*')
             ->where($filters)
             ->get();
 
-        return $ads;
+        //return $ads;
+        return Inertia::render('Ads/Index', [
+            'ads' => $ads,
+        ]);
     }
 
     public function show($id)
     {
         $ad = Ad::findOrFail($id);
-        return view('ads.show', compact('ad'));
+        //return view('ads.show', compact('ad'));
+        return Inertia::render('Ads/Show', [
+            'ad' => $ad,
+        ]);
+    }
+
+    public function myAds()
+    {
+        $ads = Ad::where('user_id', auth()->user()->id)->get();
+
+        return Inertia::render('Ads/MyAds', [
+            'ads' => $ads,
+        ]);
     }
 
     public function create()
     {
         $user = auth()->user();
         $models = BikeModel::all();
-        return view('ads.create', compact("models"), compact("user"));
+
+        return Inertia::render('Ads/Create', [
+            'models' => $models,
+            'user' => $user,
+        ]);
+
+        //return view('ads.create', compact("models"), compact("user"));
     }
 
     public function store(Request $request)
@@ -83,10 +102,8 @@ class AdController extends Controller
         $ad->user_id = $request->user_id;
         $ad->save();
 
-        if ($request->hasFile('images'))
-        {
-            foreach ($request->file('images') as $image)
-            {
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
                 $imageName = time() . Str::random(40) . '.' . $image->extension();
 
                 $image->move(public_path('images'), $imageName);
@@ -105,35 +122,39 @@ class AdController extends Controller
         $ad = Ad::findOrFail($id);
 
         // Delete images from public/images folder
-        foreach ($ad->images as $image)
-        {
+        foreach ($ad->images as $image) {
             $image_path = public_path("images") . '\\' . $image->image_url;
 
-            if (File::exists($image_path))
-            {
+            if (File::exists($image_path)) {
                 File::delete($image_path);
             }
         }
 
         $ad->delete();
 
-        return redirect()
+        // redirect where the user came from with inertia
+        return redirect()->back()->with('success', 'Ad deleted successfully');
+
+        /* return redirect()
             ->route("ads.index")
-            ->with("success", "Ad deleted successfully");
+            ->with("success", "Ad deleted successfully"); */
     }
 
     public function edit($id)
     {
         $ad = Ad::where('id', $id)->firstOrFail();
 
-        if ($ad->user_id != auth()->user()->id)
-        {
+        if ($ad->user_id != auth()->user()->id) {
             return redirect()->route('ads.index')->with('Access failed', 'You are not the owrner of this ad.');
         }
 
         $models = BikeModel::all();
 
-        return view('ads.edit', ['ad' => $ad], compact("models"));
+        return Inertia::render('Ads/Edit', [
+            'ad' => $ad,
+            'models' => $models,
+        ]);
+        //return view('ads.edit', ['ad' => $ad], compact("models"));
     }
 
     public function update(Request $request, $id)
@@ -142,15 +163,12 @@ class AdController extends Controller
 
         $ad->update($request->all());
 
-        if ($request->hasFile('images'))
-        {
+        if ($request->hasFile('images')) {
             // Remove old images
-            foreach ($ad->images as $image)
-            {
+            foreach ($ad->images as $image) {
                 $image_path = public_path("images") . '\\' . $image->image_url;
 
-                if (File::exists($image_path))
-                {
+                if (File::exists($image_path)) {
                     File::delete($image_path);
                 }
             }
@@ -159,8 +177,7 @@ class AdController extends Controller
             $ad->images()->delete();
 
             // Add new images
-            foreach ($request->file('images') as $image)
-            {
+            foreach ($request->file('images') as $image) {
                 $imageName = time() . Str::random(40) . '.' . $image->extension();
 
                 $image->move(public_path('images'), $imageName);
@@ -169,6 +186,8 @@ class AdController extends Controller
             }
         }
 
-        return redirect()->route('ads.index')->with('success', 'Ad updated successfully');
+        // redirect where the user came from with inertia
+        return redirect()->back()->with('success', 'Ad updated successfully');
+        //return redirect()->route('ads.index')->with('success', 'Ad updated successfully');
     }
 }

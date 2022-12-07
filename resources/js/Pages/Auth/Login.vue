@@ -1,8 +1,6 @@
 <template>
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
+    <!--<AppLayout>-->
+    <Head title="Login"></Head>
     <div class="column">
         <h3>Login</h3>
         <form @submit.prevent="form.post('/login')">
@@ -15,17 +13,21 @@
         </form>
         <p class="text-blue-grey-4">Doesn't have an account ? <Link class="text-orange-9" href="/register">Register</Link></p>
     </div>
+    <!--</AppLayout>-->
 </template>
 <script>
+import { Head } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 import { reactive } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 import { Link } from '@inertiajs/inertia-vue3'
-
+import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default {
+    layout : AppLayout,
     components: {
-        Link
+        Link,
+        Head
     },
     setup(){
         const form = useForm({

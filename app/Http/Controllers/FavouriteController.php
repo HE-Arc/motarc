@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AdUser;
+use Inertia\Inertia;
 
 class FavouriteController extends Controller
 {
@@ -11,7 +12,10 @@ class FavouriteController extends Controller
     {
         $favourites = auth()->user()->favourites;
 
-        return view('favourites.index', compact('favourites'));
+        return Inertia::render('Favourites/Index', [
+            'favourites' => $favourites,
+        ]);
+        //return view('favourites.index', compact('favourites'));
     }
 
     public function store(Request $request)

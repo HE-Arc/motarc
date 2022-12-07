@@ -14,7 +14,7 @@ export default defineConfig({
         }),
         vue({
             template: {
-                transformAssetUrls: {}
+                transformAssetUrls: {},
             },
         }),
         quasar({

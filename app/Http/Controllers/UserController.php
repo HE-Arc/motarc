@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -39,7 +40,12 @@ class UserController extends Controller
     public function show($userId)
     {
         $user = User::findOrFail($userId);
-        return view('users.show', ['user' => $user]);
+
+        return Inertia::render('Users/MyAccount', [
+            'user' => $user,
+        ]);
+
+        //return view('users.show', ['user' => $user]);
     }
 
     public function edit($userId)

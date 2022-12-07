@@ -8,6 +8,8 @@ import { resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
 import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 
+import AppLayout from './Layouts/AppLayout.vue';
+
 createInertiaApp({
     resolve: name => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {

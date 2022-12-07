@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@quasar/extras": "^1.15.5",
+        "bootstrap-icons": "^1.10.2",
         "quasar": "^2.10.2"
     }
 }
