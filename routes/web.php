@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use Inertia\Inertia;
 
 
@@ -20,9 +21,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-});
+Route::get('/', [SearchController::class, 'index'])->name('/');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
@@ -31,18 +30,14 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 
 Route::middleware('auth')->group(function () {
-    //Route::resource('users', UserController::class)->except(['index, show']);
-
     Route::resource('favourites', Favouritecontroller::class)->except(['update', 'create', 'show', 'edit']);
-
-    //Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites');
 
     Route::get('/ads/myads', [AdController::class, 'myads'])->name('myads');
     Route::resource('ads', AdController::class)->except(['index', 'show']);
 
-    Route::singleton('profile', ProfileController::class)->only(['show', 'edit']);
-
-    Route::resource('users', UserController::class);
+    Route::singleton('profile', ProfileController::class)->creatable()->except(['create']);
+    Route::resource('users', UserController::class)->except(['store']);
 });
 
+Route::resource('users', UserController::class)->only(['store']);
 Route::resource('ads', AdController::class)->only(['index', 'show']);

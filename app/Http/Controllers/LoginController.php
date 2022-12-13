@@ -16,7 +16,6 @@ class LoginController extends Controller
 
     public function register()
     {
-        //return view('users.create');
         return Inertia::render('Auth/Register');
     }
 
@@ -37,6 +36,12 @@ class LoginController extends Controller
             // Authentication passed...
             $request->session()->regenerate();
             // redirect to the intended route with inertia
+
+            // if user was in register page, redirect to home page
+            if (strpos(url()->previous(), 'register') !== false) {
+                return redirect()->route('/')->with('success', 'User logged in successfully.');
+            }
+
             return redirect()->intended()->with('success', 'User logged in successfully.');
             //return redirect()->route('users.index')->with('success', 'User logged in successfully.');
         }

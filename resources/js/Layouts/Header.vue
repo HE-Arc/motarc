@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md bg-grey-3" >
+    <div class="q-pa-md bg-grey-3" id="navbar" >
         <q-toolbar>
             <img src="storage/images/moto.png" height="30" />
             <q-toolbar-title>
@@ -87,3 +87,7 @@ export default {
     },
 }
 </script>
+
+<style>
+
+</style>

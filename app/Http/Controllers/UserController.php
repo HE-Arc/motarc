@@ -6,15 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use IntlChar;
 
 class UserController extends Controller
 {
+    /* Not used */
     public function index()
     {
         $users = User::all();
         return view('users.index', compact('users'));
     }
 
+    /* Not used */
     public function create()
     {
         return view('users.create');
@@ -34,9 +37,12 @@ class UserController extends Controller
 
         User::create($request->all());
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('/')->with('success', 'User created successfully.');
+        //return Inertia::render('Auth/Login');
+        //return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
+    /* Not used */
     public function show($userId)
     {
         $user = User::findOrFail($userId);
@@ -48,12 +54,14 @@ class UserController extends Controller
         //return view('users.show', ['user' => $user]);
     }
 
+    /* Not used */
     public function edit($userId)
     {
         $user = User::where('id', $userId)->firstOrFail();
         return view('users.edit', ['user' => $user]);
     }
 
+    /* Not used */
     public function update(Request $request, $userId)
     {
         // hash password before storing it in the database
@@ -69,7 +77,7 @@ class UserController extends Controller
         $user = User::find($userId);
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        return redirect()->route('/')->with('success', 'User deleted successfully');
     }
 
     // login function
