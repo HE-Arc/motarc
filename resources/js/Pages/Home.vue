@@ -2,27 +2,29 @@
     <!-- form in a q-card -->
     <q-card>
         <q-card-section>
-            <q-form>
+            <form @submit.prevent="submit">
                 <!-- brand drop down -->
                 <q-select
-                    v-model="brand"
+                    v-model="form.brand"
                     :options="brands"
                     label="Brand"
                     filled
-                    @update:modelValue="getModels"
+                    @update:modelValue="getModels()"
                 />
                 <!-- model drop down, disabled when no brand selected -->
                 <q-select
-                    v-model="model"
+                    v-model="form.model"
                     :options="models"
                     label="Model"
                     filled
-                    :disable="!brand"
+                    :disable="!form.brand"
                 />
+
+                <!-- Label abow price range -->
+                <q-label>Price</q-label>
                 <!-- Price range -->
                 <q-range
-                    v-model="price"
-                    label="Price"
+                    v-model="form.price"
                     suffix="CHF"
                     :min="0"
                     :max="10000"
@@ -31,21 +33,32 @@
                     color="red"
                 >
                 </q-range>
+
+                <q-label>KM</q-label>
                 <!-- KM range -->
-                <q-input
-                    v-model="km"
-                    label="KM"
+                <q-range
+                    v-model="form.km"
                     filled
                     type="number"
                     suffix="km"
+                    :min="0"
+                    :max="200000"
+                    :step="1000"
+                    color="red"
+                    label-always
                 />
                 <!-- Year range -->
-                <q-input
-                    v-model="year"
-                    label="Year"
+                <q-label>Year</q-label>
+                <q-range
+                    v-model="form.year"
                     filled
                     type="number"
                     suffix="year"
+                    :min="1900"
+                    :max="2022"
+                    :step="1"
+                    color="red"
+                    label-always
                 />
                 <!-- Button submit -->
                 <q-btn
@@ -54,30 +67,46 @@
                     color="red"
                     @click="submit"
                 />
-            </q-form>
+            </form>
         </q-card-section>
     </q-card>
 </template>
 
 <script>
-import AppLayout from '../Layouts/AppLayout.vue';
+import { ref } from 'vue';
+import { reactive } from 'vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { Inertia } from '@inertiajs/inertia';
 
 export default {
+    setup(){
+        const form = useForm({
+            brand: null,
+            model: null,
+            price: ref({
+                min: 2000,
+                max: 5000
+            }),
+            year: ref({
+                min: 2018,
+                max: 2022
+            }),
+            km: ref({
+                min: 0,
+                max: 20000,
+            })
+        })
+
+        return { form }
+    },
     layout : AppLayout,
     name: 'Home',
     props: {
         bikeModels: Array,
     },
-    // change models when brand changes
-    watch: {
-        brand: function () {
-            this.models = this.getModels();
-        }
-    },
-    // on page load
-    mounted() {
+    mounted() { // on page load
         this.bikeModels.forEach(element => {
-            // if brand is not in brands array, add it
             if (!this.brands.includes(element.brand)){
                 this.brands.push(element.brand);
             }
@@ -85,33 +114,39 @@ export default {
     },
     data() {
         return {
-            brand: '',
-            model: '',
-            price: '',
-            km: '',
-            year: '',
             brands: [],
             models: [],
         }
     },
     methods: {
-        // get models from api
-        getModels() {
-            console.log(this.brand);
+        getModels() { // get models from api
             this.models = [];
+            //console.log(this.form.brand)
             this.bikeModels.forEach(element => {
-                if (element.brand == this.brand && !this.models.includes(element.model)){
+                if (element.brand == this.form.brand && !this.models.includes(element.model)){
                     this.models.push(element.model);
                 }
             });
-            //this.models = ['test', 'test2'];
-            console.log(this.models.length)
-
+            //console.log(this.models)
             return this.models;
         },
-        // submit form
-        submit() {}
-    }
+        submit() {
+            this.form.transform((data) => ({
+                ...data,
+                minprice : data.price.min,
+                maxprice : data.price.max,
+                minyear : data.year.min,
+                maxyear : data.year.max,
+                minkm : data.km.min,
+                maxkm : data.km.max,
+                price: undefined,
+                year: undefined,
+                km: undefined,
+                model: data.model || undefined,
+                brand: data.brand || undefined,
+            })).get('/ads');
+        }
+    },
 }
 </script>
 

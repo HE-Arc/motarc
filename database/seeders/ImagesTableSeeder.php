@@ -31,7 +31,7 @@ class ImagesTableSeeder extends Seeder
             ['image_url' => 'jonas1.jpg', 'ad_id' => 4],
         ];
 
-        foreach ($images as $image){
+        foreach ($images as $image) {
             // Pas besoin de mettre l'id et timestamp
             Image::create(array(
                 'image_url' => $image["image_url"],

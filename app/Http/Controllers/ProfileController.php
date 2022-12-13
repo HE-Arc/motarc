@@ -52,8 +52,10 @@ class ProfileController extends Controller
         Auth::user()->email = $request->email;
         Auth::user()->npa = $request->npa;
 
-        return Inertia::render('Profile/Show', [
+        return redirect()->route('profile.show')->with('success', 'Profile updated successfully.');
+
+        /* return Inertia::render('Profile/Show', [
             'user' => Auth::user(),
-        ]);
+        ]); */
     }
 }

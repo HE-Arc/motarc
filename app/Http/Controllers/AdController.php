@@ -12,42 +12,43 @@ use Inertia\Inertia;
 
 class AdController extends Controller
 {
-
     public function index(Request $request)
     {
         if (empty($request->all())) {
-            $ads = Ad::with('model')->with('user')->get();
+            $ads = Ad::with('model')->with('user')->with('images')->get();
 
-            //return view('ads.index', compact('ads'));
-
-            return Inertia::render('Ads/Index', [
-                'ads' => $ads,
-            ]);
+            return inertia('Ads/Index', compact('ads'));
         }
 
         $filters = array();
 
         foreach ($request->all() as $name => $value) {
-            if (str_contains($name, "from")) {
-                array_push($filters, [substr($name, 4), '>=', $value]);
-            } elseif (str_contains($name, "to")) {
-                array_push($filters, [substr($name, 2), '<=', $value]);
+            if (str_contains($name, "min")) {
+                array_push($filters, [substr($name, 3), '>=', $value]);
+            } elseif (str_contains($name, "max")) {
+                array_push($filters, [substr($name, 3), '<=', $value]);
             } else {
                 array_push($filters, [$name, '=', $value]);
             }
         }
 
+        //$ads = Ad::with(['model', 'user'])->where($filters)->get();
+
         $ads = DB::table('ads') // Ad::where($filters)
             ->join('bike_models', 'ads.model_id', '=', 'bike_models.id')
             ->join('users', 'ads.user_id', '=', 'users.id')
-            ->select('ads.*', 'bike_models.*', 'users.*')
+            ->join('images', 'ads.id', '=', 'images.ad_id')
+            ->select('ads.*', 'bike_models.*', 'users.*', 'images.*')
             ->where($filters)
             ->get();
 
         //return $ads;
-        return Inertia::render('Ads/Index', [
+
+        return inertia('Ads/Index', compact('ads'));
+
+        /*return Inertia::render('Ads/Index', [
             'ads' => $ads,
-        ]);
+        ]);*/
     }
 
     public function show($id)
@@ -59,14 +60,14 @@ class AdController extends Controller
         ]);
     }
 
-    public function myAds()
+    /*  public function myAds()
     {
         $ads = Ad::where('user_id', auth()->user()->id)->get();
 
         return Inertia::render('Ads/MyAds', [
             'ads' => $ads,
         ]);
-    }
+    } */
 
     public function create()
     {
