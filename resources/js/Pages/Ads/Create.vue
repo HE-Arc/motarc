@@ -1,7 +1,7 @@
 <template>
     <q-card class="q-pa-md">
         <q-card-section class="q-gutter-md">
-            <h1>Create ad</h1>
+            <h2>Create ad</h2>
 
             <form @submit.prevent="submit" enctype="multipart/form-data">
                 <div class="row">
@@ -81,7 +81,8 @@
 
                 <q-file
                     v-model="form.images"
-                    @input="form.images = $event.target.files"
+                    @input="form.images = $event.target.files; preview($event);"
+
                     id="images"
                     name="images[]"
                     label="Images"
@@ -90,6 +91,21 @@
                     color="deep-orange-9" label-color="deep-orange-9"
                 />
                 <div v-if="form.errors.files">{{ form.errors.files }}</div>
+
+                <!-- <div v-for="url in urls">
+                    <img v-if="url" :src="url" />
+                </div> -->
+
+                <q-carousel
+                    v-if="urls.length > 0"
+                    animated
+                    v-model="slide"
+                    arrows
+                    navigation
+                    infinite
+                    >
+                    <q-carousel-slide  v-for="url in urls" :name="url[0]" :img-src="url[1]"/>
+                </q-carousel>
 
                 <!-- submit -->
                 <q-btn
@@ -110,7 +126,7 @@
 
 import { Head } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 import { Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
@@ -144,7 +160,19 @@ export default {
                 .post('/ads');
         }
 
-        return { form, submit }
+        return { form, submit, slide: ref(1) }
+    },
+
+    methods: {
+        preview(e)
+        {
+            this.urls = [];
+            let cpt = 1;
+            Array.from(e.target.files).forEach(file => {
+                this.urls.push([cpt, URL.createObjectURL(file)]);
+                cpt += 1;
+            });
+        },
     },
 
     props: {
@@ -159,7 +187,8 @@ export default {
                     value: m.id + 0,
                     label: m.model + " " + m.year + " " + m.capacity,
                 }
-            })
+            }),
+            urls: [],  // preview
         }
     },
 }
