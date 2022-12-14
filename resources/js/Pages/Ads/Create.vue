@@ -1,38 +1,44 @@
 <template>
-    <h1>Create ad</h1>
+    <q-card class="q-pa-md">
+        <q-card-section class="q-gutter-md">
+            <h1>Create ad</h1>
 
-    <form @submit.prevent="submit" enctype="multipart/form-data">
-        <q-input type="number" label="Prix" v-model="form.price" name="price" id="inputPrice" color="deep-orange-9" label-color="deep-orange-9" />
-        <div v-if="form.errors.inputPrice">{{ form.errors.inputPrice }}</div>
+            <form @submit.prevent="submit" enctype="multipart/form-data">
+                <div class="row">
+                    <q-input class="col-grow q-ma-md" type="number" label="Prix" v-model="form.price" name="price" id="inputPrice" color="deep-orange-9" label-color="deep-orange-9" />
+                    <div v-if="form.errors.inputPrice">{{ form.errors.inputPrice }}</div>
 
-        <q-input type="number" name="km" label="Km" v-model="form.km" id="inputKm" color="deep-orange-9" label-color="deep-orange-9" />
-        <div v-if="form.errors.km">{{ form.errors.km }}</div>
+                    <q-input class="col-grow q-ma-md" type="number" name="km" label="Km" v-model="form.km" id="inputKm" color="deep-orange-9" label-color="deep-orange-9" />
+                    <div v-if="form.errors.km">{{ form.errors.km }}</div>
 
-        <q-input type="number" label="Puissance" name="power_kw" v-model="form.power_kw" id="inputPower_kw" step="0.1" color="deep-orange-9" label-color="deep-orange-9" />
-        <div v-if="form.errors.power_kw">{{ form.errors.power_kw }}</div>
+                    <q-input type="number" class="col-grow q-ma-md" label="Puissance" name="power_kw" v-model="form.power_kw" id="inputPower_kw" step="0.1" color="deep-orange-9" label-color="deep-orange-9" />
+                    <div v-if="form.errors.power_kw">{{ form.errors.power_kw }}</div>
+                </div>
 
-        <q-input type="text" label="Couleur" name="color_hexa" v-model="form.color_hexa" id="inputColor" color="deep-orange-9" label-color="deep-orange-9" />
-        <div v-if="form.errors.color_hexa">{{ form.errors.color_hexa }}</div>
+                <div class="row">
+                    <q-input class="col-grow q-ma-md" type="text" label="Couleur" name="color_hexa" v-model="form.color_hexa" id="inputColor" color="deep-orange-9" label-color="deep-orange-9" />
+                    <div v-if="form.errors.color_hexa">{{ form.errors.color_hexa }}</div>
 
-        <!-- <q-input type="text" name="user_id" v-model="form.user_id" id="user_id" hidden /> -->
+                    <q-select class="col-grow q-ma-md" name="model_id" label="Modèle" v-model="form.model_id" :options="model_options" id="model_id" color="deep-orange-9" label-color="deep-orange-9" />
+                    <div v-if="form.errors.model_id">{{ form.errors.model_id }}</div>
+                </div>
 
-        <q-select name="model_id" label="Modèle" v-model="form.model_id" :options="model_options" id="model_id" />
-        <div v-if="form.errors.model_id">{{ form.errors.model_id }}</div>
+                <!-- <q-file
+                    v-model="files"
+                    id="images"
+                    name="images[]"
+                    label="Images"
+                    filled
+                    multiple
+                    color="deep-orange-9" label-color="deep-orange-9"
+                />
+                <div v-if="form.errors.files">{{ form.errors.files }}</div> -->
 
-        <!-- <q-file
-            v-model="files"
-            id="images"
-            name="images[]"
-            label="Images"
-            filled
-            multiple
-            color="deep-orange-9" label-color="deep-orange-9"
-        />
-        <div v-if="form.errors.files">{{ form.errors.files }}</div> -->
-
-        <!-- submit -->
-        <q-btn type="submit" :disabled="form.processing" no-caps color="deep-orange-9" label="Créer" />
-      </form>
+                <!-- submit -->
+                <q-btn type="submit" class="col-grow q-ma-md" :disabled="form.processing" no-caps color="deep-orange-9" label="Créer" />
+            </form>
+        </q-card-section>
+    </q-card>
 </template>
 
 <script>
@@ -68,7 +74,8 @@ export default {
                     color_hexa: data.color_hexa,
                     user_id: data.user_id,
                     model_id: data.model_id.value,
-                })).post('/ads');
+                }))
+                .post('/ads');
         }
 
         return { form, submit }
