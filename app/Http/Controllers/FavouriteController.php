@@ -12,6 +12,13 @@ class FavouriteController extends Controller
     {
         $favourites = auth()->user()->favourites;
 
+        // get user and model data for each ad
+        foreach ($favourites as $favourite) {
+            $favourite->user;
+            $favourite->model;
+            $favourite->images;
+        }
+
         return Inertia::render('Favourites/Index', [
             'favourites' => $favourites,
         ]);
@@ -24,13 +31,16 @@ class FavouriteController extends Controller
             'ad_id' => 'required|integer',
         ]);
 
-        $favourite = new AdUser();
-        $favourite->user_id = auth()->user()->id;
-        $favourite->ad_id = $request->ad_id;
-        $favourite->save();
+        $request->merge([
+            'user_id' => auth()->user()->id,
+        ]);
 
-        // TODO : redirect to where the user was before
-        return redirect()->route('favourites.index')->with('success', 'Ad added to favourites.');
+        AdUser::create($request->all());
+
+        // redirect where the user was and keep scroll position
+        return redirect()->back()->with('success', 'Ad added to favourites.');
+
+        //return redirect()->route('favourites.index')->with('success', 'Ad added to favourites.');
     }
 
     public function destroy($id)
@@ -38,7 +48,7 @@ class FavouriteController extends Controller
         $favourite = AdUser::findOrFail($id);
         $favourite->delete();
 
-        // TODO : redirect to where the user was before
-        return redirect()->route('favourites.index')->with('success', 'Ad removed from favourites.');
+        // redirect where the user was and keep scroll position
+        return redirect()->back()->with('success', 'Ad removed from favourites.');
     }
 }

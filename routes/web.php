@@ -30,14 +30,15 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 
 Route::resource('users', UserController::class)->only(['store']);
-Route::resource('ads', AdController::class); //->only(['index', 'show']);
 
 Route::middleware('auth')->group(function () {
     Route::resource('favourites', Favouritecontroller::class)->except(['update', 'create', 'show', 'edit']);
 
-    //Route::get('/ads/myads', [AdController::class, 'myads'])->name('myads');
-    //Route::resource('ads', AdController::class); //->except(['index', 'show']);
+    Route::get('/ads/myads', [AdController::class, 'myads'])->name('myads');
+    Route::resource('ads', AdController::class)->except(['index', 'show']);
 
     Route::singleton('profile', ProfileController::class); //->creatable()->except(['create']);
     Route::resource('users', UserController::class)->except(['store']);
 });
+
+Route::resource('ads', AdController::class)->only(['index', 'show']);

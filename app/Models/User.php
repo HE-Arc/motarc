@@ -22,7 +22,8 @@ class User extends Authenticatable
 
     public function favourites()
     {
-        return $this->belongsToMany(Ad::class, 'ad_user', 'user_id', 'ad_id');
+        return $this->belongsToMany(Ad::class)->using(AdUser::class)->withPivot('id', 'user_id', 'ad_id');
+        //return $this->belongsToMany(Ad::class, 'ad_user', 'user_id', 'ad_id');
     }
 
     /**
