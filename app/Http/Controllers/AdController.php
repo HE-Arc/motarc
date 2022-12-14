@@ -151,7 +151,7 @@ class AdController extends Controller
             foreach ($request->file('images') as $image) {
                 $imageName = time() . Str::random(40) . '.' . $image->extension();
 
-                $image->move(public_path('images'), $imageName);
+                $image->move(public_path('storage/images'), $imageName);
 
                 $ad->images()->create(['image_url' => $imageName]);
             }
