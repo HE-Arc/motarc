@@ -135,7 +135,7 @@ class AdController extends Controller
             'color_hexa' => 'required',
             'model_id' => 'required|integer',
             'user_id' => 'required|integer',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000' // max : Max size in KB = 10MB
+            // 'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000' // max : Max size in KB = 10MB
         ]);
 
         $ad = new Ad();
@@ -147,15 +147,15 @@ class AdController extends Controller
         $ad->user_id = $request->user_id;
         $ad->save();
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $imageName = time() . Str::random(40) . '.' . $image->extension();
+        // if ($request->hasFile('images')) {
+        //     foreach ($request->file('images') as $image) {
+        //         $imageName = time() . Str::random(40) . '.' . $image->extension();
 
-                $image->move(public_path('images'), $imageName);
+        //         $image->move(public_path('images'), $imageName);
 
-                $ad->images()->create(['image_url' => $imageName]);
-            }
-        }
+        //         $ad->images()->create(['image_url' => $imageName]);
+        //     }
+        // }
 
         return redirect()
             ->route("ads.index")

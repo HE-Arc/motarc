@@ -15,6 +15,6 @@ export default {
     <q-layout>
     <Header />
     <slot></slot>
-    <Footer />
+    <!-- <Footer /> -->
     </q-layout>
 </template>
