@@ -92,10 +92,6 @@
                 />
                 <div v-if="form.errors.files">{{ form.errors.files }}</div>
 
-                <!-- <div v-for="url in urls">
-                    <img v-if="url" :src="url" />
-                </div> -->
-
                 <q-carousel
                     v-if="urls.length > 0"
                     animated
