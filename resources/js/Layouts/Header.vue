@@ -1,7 +1,7 @@
 <template>
     <div class="q-pa-md bg-grey-3" id="navbar" >
         <q-toolbar>
-            <img src="storage/images/moto.png" height="30" />
+            <img src="/public/storage/images/moto.png" height="30" />
             <q-toolbar-title>
                 <Link href="/">
                 <q-btn flat label="Motarc" to="/">

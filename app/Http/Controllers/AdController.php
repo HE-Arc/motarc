@@ -32,6 +32,9 @@ class AdController extends Controller
 
         $filters = array();
 
+        $filtersAd = array();
+        $filtersModel = array();
+
         foreach ($request->all() as $name => $value) {
             if (str_contains($name, "min")) {
                 array_push($filters, [substr($name, 3), '>=', $value]);
@@ -42,10 +45,31 @@ class AdController extends Controller
             }
         }
 
+        // switch filters to ad or model
+        foreach ($filters as $filter) {
+            if (in_array($filter[0], ['price', 'km', 'power_kw'])) {
+                array_push($filtersAd, $filter);
+            } else {
+                array_push($filtersModel, $filter);
+            }
+        }
+
         // write filters in console
         //dd($filters);
 
-        dd($filters);
+        //dd($filters);
+        //dd($filtersAd);
+        //dd($filtersModel);
+
+        $ads = Ad::query()
+            ->with(['user', 'images'])
+            ->withWhereHas('model', function ($query) use ($filtersModel) {
+                $query->where($filtersModel);
+            })
+            ->where($filtersAd)
+            ->get();
+
+        //dd($ads);
 
         //$ads = Ad::with(['model', 'user', 'images'])->where($filters)->get();
 
@@ -58,10 +82,10 @@ class AdController extends Controller
             ->get(); */
 
 
-        /* return Inertia::render('Ads/Index', [
+        return Inertia::render('Ads/Index', [
             'ads' => $ads,
             'favourites' => $favourites,
-        ]); */
+        ]);
     }
 
     public function show($id)
