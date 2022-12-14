@@ -42,7 +42,12 @@ class AdController extends Controller
             }
         }
 
-        $ads = Ad::with(['model', 'user', 'images'])->where($filters)->get();
+        // write filters in console
+        //dd($filters);
+
+        dd($filters);
+
+        //$ads = Ad::with(['model', 'user', 'images'])->where($filters)->get();
 
         /* $ads = DB::table('ads') // Ad::where($filters)
             ->join('bike_models', 'ads.model_id', '=', 'bike_models.id')
@@ -52,18 +57,11 @@ class AdController extends Controller
             ->where($filters)
             ->get(); */
 
-        //return $ads;
 
-        return Inertia::render('Ads/Index', [
+        /* return Inertia::render('Ads/Index', [
             'ads' => $ads,
             'favourites' => $favourites,
-        ]);
-
-        //return inertia('Ads/Index', compact('ads'), compact('favourites'));
-
-        /*return Inertia::render('Ads/Index', [
-            'ads' => $ads,
-        ]);*/
+        ]); */
     }
 
     public function show($id)
