@@ -135,6 +135,18 @@ export default {
     layout : AppLayout,
     name: 'Edit ad',
 
+    data() {
+        return {
+            model_options: this.models.map(m => {
+                return {
+                    value: m.id + 0,
+                    label: m.model + " " + m.year + " " + m.capacity,
+                }
+            }),
+            urls: [],  // preview
+        }
+    },
+
     setup (props) {
         const form = useForm({
             price: props.ad.price,
@@ -165,14 +177,14 @@ export default {
         }
 
         // Set up urls for preview
-        var urls_ = [];
+        var urls = [];
         let cpt = 1;
         props.ad.images.forEach(image => {
-            urls_.push([cpt, "/storage/images/" + image.image_url]);
+            urls.push([cpt, "/storage/images/" + image.image_url]);
             cpt += 1;
         });
 
-        return { form, submit, slide: ref(1), urls: urls_ }
+        return { form, submit, slide: ref(1), urls: urls }
     },
 
     methods: {
@@ -190,18 +202,6 @@ export default {
     props: {
         models: Array,
         ad: Object,
-    },
-
-    data() {
-        return {
-            model_options: this.models.map(m => {
-                return {
-                    value: m.id + 0,
-                    label: m.model + " " + m.year + " " + m.capacity,
-                }
-            }),
-            urls: [],  // preview
-        }
     },
 }
 
