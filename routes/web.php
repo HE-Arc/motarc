@@ -35,7 +35,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('favourites', Favouritecontroller::class)->except(['update', 'create', 'show', 'edit']);
 
     Route::get('/ads/myads', [AdController::class, 'myads'])->name('myads');
-    Route::resource('ads', AdController::class)->except(['index', 'show']);
+    Route::resource('ads', AdController::class)->except(['index', 'show', 'update']);
+
+    // Nécessaire pour la mise à jour d'une annonce
+    // Les fichiers ne peuvent pas être mis à jour avec la méthode PUT ou PATCH (multipart limitations)
+    // Il faut donc utiliser la méthode POST
+    // Plus d'infos :
+    // - https://laracasts.com/discuss/channels/inertia/request-null-when-upload-edit-file?page=1&replyId=801052
+    // https://inertiajs.com/file-uploads#multipart-limitations
+    Route::post('/ads/{ad}/update', [AdController::class, 'update'])->name('ads.update');
 
     Route::singleton('profile', ProfileController::class); //->creatable()->except(['create']);
     Route::resource('users', UserController::class)->except(['store']);

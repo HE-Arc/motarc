@@ -112,7 +112,7 @@
                     :disabled="form.processing"
                     no-caps
                     color="deep-orange-9"
-                    label="Créer"
+                    label="Créer l'annonce"
                 />
 
             </form>

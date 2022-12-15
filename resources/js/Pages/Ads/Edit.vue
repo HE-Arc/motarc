@@ -94,7 +94,7 @@
                 <div v-if="form.errors.files">{{ form.errors.files }}</div>
 
                 <q-carousel
-                class="col-grow q-ma-md"
+                    class="col-grow q-ma-md"
                     v-if="urls.length > 0"
                     animated
                     v-model="slide"
@@ -128,23 +128,12 @@ import { reactive, ref } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 import { Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { propsToAttrMap } from '@vue/shared'
 
 
 export default {
     layout : AppLayout,
     name: 'Edit ad',
-
-    data() {
-        return {
-            model_options: this.models.map(m => {
-                return {
-                    value: m.id + 0,
-                    label: m.model + " " + m.year + " " + m.capacity,
-                }
-            }),
-            urls: [],  // preview
-        }
-    },
 
     setup (props) {
         const form = useForm({
@@ -153,8 +142,12 @@ export default {
             power_kw: props.ad.power_kw,
             color_hexa: props.ad.color_hexa,
             user_id: props.ad.user_id,
-            model_id: props.ad.model_id,
+            model_id: {
+                    value: props.ad.model.id + 0,
+                    label: props.ad.model.model + " " + props.ad.model.year + " " + props.ad.model.capacity,
+                },
             images: null,
+            _method: 'patch',
         })
 
         function submit()
@@ -168,18 +161,18 @@ export default {
                     model_id: data.model_id.value,
                     images: data.images,
                 }))
-                .post('/ads');
+                .post("/ads/" + props.ad.id + "/update");
         }
 
-        // // Set up urls for preview
-        var urls = [];
+        // Set up urls for preview
+        var urls_ = [];
         let cpt = 1;
         props.ad.images.forEach(image => {
-            urls.push([cpt, "/storage/images/" + image.image_url]);
+            urls_.push([cpt, "/storage/images/" + image.image_url]);
             cpt += 1;
         });
 
-        return { form, submit, slide: ref(1), urls: urls }
+        return { form, submit, slide: ref(1), urls: urls_ }
     },
 
     methods: {
@@ -197,6 +190,18 @@ export default {
     props: {
         models: Array,
         ad: Object,
+    },
+
+    data() {
+        return {
+            model_options: this.models.map(m => {
+                return {
+                    value: m.id + 0,
+                    label: m.model + " " + m.year + " " + m.capacity,
+                }
+            }),
+            urls: [],  // preview
+        }
     },
 }
 

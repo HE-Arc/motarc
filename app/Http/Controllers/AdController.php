@@ -168,7 +168,7 @@ class AdController extends Controller
 
         // Delete images from public/images folder
         foreach ($ad->images as $image) {
-            $image_path = public_path("images") . '\\' . $image->image_url;
+            $image_path = public_path("storage/images") . '\\' . $image->image_url;
 
             if (File::exists($image_path)) {
                 File::delete($image_path);
@@ -187,7 +187,7 @@ class AdController extends Controller
 
     public function edit($id)
     {
-        $ad = Ad::where('id', $id)->with("images")->firstOrFail();
+        $ad = Ad::where('id', $id)->with("images")->with("model")->firstOrFail();
 
         if ($ad->user_id != auth()->user()->id) {
             return redirect()->route('ads.index')->with('Access failed', 'You are not the owner of this ad.');
@@ -203,37 +203,45 @@ class AdController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'price' => 'required|integer',
+            'km' => 'required|integer',
+            'power_kw' => 'required|numeric',
+            'color_hexa' => 'required',
+            'model_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000' // max : Max size in KB = 10MB
+        ]);
+
         $ad = Ad::findOrFail($id);
 
         $ad->update($request->all());
 
-        dd($request->all());
+        if ($request->hasFile('images')) {
+            // Remove old images
+            foreach ($ad->images as $image) {
+                $image_path = public_path("storage/images") . '\\' . $image->image_url;
 
-        // if ($request->hasFile('images')) {
-        //     // Remove old images
-        //     foreach ($ad->images as $image) {
-        //         $image_path = public_path("images") . '\\' . $image->image_url;
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+            }
 
-        //         if (File::exists($image_path)) {
-        //             File::delete($image_path);
-        //         }
-        //     }
+            // Remove old images from database
+            $ad->images()->delete();
 
-        //     // Remove old images from database
-        //     $ad->images()->delete();
+            // Add new images
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . Str::random(40) . '.' . $image->extension();
 
-        //     // Add new images
-        //     foreach ($request->file('images') as $image) {
-        //         $imageName = time() . Str::random(40) . '.' . $image->extension();
+                $image->move(public_path('storage/images'), $imageName);
 
-        //         $image->move(public_path('images'), $imageName);
-
-        //         $ad->images()->create(['image_url' => $imageName]);
-        //     }
-        // }
+                $ad->images()->create(['image_url' => $imageName]);
+            }
+        }
 
         // redirect where the user came from with inertia
         // return redirect()->back()->with('success', 'Ad updated successfully');
-        //return redirect()->route('ads.index')->with('success', 'Ad updated successfully');
+        return redirect()->route('ads.show', $id)->with('success', 'Ad updated successfully');
     }
 }
