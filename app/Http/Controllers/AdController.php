@@ -187,10 +187,10 @@ class AdController extends Controller
 
     public function edit($id)
     {
-        $ad = Ad::where('id', $id)->firstOrFail();
+        $ad = Ad::where('id', $id)->with("images")->firstOrFail();
 
         if ($ad->user_id != auth()->user()->id) {
-            return redirect()->route('ads.index')->with('Access failed', 'You are not the owrner of this ad.');
+            return redirect()->route('ads.index')->with('Access failed', 'You are not the owner of this ad.');
         }
 
         $models = BikeModel::all();
@@ -199,7 +199,6 @@ class AdController extends Controller
             'ad' => $ad,
             'models' => $models,
         ]);
-        //return view('ads.edit', ['ad' => $ad], compact("models"));
     }
 
     public function update(Request $request, $id)
@@ -208,31 +207,33 @@ class AdController extends Controller
 
         $ad->update($request->all());
 
-        if ($request->hasFile('images')) {
-            // Remove old images
-            foreach ($ad->images as $image) {
-                $image_path = public_path("images") . '\\' . $image->image_url;
+        dd($request->all());
 
-                if (File::exists($image_path)) {
-                    File::delete($image_path);
-                }
-            }
+        // if ($request->hasFile('images')) {
+        //     // Remove old images
+        //     foreach ($ad->images as $image) {
+        //         $image_path = public_path("images") . '\\' . $image->image_url;
 
-            // Remove old images from database
-            $ad->images()->delete();
+        //         if (File::exists($image_path)) {
+        //             File::delete($image_path);
+        //         }
+        //     }
 
-            // Add new images
-            foreach ($request->file('images') as $image) {
-                $imageName = time() . Str::random(40) . '.' . $image->extension();
+        //     // Remove old images from database
+        //     $ad->images()->delete();
 
-                $image->move(public_path('images'), $imageName);
+        //     // Add new images
+        //     foreach ($request->file('images') as $image) {
+        //         $imageName = time() . Str::random(40) . '.' . $image->extension();
 
-                $ad->images()->create(['image_url' => $imageName]);
-            }
-        }
+        //         $image->move(public_path('images'), $imageName);
+
+        //         $ad->images()->create(['image_url' => $imageName]);
+        //     }
+        // }
 
         // redirect where the user came from with inertia
-        return redirect()->back()->with('success', 'Ad updated successfully');
+        // return redirect()->back()->with('success', 'Ad updated successfully');
         //return redirect()->route('ads.index')->with('success', 'Ad updated successfully');
     }
 }

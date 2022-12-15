@@ -80,6 +80,7 @@
                 </div>
 
                 <q-file
+                    class="col-grow q-ma-md"
                     v-model="form.images"
                     @input="form.images = $event.target.files; preview($event);"
 
@@ -93,6 +94,7 @@
                 <div v-if="form.errors.files">{{ form.errors.files }}</div>
 
                 <q-carousel
+                    class="col-grow q-ma-md"
                     v-if="urls.length > 0"
                     animated
                     v-model="slide"

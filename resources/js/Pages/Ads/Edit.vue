@@ -80,6 +80,7 @@
                 </div>
 
                 <q-file
+                    class="col-grow q-ma-md"
                     v-model="form.images"
                     @input="form.images = $event.target.files; preview($event);"
 
@@ -93,6 +94,7 @@
                 <div v-if="form.errors.files">{{ form.errors.files }}</div>
 
                 <q-carousel
+                class="col-grow q-ma-md"
                     v-if="urls.length > 0"
                     animated
                     v-model="slide"
@@ -110,7 +112,7 @@
                     :disabled="form.processing"
                     no-caps
                     color="deep-orange-9"
-                    label="Créer"
+                    label="Modifier l'annonce"
                 />
 
             </form>
@@ -132,6 +134,18 @@ export default {
     layout : AppLayout,
     name: 'Edit ad',
 
+    data() {
+        return {
+            model_options: this.models.map(m => {
+                return {
+                    value: m.id + 0,
+                    label: m.model + " " + m.year + " " + m.capacity,
+                }
+            }),
+            urls: [],  // preview
+        }
+    },
+
     setup (props) {
         const form = useForm({
             price: props.ad.price,
@@ -140,7 +154,7 @@ export default {
             color_hexa: props.ad.color_hexa,
             user_id: props.ad.user_id,
             model_id: props.ad.model_id,
-            images: props.ad.images,
+            images: null,
         })
 
         function submit()
@@ -157,7 +171,15 @@ export default {
                 .post('/ads');
         }
 
-        return { form, submit, slide: ref(1) }
+        // // Set up urls for preview
+        var urls = [];
+        let cpt = 1;
+        props.ad.images.forEach(image => {
+            urls.push([cpt, "/storage/images/" + image.image_url]);
+            cpt += 1;
+        });
+
+        return { form, submit, slide: ref(1), urls: urls }
     },
 
     methods: {
@@ -175,18 +197,6 @@ export default {
     props: {
         models: Array,
         ad: Object,
-    },
-
-    data() {
-        return {
-            model_options: this.models.map(m => {
-                return {
-                    value: m.id + 0,
-                    label: m.model + " " + m.year + " " + m.capacity,
-                }
-            }),
-            urls: [],  // preview
-        }
     },
 }
 
