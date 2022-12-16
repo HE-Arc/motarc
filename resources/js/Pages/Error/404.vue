@@ -1,6 +1,6 @@
 <template>
     <div class="col-grow q-ma-md">
-        <h2 class="card-header">404 Page not found</h2>
+        <h2 class="card-header" id="title404">404 Page not found</h2>
 
         <div class="card-body">
             <div class="text-h6 q-mb-md">This page does not exist.</div>
@@ -30,12 +30,9 @@ export default {
 </script>
 
 <style lang="scss">
-h2 {
+
+#title404 {
     color: $primary;
 }
 
-Link {
-    text-decoration: none;
-    color: blue;
-}
 </style>
