@@ -50,3 +50,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('ads', AdController::class)->only(['index', 'show']);
+
+// If no route matches, render the 404 page
+Route::fallback(function () {
+    return Inertia::render('Error/404');
+});
