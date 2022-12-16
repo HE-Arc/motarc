@@ -14,10 +14,12 @@ class AdController extends Controller
 {
     public function index(Request $request)
     {
+        $bikeModels = BikeModel::all();
+
         if (auth()->user()) {
             $favourites = auth()->user()->favourites;
         } else {
-            $favourites = null;
+            $favourites = [];
         }
 
         if (empty($request->all())) {
@@ -26,6 +28,7 @@ class AdController extends Controller
             return Inertia::render('Ads/Index', [
                 'ads' => $ads,
                 'favourites' => $favourites,
+                'bikeModels' => $bikeModels,
             ]);
             //return inertia('Ads/Index', compact('ads'), compact('favourites'));
         }
@@ -45,7 +48,6 @@ class AdController extends Controller
             }
         }
 
-        // switch filters to ad or model
         foreach ($filters as $filter) {
             if (in_array($filter[0], ['price', 'km', 'power_kw'])) {
                 array_push($filtersAd, $filter);
@@ -53,13 +55,6 @@ class AdController extends Controller
                 array_push($filtersModel, $filter);
             }
         }
-
-        // write filters in console
-        //dd($filters);
-
-        //dd($filters);
-        //dd($filtersAd);
-        //dd($filtersModel);
 
         $ads = Ad::query()
             ->with(['user', 'images'])
@@ -69,10 +64,6 @@ class AdController extends Controller
             ->where($filtersAd)
             ->get();
 
-        //dd($ads);
-
-        //$ads = Ad::with(['model', 'user', 'images'])->where($filters)->get();
-
         /* $ads = DB::table('ads') // Ad::where($filters)
             ->join('bike_models', 'ads.model_id', '=', 'bike_models.id')
             ->join('users', 'ads.user_id', '=', 'users.id')
@@ -81,16 +72,20 @@ class AdController extends Controller
             ->where($filters)
             ->get(); */
 
-
         return Inertia::render('Ads/Index', [
             'ads' => $ads,
             'favourites' => $favourites,
+            'bikeModels' => $bikeModels,
         ]);
     }
 
     public function show($id)
     {
+<<<<<<< HEAD
         $ad = Ad::with(['model', 'user', 'images'])->findOrFail($id);
+=======
+        $ad = Ad::findOrFail($id);
+>>>>>>> 98f0892 (Fix issues #12, #5, #4)
 
         return Inertia::render('Ads/Show', [
             'ad' => $ad,

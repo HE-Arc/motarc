@@ -15,7 +15,7 @@
             <!-- Button modify -->
             <q-btn
                 class="q-mt-md"
-                color="deep-orange-9"
+                color="primary"
                 to="/profile/edit"
             >
             <Link href="/profile/edit">Modify</Link>

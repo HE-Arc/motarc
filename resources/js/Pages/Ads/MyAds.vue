@@ -1,5 +1,11 @@
 <template>
     <h2>My ads</h2>
+
+    <!-- If no ads, print message -->
+    <div v-if="ads.length === 0">
+        <p>You have no ads yet :(</p>
+    </div>
+
     <q-card v-for="ad in ads" :key="ad.id">
         <q-card-section>
             <img v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />

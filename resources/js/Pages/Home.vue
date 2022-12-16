@@ -30,7 +30,7 @@
                     :max="10000"
                     :step="100"
                     label-always
-                    color="red"
+                    color="primary"
                 >
                 </q-range>
 
@@ -44,7 +44,7 @@
                     :min="0"
                     :max="200000"
                     :step="1000"
-                    color="red"
+                    color="primary"
                     label-always
                 />
                 <!-- Year range -->
@@ -55,19 +55,24 @@
                     type="number"
                     suffix="year"
                     :min="1900"
-                    :max="2022"
+                    :max="2023"
                     :step="1"
-                    color="red"
+                    color="primary"
                     label-always
                 />
                 <!-- Button submit -->
                 <q-btn
                     label="Search"
                     type="submit"
-                    color="red"
+                    color="primary"
                     @click="submit"
                 />
             </form>
+
+            <!-- Advanced search link -->
+            <Link href="/ads" id="adv-search" >
+                Advanced search
+            </Link>
         </q-card-section>
     </q-card>
 </template>
@@ -78,6 +83,7 @@ import { reactive } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
     setup(){
@@ -120,6 +126,7 @@ export default {
     },
     methods: {
         getModels() { // get models from api
+            this.form.model = null;
             this.models = [];
             //console.log(this.form.brand)
             this.bikeModels.forEach(element => {
@@ -147,10 +154,16 @@ export default {
             })).get('/ads');
         }
     },
+    components: {
+        Link
+    }
 }
 </script>
 
 <style>
 
+#adv-search {
+    color: #f50057;
+}
 
 </style>

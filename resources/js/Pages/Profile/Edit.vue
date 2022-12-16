@@ -16,15 +16,15 @@
                         </q-card-section>
 
                         <q-card-section>
-                            <q-input v-model="form.password" type="password" id="password" label="Password" placeholder="Your password" color="deep-orange-9" label-color="deep-orange-9" />
+                            <q-input v-model="form.password" type="password" id="password" label="Password" placeholder="Your password" color="primary" label-color="primary" />
                             <div v-if="form.errors.password" class="text-red-500">{{ form.errors.password }}</div>
-                            <q-input v-model="form.password_confirmation" type="password" id="password" label="Password confirmation" placeholder="Your password" color="deep-orange-9" label-color="deep-orange-9" />
+                            <q-input v-model="form.password_confirmation" type="password" id="password" label="Password confirmation" placeholder="Your password" color="primary" label-color="primary" />
                             <div v-if="form.errors.password_confirmation" class="text-red-500">{{ form.errors.password_confirmation }}</div>
                         </q-card-section>
 
                         <q-card-actions align="right">
-                            <q-btn flat label="Cancel" color="deep-orange-9" @click="showPasswordPopup = false" />
-                            <q-btn label="Update" type="submit" :disabled="form.processing" color="deep-orange-9" />
+                            <q-btn flat label="Cancel" color="primary" @click="showPasswordPopup = false" />
+                            <q-btn label="Update" type="submit" :disabled="form.processing" color="primary" />
                         </q-card-actions>
                     </form>
                 </q-card>
@@ -42,25 +42,25 @@
                     </q-card-section>
 
                     <q-card-actions align="right">
-                        <q-btn flat label="Cancel" color="deep-orange-9" @click="showDeletePopup = false" />
+                        <q-btn flat label="Cancel" color="primary" @click="showDeletePopup = false" />
                         <Link :href="'/users/'+$page.props.auth.user.id" method="delete">
-                            <q-btn label="Delete" type="submit" color="deep-orange-9"></q-btn>
+                            <q-btn label="Delete" type="submit" color="primary"></q-btn>
                         </Link>
                     </q-card-actions>
                 </q-card>
             </q-dialog>
 
             <form @submit.prevent="form.put('/profile')">
-                <q-input v-model="form.name" type="text" id="name" label="Name" placeholder="Your name" color="deep-orange-9" label-color="deep-orange-9" />
+                <q-input v-model="form.name" type="text" id="name" label="Name" placeholder="Your name" color="primary" label-color="primary" />
                 <div v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</div>
-                <q-input v-model="form.npa" type="number" id="npa" label="NPA" placeholder="Your NPA" color="deep-orange-9" label-color="deep-orange-9" />
+                <q-input v-model="form.npa" type="number" id="npa" label="NPA" placeholder="Your NPA" color="dprimary" label-color="primary" />
                 <div v-if="form.errors.npa" class="text-red-500">{{ form.errors.npa }}</div>
-                <q-input v-model="form.email" type="email" id="email" label="E-mail" placeholder="Your e-mail adress" color="deep-orange-9" label-color="deep-orange-9" />
+                <q-input v-model="form.email" type="email" id="email" label="E-mail" placeholder="Your e-mail adress" color="primary" label-color="primary" />
                 <div v-if="form.errors.email" class="text-red-500">{{ form.errors.email }}</div>
 
                 <!-- Button to update passwork with lock icon -->
                 <q-btn @click="showPasswordPopup = true" icon="lock">Update password</q-btn>
-                <q-btn type="submit" :disabled="form.processing" no-caps color="deep-orange-9" label="Update" />
+                <q-btn type="submit" :disabled="form.processing" no-caps color="primary" label="Update" />
             </form>
 
             <q-btn class="q-mt-md" color="red" icon="warning" @click="showDeletePopup = true">Delete account</q-btn>

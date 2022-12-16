@@ -1,10 +1,10 @@
 <template>
     <div class="q-pa-md bg-grey-3" id="navbar" >
         <q-toolbar>
-            <img src="/public/storage/images/moto.png" height="30" />
+            <img src="/storage/images/moto.png" height="30" />
             <q-toolbar-title>
-                <Link href="/">
-                <q-btn flat label="Motarc" to="/">
+                <Link href="/" id="link-title">
+                <q-btn flat label="Motarc">
                 </q-btn>
                 </Link>
             </q-toolbar-title>
@@ -13,7 +13,7 @@
                 <Link href="/">
                     <q-tab name="tab1" label="Search" />
                 </Link>
-                <Link href="/ads/create" v-if="$page.props.auth.user">
+                <Link href="/ads/create"> <!--v-if="$page.props.auth.user">-->
                     <q-tab name="tab2" label="New ad" />
                 </Link>
             </q-tabs>
@@ -22,53 +22,53 @@
                 <q-list>
                     <!-- if user not logged in, register and login pages -->
                     <div v-if="$page.props.auth.user">
+                        <Link href="/profile">
                         <q-item clickable v-ripple>
-                            <Link href="/profile">
                             <q-item-section>
                                 My profile
                             </q-item-section>
-                            </Link>
                         </q-item>
+                        </Link>
 
+                        <Link href="/ads/myads">
                         <q-item clickable v-ripple>
-                            <Link href="/ads/myads">
                             <q-item-section>
                                 My ads
                             </q-item-section>
-                            </Link>
                         </q-item>
+                        </Link>
 
+                        <Link href="/favourites">
                         <q-item clickable v-ripple>
-                            <Link href="/favourites">
                             <q-item-section>
                                 My favourites
                             </q-item-section>
-                            </Link>
                         </q-item>
+                        </Link>
 
+                        <Link href="/logout">
                         <q-item clickable v-ripple>
-                            <Link href="/logout">
                             <q-item-section>
                                 Logout
                             </q-item-section>
-                            </Link>
                         </q-item>
+                        </Link>
                     </div>
                     <div v-else>
+                        <Link href="/login">
                         <q-item v-ripple>
-                            <Link href="/login">
                             <q-item-section>
                                 Login
                             </q-item-section>
-                            </Link>
                         </q-item>
+                        </Link>
+                        <Link href="/register">
                         <q-item v-ripple>
-                            <Link href="/register">
                             <q-item-section>
                                 Register
                             </q-item-section>
-                            </Link>
                         </q-item>
+                        </Link>
                     </div>
                 </q-list>
             </q-btn-dropdown>
@@ -89,5 +89,21 @@ export default {
 </script>
 
 <style>
+
+a:visited {
+    color: black;
+}
+
+a:hover {
+    color: #f50057;
+}
+
+a {
+    text-decoration: none;
+}
+
+#link-title:hover {
+    color: black;
+}
 
 </style>
