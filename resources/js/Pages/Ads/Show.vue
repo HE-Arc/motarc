@@ -15,7 +15,7 @@
                 <q-item-label caption>{{ ad.model.year }}</q-item-label>
 
             <!-- Button modify -->
-            <!-- <q-btn class="q-mt-md" color="deep-orange-9" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn> -->
+            <q-btn v-if="$page.props.auth.user.id == ad.user.id" class="q-mt-md" color="deep-orange-9" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
             </div>
         </q-card-section>
     </q-card>
@@ -34,18 +34,12 @@ export default {
     layout : AppLayout,
     name: 'Show ad',
 
-    // setup
-    setup(props) {
-        console.log(props.ad);
-    },
-
     props: {
         ad: Object,
     },
 
     methods: {
         modifyAd(id) {
-            console.log(id)
             this.$inertia.get('/ads/' + id + '/edit');
         },
     }

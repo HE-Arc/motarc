@@ -158,7 +158,7 @@ class AdController extends Controller
         }
 
         return redirect()
-            ->route("ads.index")
+            ->route("ads.show", $ad->id)
             ->with("success", "Ad created successfully");
     }
 

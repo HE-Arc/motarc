@@ -13,7 +13,7 @@
                 <Link href="/">
                     <q-tab name="tab1" label="Search" />
                 </Link>
-                <Link href="/ads/create">
+                <Link href="/ads/create" v-if="$page.props.auth.user">
                     <q-tab name="tab2" label="New ad" />
                 </Link>
             </q-tabs>

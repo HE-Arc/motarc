@@ -63,7 +63,7 @@
                         {{ form.errors.color_hexa }}
                     </div>
 
-                    <q-select
+                    <!-- <q-select
                         class="col-grow q-ma-md"
                         name="model_id"
                         label="Modèle"
@@ -72,12 +72,35 @@
                         id="model_id"
                         color="deep-orange-9"
                         label-color="deep-orange-9"
-                    />
+                    /> -->
 
                     <div v-if="form.errors.model_id">
                         {{ form.errors.model_id }}
                     </div>
                 </div>
+
+                <q-select
+                    v-model="form.brand"
+                    class="col-grow q-ma-md"
+                    :options="brands_name"
+                    label="Brand"
+                    filled
+                    color="deep-orange-9"
+                    label-color="deep-orange-9"
+                    @update:modelValue="getModels()"
+                />
+
+                <!-- model drop down, disabled when no brand selected -->
+                <q-select
+                    v-model="form.model"
+                    class="col-grow q-ma-md"
+                    :options="models_name"
+                    label="Model"
+                    filled
+                    color="deep-orange-9"
+                    label-color="deep-orange-9"
+                    :disable="!form.brand"
+                />
 
                 <q-file
                     class="col-grow q-ma-md"
@@ -140,29 +163,16 @@ export default {
             power_kw: null,
             color_hexa: null,
             user_id: props.user.id,
-            model_id: null,
+            brand: null,
+            model: null,
             images: null,
         })
 
-        function submit()
-        {
-            form.transform((data) => ({
-                    price: data.price,
-                    km: data.km,
-                    power_kw: data.power_kw,
-                    color_hexa: data.color_hexa,
-                    user_id: data.user_id,
-                    model_id: data.model_id.value,
-                    images: data.images,
-                }))
-                .post('/ads');
-        }
-
-        return { form, submit, slide: ref(1) }
+        return { form, slide: ref(1) }
     },
 
     methods: {
-        preview(e)
+        preview(e) // Setup preview for selected images
         {
             this.urls = [];
             let cpt = 1;
@@ -171,6 +181,45 @@ export default {
                 cpt += 1;
             });
         },
+
+        getModels() { // get models from api
+            this.models_name = [];
+
+            this.form.model = null;
+
+            this.models.forEach(element => {
+                if (element.brand == this.form.brand && !this.models.includes(element.model)){
+                    this.models_name.push(element.model);
+                }
+            });
+
+            return this.models;
+        },
+
+        getModelIdFromBrandAndModel(model, brand) { // get model id from name
+            let id = null;
+            this.models.forEach(element => {
+                if (element.model == model && element.brand == brand){
+                    id = element.id;
+                }
+            });
+
+            return id;
+        },
+
+        submit()
+        {
+            this.form.transform((data) => ({
+                    price: data.price,
+                    km: data.km,
+                    power_kw: data.power_kw,
+                    color_hexa: data.color_hexa,
+                    user_id: data.user_id,
+                    model_id: this.getModelIdFromBrandAndModel(this.form.model, this.form.brand),
+                    images: data.images,
+                }))
+                .post('/ads');
+        },
     },
 
     props: {
@@ -178,15 +227,19 @@ export default {
         user: Object,
     },
 
+    mounted() { // on page load
+        this.models.forEach(element => {
+            if (!this.brands_name.includes(element.brand)){
+                this.brands_name.push(element.brand);
+            }
+        });
+    },
+
     data() {
         return {
-            model_options: this.models.map(m => {
-                return {
-                    value: m.id + 0,
-                    label: m.model + " " + m.year + " " + m.capacity,
-                }
-            }),
             urls: [],  // preview
+            brands_name: [],
+            models_name: [],
         }
     },
 }
