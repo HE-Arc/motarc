@@ -81,11 +81,7 @@ class AdController extends Controller
 
     public function show($id)
     {
-<<<<<<< HEAD
         $ad = Ad::with(['model', 'user', 'images'])->findOrFail($id);
-=======
-        $ad = Ad::findOrFail($id);
->>>>>>> 98f0892 (Fix issues #12, #5, #4)
 
         return Inertia::render('Ads/Show', [
             'ad' => $ad,
