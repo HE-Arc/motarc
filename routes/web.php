@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     // Il faut donc utiliser la méthode POST
     // Plus d'infos :
     // - https://laracasts.com/discuss/channels/inertia/request-null-when-upload-edit-file?page=1&replyId=801052
-    // https://inertiajs.com/file-uploads#multipart-limitations
+    // https://inertiajs.com/file-uploads#multipart-limitationsd
     Route::post('/ads/{ad}/update', [AdController::class, 'update'])->name('ads.update');
 
     Route::singleton('profile', ProfileController::class); //->creatable()->except(['create']);

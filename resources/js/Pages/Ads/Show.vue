@@ -14,6 +14,9 @@
                 <q-item-label caption class="text-weight-bold"> Year </q-item-label>
                 <q-item-label caption>{{ ad.model.year }}</q-item-label>
 
+                <q-item-label caption class="text-weight-bold"> Color </q-item-label>
+                <q-item-label caption>{{ ad.color_hexa }}</q-item-label>
+
             <!-- Button modify -->
             <q-btn v-if="$page.props.auth.user.id == ad.user.id" class="q-mt-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
             </div>

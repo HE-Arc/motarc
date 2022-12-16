@@ -48,7 +48,7 @@
 
                 <div class="row">
                     <div class="col-grow">
-                            <q-input
+                        <!-- <q-input
                             class="col-grow q-ma-md"
                             type="text"
                             label="Couleur"
@@ -58,7 +58,29 @@
                             color="primary"
                             label-color="primary"
                             placeholder="#AABBCC"
-                        />
+                        /> -->
+                        <q-select
+                            v-model="form.color_hexa"
+                            class="col-grow q-ma-md"
+                            :options="colors"
+                            label="Color"
+                            filled
+                            color="primary"
+                            option-color
+                            option-value="value"
+                            option-label="label"
+                            clearable
+                        >
+                        <template v-slot:option="scope">
+                            <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
+                            <q-item-section avatar>
+                                <q-icon name="square" :color="scope.opt.value" />
+                            </q-item-section>
+                            <q-item-section>{{ scope.opt.label }}</q-item-section>
+                            </q-item>
+                        </template>
+
+                    </q-select>
 
                         <div v-if="form.errors.color_hexa">
                             {{ form.errors.color_hexa }}
@@ -206,7 +228,7 @@ export default {
                     price: data.price,
                     km: data.km,
                     power_kw: data.power_kw,
-                    color_hexa: data.color_hexa,
+                    color_hexa: data.color_hexa.label,
                     user_id: data.user_id,
                     model_id: this.getModelIdFromBrandAndModel(this.form.model, this.form.brand),
                     images: data.images,
@@ -233,6 +255,19 @@ export default {
             urls: [],  // preview
             brands_name: [],
             models_name: [],
+            colors: [
+                { label: 'Yellow', value: 'yellow' },
+                { label: 'Orange', value: 'orange' },
+                { label: 'Red', value: 'red' },
+                { label: 'Pink', value: 'pink' },
+                { label: 'Purple', value: 'purple' },
+                { label: 'Blue', value: 'blue' },
+                { label: 'Green', value: 'green' },
+                { label: 'Brown', value: 'brown' },
+                { label: 'Grey', value: 'grey' },
+                { label: 'Black', value: 'black' },
+                { label: 'White', value: 'white' },
+            ],
         }
     },
 }
