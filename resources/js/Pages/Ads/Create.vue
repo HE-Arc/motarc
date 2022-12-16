@@ -48,17 +48,6 @@
 
                 <div class="row">
                     <div class="col-grow">
-                        <!-- <q-input
-                            class="col-grow q-ma-md"
-                            type="text"
-                            label="Couleur"
-                            name="color_hexa"
-                            v-model="form.color_hexa"
-                            id="inputColor"
-                            color="primary"
-                            label-color="primary"
-                            placeholder="#AABBCC"
-                        /> -->
                         <q-select
                             v-model="form.color_hexa"
                             class="col-grow q-ma-md"
@@ -228,7 +217,7 @@ export default {
                     price: data.price,
                     km: data.km,
                     power_kw: data.power_kw,
-                    color_hexa: data.color_hexa.label,
+                    color_hexa: data.color_hexa.value,
                     user_id: data.user_id,
                     model_id: this.getModelIdFromBrandAndModel(this.form.model, this.form.brand),
                     images: data.images,
