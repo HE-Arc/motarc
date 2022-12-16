@@ -1,25 +1,41 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
+    <div class="col-grow q-ma-md">
+        <h2 class="card-header">404 Page not found</h2>
 
-                    <div class="card-body">
-                        I'm an example component.
-                        <q-icon name="thumb_up" />
-                        <q-btn @click="showAlert" color="deep-orange-9">Show Alert</q-btn>
-                    </div>
-                </div>
-            </div>
+        <div class="card-body">
+            <div class="text-h6 q-mb-md">This page does not exist.</div>
+
+            <Link href="/">
+                <q-btn color="primary">
+                    Go to home page
+                </q-btn>
+            </Link>
+
         </div>
     </div>
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
+import AppLayout from '@/Layouts/AppLayout.vue'
+import { Link } from '@inertiajs/inertia-vue3';
+
+export default {
+    layout : AppLayout,
+    name: '404 : Page not found',
+
+    components: {
+        Link
+    },
+}
 </script>
+
+<style lang="scss">
+h2 {
+    color: $primary;
+}
+
+Link {
+    text-decoration: none;
+    color: blue;
+}
+</style>
