@@ -12,8 +12,8 @@
                         v-model="form.price"
                         name="price"
                         id="inputPrice"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
+                        color="primary"
+                        label-color="primary"
                         placeholder="9999.90"
                     />
                     <div v-if="form.errors.inputPrice">{{ form.errors.inputPrice }}</div>
@@ -25,8 +25,8 @@
                         label="Km"
                         v-model="form.km"
                         id="inputKm"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
+                        color="primary"
+                        label-color="primary"
                         placeholder="12345"
                     />
                     <div v-if="form.errors.km">{{ form.errors.km }}</div>
@@ -39,82 +39,75 @@
                         v-model="form.power_kw"
                         id="inputPower_kw"
                         step="0.1"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
+                        color="primary"
+                        label-color="primary"
                         placeholder="349.9"
                     />
                     <div v-if="form.errors.power_kw">{{ form.errors.power_kw }}</div>
                 </div>
 
                 <div class="row">
-                    <q-input
-                        class="col-grow q-ma-md"
-                        type="text"
-                        label="Couleur"
-                        name="color_hexa"
-                        v-model="form.color_hexa"
-                        id="inputColor"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
-                        placeholder="#AABBCC"
-                    />
+                    <div class="col-grow">
+                            <q-input
+                            class="col-grow q-ma-md"
+                            type="text"
+                            label="Couleur"
+                            name="color_hexa"
+                            v-model="form.color_hexa"
+                            id="inputColor"
+                            color="primary"
+                            label-color="primary"
+                            placeholder="#AABBCC"
+                        />
 
-                    <div v-if="form.errors.color_hexa">
-                        {{ form.errors.color_hexa }}
+                        <div v-if="form.errors.color_hexa">
+                            {{ form.errors.color_hexa }}
+                        </div>
+
+
+                        <q-file
+                            class="col-grow q-ma-md"
+                            v-model="form.images"
+                            @input="form.images = $event.target.files; preview($event);"
+
+                            id="images"
+                            name="images[]"
+                            label="Images"
+                            filled
+                            multiple
+                            color="primary" label-color="primary"
+                        />
+                        <div v-if="form.errors.files">{{ form.errors.files }}</div>
                     </div>
+                    <div class="col-grow">
+                        <q-select
+                            v-model="form.brand"
+                            class="col-grow q-ma-md"
+                            :options="brands_name"
+                            label="Brand"
+                            filled
+                            color="primary"
+                            label-color="primary"
+                            @update:modelValue="getModels()"
+                        />
 
-                    <!-- <q-select
-                        class="col-grow q-ma-md"
-                        name="model_id"
-                        label="Modèle"
-                        v-model="form.model_id"
-                        :options="model_options"
-                        id="model_id"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
-                    /> -->
+                        <!-- model drop down, disabled when no brand selected -->
+                        <q-select
+                            v-model="form.model"
+                            class="col-grow q-ma-md"
+                            :options="models_name"
+                            label="Model"
+                            filled
+                            color="primary"
+                            label-color="primary"
+                            :disable="!form.brand"
+                        />
 
-                    <div v-if="form.errors.model_id">
-                        {{ form.errors.model_id }}
+                        <div v-if="form.errors.model_id">
+                            {{ form.errors.model_id }}
+                        </div>
                     </div>
                 </div>
-
-                <q-select
-                    v-model="form.brand"
-                    class="col-grow q-ma-md"
-                    :options="brands_name"
-                    label="Brand"
-                    filled
-                    color="deep-orange-9"
-                    label-color="deep-orange-9"
-                    @update:modelValue="getModels()"
-                />
-
-                <!-- model drop down, disabled when no brand selected -->
-                <q-select
-                    v-model="form.model"
-                    class="col-grow q-ma-md"
-                    :options="models_name"
-                    label="Model"
-                    filled
-                    color="deep-orange-9"
-                    label-color="deep-orange-9"
-                    :disable="!form.brand"
-                />
-
-                <q-file
-                    class="col-grow q-ma-md"
-                    v-model="form.images"
-                    @input="form.images = $event.target.files; preview($event);"
-
-                    id="images"
-                    name="images[]"
-                    label="Images"
-                    filled
-                    multiple
-                    color="deep-orange-9" label-color="deep-orange-9"
-                />
-                <div v-if="form.errors.files">{{ form.errors.files }}</div>
 
                 <q-carousel
                     class="col-grow q-ma-md"
@@ -134,7 +127,7 @@
                     class="col-grow q-ma-md"
                     :disabled="form.processing"
                     no-caps
-                    color="deep-orange-9"
+                    color="primary"
                     label="Créer l'annonce"
                 />
 

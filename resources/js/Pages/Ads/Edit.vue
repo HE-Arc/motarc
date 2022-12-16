@@ -12,8 +12,8 @@
                         v-model="form.price"
                         name="price"
                         id="inputPrice"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
+                        color="primary"
+                        label-color="primary"
                         placeholder="9999.90"
                     />
                     <div v-if="form.errors.inputPrice">{{ form.errors.inputPrice }}</div>
@@ -25,8 +25,8 @@
                         label="Km"
                         v-model="form.km"
                         id="inputKm"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
+                        color="primary"
+                        label-color="primary"
                         placeholder="12345"
                     />
                     <div v-if="form.errors.km">{{ form.errors.km }}</div>
@@ -39,8 +39,8 @@
                         v-model="form.power_kw"
                         id="inputPower_kw"
                         step="0.1"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
+                        color="primary"
+                        label-color="primary"
                         placeholder="349.9"
                     />
                     <div v-if="form.errors.power_kw">{{ form.errors.power_kw }}</div>
@@ -54,8 +54,8 @@
                         name="color_hexa"
                         v-model="form.color_hexa"
                         id="inputColor"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
+                        color="primary"
+                        label-color="primary"
                         placeholder="#AABBCC"
                     />
 
@@ -70,8 +70,8 @@
                         v-model="form.model_id"
                         :options="model_options"
                         id="model_id"
-                        color="deep-orange-9"
-                        label-color="deep-orange-9"
+                        color="primary"
+                        label-color="primary"
                     />
 
                     <div v-if="form.errors.model_id">
@@ -89,7 +89,7 @@
                     label="Images"
                     filled
                     multiple
-                    color="deep-orange-9" label-color="deep-orange-9"
+                    color="primary" label-color="primary"
                 />
                 <div v-if="form.errors.files">{{ form.errors.files }}</div>
 
@@ -111,7 +111,7 @@
                     class="col-grow q-ma-md"
                     :disabled="form.processing"
                     no-caps
-                    color="deep-orange-9"
+                    color="primary"
                     label="Modifier l'annonce"
                 />
 
