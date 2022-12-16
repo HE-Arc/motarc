@@ -15,7 +15,7 @@
                 <q-item-label caption>{{ ad.model.year }}</q-item-label>
 
             <!-- Button modify -->
-            <q-btn class="q-mt-md" color="deep-orange-9" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
+            <q-btn class="q-mt-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
             </div>
         </q-card-section>
     </q-card>

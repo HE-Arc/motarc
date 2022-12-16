@@ -63,7 +63,7 @@
                         {{ form.errors.color_hexa }}
                     </div>
 
-                    <q-select
+                    <!-- <q-select
                         class="col-grow q-ma-md"
                         name="model_id"
                         label="Modèle"
@@ -72,6 +72,29 @@
                         id="model_id"
                         color="primary"
                         label-color="primary"
+                    /> -->
+
+                    <q-select
+                        v-model="form.brand"
+                        class="col-grow q-ma-md"
+                        :options="brands_name"
+                        label="Brand"
+                        filled
+                        color="primary"
+                        label-color="primary"
+                        @update:modelValue="getModels()"
+                    />
+
+                    <!-- model drop down, disabled when no brand selected -->
+                    <q-select
+                        v-model="form.model"
+                        class="col-grow q-ma-md"
+                        :options="models_name"
+                        label="Model"
+                        filled
+                        color="primary"
+                        label-color="primary"
+                        :disable="!form.brand"
                     />
 
                     <div v-if="form.errors.model_id">
@@ -137,14 +160,23 @@ export default {
 
     data() {
         return {
-            model_options: this.models.map(m => {
-                return {
-                    value: m.id + 0,
-                    label: m.model + " " + m.year + " " + m.capacity,
-                }
-            }),
             urls: [],  // preview
+            brands_name: [],
+            models_name: [],
         }
+    },
+
+    mounted() { // on page load
+        this.models.forEach(element => {
+            if (!this.brands_name.includes(element.brand)){
+                this.brands_name.push(element.brand);
+            }
+        });
+
+        this.getModels();
+
+        this.form.model = this.$page.props.ad.model.model;
+
     },
 
     setup (props) {
@@ -154,27 +186,11 @@ export default {
             power_kw: props.ad.power_kw,
             color_hexa: props.ad.color_hexa,
             user_id: props.ad.user_id,
-            model_id: {
-                    value: props.ad.model.id + 0,
-                    label: props.ad.model.model + " " + props.ad.model.year + " " + props.ad.model.capacity,
-                },
+            brand: props.ad.model.brand,
+            model: props.ad.model.model,
             images: null,
             _method: 'patch',
         })
-
-        function submit()
-        {
-            form.transform((data) => ({
-                    price: data.price,
-                    km: data.km,
-                    power_kw: data.power_kw,
-                    color_hexa: data.color_hexa,
-                    user_id: data.user_id,
-                    model_id: data.model_id.value,
-                    images: data.images,
-                }))
-                .post("/ads/" + props.ad.id + "/update");
-        }
 
         // Set up urls for preview
         var urls = [];
@@ -184,7 +200,12 @@ export default {
             cpt += 1;
         });
 
-        return { form, submit, slide: ref(1), urls: urls }
+        return { form, slide: ref(1), urls: urls }
+    },
+
+    props: {
+        models: Array,
+        ad: Object,
     },
 
     methods: {
@@ -197,11 +218,45 @@ export default {
                 cpt += 1;
             });
         },
-    },
 
-    props: {
-        models: Array,
-        ad: Object,
+        getModels() { // get models from api
+            this.models_name = [];
+
+            this.form.model = null;
+
+            this.models.forEach(element => {
+                if (element.brand == this.form.brand && !this.models.includes(element.model)){
+                    this.models_name.push(element.model);
+                }
+            });
+
+            return this.models;
+        },
+
+        getModelIdFromBrandAndModel(model, brand) { // get model id from name
+            let id = null;
+            this.models.forEach(element => {
+                if (element.model == model && element.brand == brand){
+                    id = element.id;
+                }
+            });
+
+            return id;
+        },
+
+        submit()
+        {
+            this.form.transform((data) => ({
+                price: data.price,
+                km: data.km,
+                power_kw: data.power_kw,
+                color_hexa: data.color_hexa,
+                user_id: data.user_id,
+                model_id: this.getModelIdFromBrandAndModel(this.form.model, this.form.brand),
+                images: data.images,
+            }))
+            .post("/ads/" + this.$page.props.ad.id + "/update");
+        },
     },
 }
 
