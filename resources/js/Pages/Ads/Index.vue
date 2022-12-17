@@ -28,6 +28,7 @@
                             filled
                             :disable="!form.brand"
                             clearable
+                            @update:modelValue="submit()"
                         />
                         <!-- Label for price range -->
                         <q-label>Price</q-label>
@@ -40,6 +41,7 @@
                             :step="100"
                             label-always
                             color="primary"
+                            @change="submit()"
                         ></q-range>
 
                         <!-- Label for KM -->
@@ -55,6 +57,7 @@
                             :step="1000"
                             color="primary"
                             label-always
+                            @change="submit()"
                         ></q-range>
                         <!-- Label for year -->
                         <q-label>Year</q-label>
@@ -69,6 +72,7 @@
                             :step="1"
                             color="primary"
                             label-always
+                            @change="submit()"
                         ></q-range>
                         <!-- Label for power -->
                         <q-label>Power</q-label>
@@ -83,6 +87,7 @@
                             :step="1"
                             color="primary"
                             label-always
+                            @change="submit()"
                         ></q-range>
                         <!-- Label for capacity -->
                         <q-label>Capacity</q-label>
@@ -97,6 +102,7 @@
                             :step="1"
                             color="primary"
                             label-always
+                            @change="submit()"
                         ></q-range>
                         <!-- Color dropdown with color oreview -->
                         <q-select
@@ -109,9 +115,10 @@
                             option-value="value"
                             option-label="label"
                             clearable
-                            multiple
-                            use-chips
-                        >
+                            @update:modelValue="submit()"
+
+                        > <!-- multiple
+                            use-chips -->
                         <template v-slot:option="scope">
                             <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
                             <q-item-section avatar>
@@ -238,6 +245,7 @@ export default {
                     this.models.push(element.model);
                 }
             });
+            this.submit();
         },
         addFavourite(id) {
             this.$inertia.post('/favourites', {ad_id: id}, {
@@ -267,7 +275,8 @@ export default {
             });
         },
         submit() {
-            his.form.transform((data) => ({
+            console.log("submit");
+            this.form.transform((data) => ({
                 ...data,
                 minprice : data.price.min,
                 maxprice : data.price.max,
@@ -277,8 +286,8 @@ export default {
                 maxkm : data.km.max,
                 minprice : data.price.min,
                 maxprice : data.price.max,
-                minpower : data.power.min,
-                maxpower : data.power.max,
+                minpower_kw : data.power.min,
+                maxpower_kw : data.power.max,
                 mincapacity : data.capacity.min,
                 maxcapacity : data.capacity.max,
                 price: undefined,
@@ -288,7 +297,7 @@ export default {
                 capacity: undefined,
                 model: data.model || undefined,
                 brand: data.brand || undefined,
-
+                color: data.color || undefined,
             })).get('/ads');
         },
     }

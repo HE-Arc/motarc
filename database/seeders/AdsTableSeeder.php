@@ -20,7 +20,7 @@ class AdsTableSeeder extends Seeder
             'price' => 14000,
             'km' => 9850,
             'power_kw' => 104.5,
-            'color_hexa' => 'green',
+            'color' => 'green',
             'model_id' => 6,
             'user_id' => 3,
         ]);
@@ -30,7 +30,7 @@ class AdsTableSeeder extends Seeder
             'price' => 6500,
             'km' => 16800,
             'power_kw' => 35,
-            'color_hexa' => 'white',
+            'color' => 'white',
             'model_id' => 5,
             'user_id' => 1,
         ]);
@@ -40,7 +40,7 @@ class AdsTableSeeder extends Seeder
             'price' => 2200,
             'km' => 11000,
             'power_kw' => 8.2,
-            'color_hexa' => 'black',
+            'color' => 'black',
             'model_id' => 4,
             'user_id' => 2,
         ]);
@@ -50,7 +50,7 @@ class AdsTableSeeder extends Seeder
             'price' => 5000,
             'km' => 18000,
             'power_kw' => 67,
-            'color_hexa' => 'red',
+            'color' => 'red',
             'model_id' => 3,
             'user_id' => 5,
         ]);
@@ -60,7 +60,7 @@ class AdsTableSeeder extends Seeder
             'price' => 6000,
             'km' => 10000,
             'power_kw' => 35,
-            'color_hexa' => 'red',
+            'color' => 'red',
             'model_id' => 1,
             'user_id' => 4,
         ]);
@@ -70,7 +70,7 @@ class AdsTableSeeder extends Seeder
             'price' => 5000,
             'km' => 28000,
             'power_kw' => 35,
-            'color_hexa' => 'white',
+            'color' => 'white',
             'model_id' => 2,
             'user_id' => 4,
         ]);

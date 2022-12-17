@@ -1,9 +1,6 @@
 <template>
     <q-card v-for="ad in ads" :key="ad.id">
         <q-card-section>
-
-            <!--<p>{{favourites}}</p>-->
-
             <img v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
 
             <h3>{{ ad.model.brand + " " + ad.model.model }}</h3>

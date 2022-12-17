@@ -49,7 +49,7 @@ class AdController extends Controller
         }
 
         foreach ($filters as $filter) {
-            if (in_array($filter[0], ['price', 'km', 'power_kw'])) {
+            if (in_array($filter[0], ['price', 'km', 'power_kw', 'color'])) {
                 array_push($filtersAd, $filter);
             } else {
                 array_push($filtersModel, $filter);
