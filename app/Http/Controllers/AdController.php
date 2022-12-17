@@ -25,6 +25,9 @@ class AdController extends Controller
         if (empty($request->all())) {
             $ads = Ad::with(['model', 'user', 'images'])->get();
 
+            // paginate ads
+            $ads = $ads->paginate(20);
+
             return Inertia::render('Ads/Index', [
                 'ads' => $ads,
                 'favourites' => $favourites,
@@ -72,6 +75,9 @@ class AdController extends Controller
             ->where($filters)
             ->get(); */
 
+        // paginate ads
+        $ads = $ads->paginate(20);
+
         return Inertia::render('Ads/Index', [
             'ads' => $ads,
             'favourites' => $favourites,
@@ -98,6 +104,8 @@ class AdController extends Controller
             $ad->model;
             $ad->images;
         }
+
+        $ads = $ads->paginate(20);
 
         return Inertia::render('Ads/MyAds', [
             'ads' => $ads,
