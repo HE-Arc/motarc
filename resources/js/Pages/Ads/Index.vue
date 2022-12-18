@@ -8,7 +8,7 @@
     <!-- Left menu to change parameter -->
     <div class="row">
         <div class="col-3">
-            <q-card>
+            <q-card class="q-pa-sm">
                 <q-card-section>
                     <form @submit.prevent="submit">
                         <!-- Brand dropdown -->
@@ -29,6 +29,7 @@
                             :disable="!form.brand"
                             clearable
                             @update:modelValue="submit()"
+                            class="q-mb-sm"
                         />
                         <!-- Label for price range -->
                         <q-label>Price</q-label>
@@ -42,6 +43,7 @@
                             label-always
                             color="primary"
                             @change="submit()"
+                            class="q-mt-lg"
                         ></q-range>
 
                         <!-- Label for KM -->
@@ -58,6 +60,7 @@
                             color="primary"
                             label-always
                             @change="submit()"
+                            class="q-mt-lg"
                         ></q-range>
                         <!-- Label for year -->
                         <q-label>Year</q-label>
@@ -73,6 +76,7 @@
                             color="primary"
                             label-always
                             @change="submit()"
+                            class="q-mt-lg"
                         ></q-range>
                         <!-- Label for power -->
                         <q-label>Power</q-label>
@@ -88,6 +92,7 @@
                             color="primary"
                             label-always
                             @change="submit()"
+                            class="q-mt-lg"
                         ></q-range>
                         <!-- Label for capacity -->
                         <q-label>Capacity</q-label>
@@ -103,6 +108,7 @@
                             color="primary"
                             label-always
                             @change="submit()"
+                            class="q-mt-lg"
                         ></q-range>
                         <!-- Color dropdown with color oreview -->
                         <q-select
@@ -118,8 +124,7 @@
                             @update:modelValue="submit()"
                             multiple
                             use-chips
-                        > <!-- multiple
-                            use-chips -->
+                        >
                         <template v-slot:option="scope">
                             <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
                             <q-item-section avatar>
@@ -144,36 +149,38 @@
                 </q-card-section>
             </q-card>
         </div>
+
+
+        <div class="col-9">
+        <q-card v-for="ad in ads" :key="ad.id">
+            <q-card-section>
+                <div class="row">
+                    <div class="col-5">
+                        <img v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
+                    </div>
+                    <div class="col-7">
+                        <h3>{{ ad.model.brand + " " + ad.model.model }}</h3>
+
+                        <div class="row">
+                            <q-item-label caption>{{ ad.km }} km | {{ad.model.year}} | {{ad.power_kw}} kw</q-item-label>
+                        </div>
+                            <h4>{{ad.price}} .-</h4>
+                            <Link :href="'/ads/'+ ad.id">
+                                <q-btn class="q-mt-md" color="primary" label="Show">
+                                </q-btn>
+                            </Link>
+
+                            <!-- if ad is in favourite, add button with icon -->
+                            <q-btn v-if="isInFavourites(ad.id)" class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(ad.id)"></q-btn>
+                            <!-- if ad is not in favourite, add button with icon -->
+                            <q-btn v-else class="q-mt-md"  text-color="black" color="white" icon="star_border" flat round @click="addFavourite(ad.id)"></q-btn>
+
+                    </div>
+                </div>
+            </q-card-section>
+        </q-card>
+        </div>
     </div>
-
-
-    <q-card v-for="ad in ads" :key="ad.id">
-        <q-card-section>
-            <img v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
-
-            <h3>{{ ad.model.brand + " " + ad.model.model }}</h3>
-
-            <div class="row-items">
-                <q-item-label caption class="text-weight-bold"> Price </q-item-label>
-                <q-item-label caption>{{ ad.price }}</q-item-label>
-                <q-item-label caption class="text-weight-bold"> KM </q-item-label>
-                <q-item-label caption>{{ ad.km }}</q-item-label>
-                <q-item-label caption class="text-weight-bold"> Year </q-item-label>
-                <q-item-label caption>{{ ad.model.year }}</q-item-label>
-
-                <Link :href="'/ads/'+ ad.id">
-                    <q-btn class="q-mt-md" color="primary" label="Show">
-                    </q-btn>
-                </Link>
-
-
-            <!-- if ad is in favourite, add button with icon -->
-            <q-btn v-if="isInFavourites(ad.id)" class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(ad.id)"></q-btn>
-            <!-- if ad is not in favourite, add button with icon -->
-            <q-btn v-else class="q-mt-md"  text-color="black" color="white" icon="star_border" flat round @click="addFavourite(ad.id)"></q-btn>
-            </div>
-        </q-card-section>
-    </q-card>
 
 </template>
 
