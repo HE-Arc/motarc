@@ -25,18 +25,16 @@ class AdController extends Controller
         if (empty($request->all())) {
             $ads = Ad::with(['model', 'user', 'images'])->get();
 
-            //$ads = $ads->paginate(20);
-
             return Inertia::render('Ads/Index', [
                 'ads' => $ads,
                 'favourites' => $favourites,
                 'bikeModels' => $bikeModels,
             ]);
-            //return inertia('Ads/Index', compact('ads'), compact('favourites'));
         }
 
         $filters = array();
 
+        $filtersColors = array();
         $filtersAd = array();
         $filtersModel = array();
 
@@ -55,8 +53,10 @@ class AdController extends Controller
         }
 
         foreach ($filters as $filter) {
-            if (in_array($filter[0], ['price', 'km', 'power_kw', 'color'])) {
+            if (in_array($filter[0], ['price', 'km', 'power_kw'])) {
                 array_push($filtersAd, $filter);
+            } elseif (in_array($filter[0], ['color'])) {
+                array_push($filtersColors, $filter);
             } else {
                 array_push($filtersModel, $filter);
             }
@@ -64,14 +64,17 @@ class AdController extends Controller
 
         $ads = Ad::query()
             ->with(['user', 'images'])
-            ->withWhereHas('model', function ($query) use ($filtersModel) {
+            ->withWhereHas('model', function ($query) use ($filtersModel, $filtersColors) {
                 $query->where($filtersModel);
-            })
-            ->where($filtersAd)->get();
-        //->paginate(20);
+            })->where($filtersAd)
+            ->where(function ($query) use ($filtersColors) {
+                foreach ($filtersColors as $filter) {
+                    $query->orWhere($filter[0], $filter[1], $filter[2]);
+                }
+            })->get();
 
-        //dd($request->all(), $filters, $filtersAd, $filtersModel, $ads);
-
+        // First attempt with DB. It works but it's not as elegant as the query above. We asked a stackoverflow question about this.
+        // https://stackoverflow.com/questions/74799272/multiple-where-clauses-on-multiple-tables-laravel-without-join
         /* $ads = DB::table('ads') // Ad::where($filters)
             ->join('bike_models', 'ads.model_id', '=', 'bike_models.id')
             ->join('users', 'ads.user_id', '=', 'users.id')
