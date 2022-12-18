@@ -25,8 +25,7 @@ class AdController extends Controller
         if (empty($request->all())) {
             $ads = Ad::with(['model', 'user', 'images'])->get();
 
-            // paginate ads
-            $ads = $ads->paginate(20);
+            //$ads = $ads->paginate(20);
 
             return Inertia::render('Ads/Index', [
                 'ads' => $ads,
@@ -46,6 +45,10 @@ class AdController extends Controller
                 array_push($filters, [substr($name, 3), '>=', $value]);
             } elseif (str_contains($name, "max")) {
                 array_push($filters, [substr($name, 3), '<=', $value]);
+            } elseif (str_contains($name, "color")) {
+                foreach ($value as $color) {
+                    array_push($filters, ['color', '=', $color]);
+                }
             } else {
                 array_push($filters, [$name, '=', $value]);
             }
@@ -64,8 +67,10 @@ class AdController extends Controller
             ->withWhereHas('model', function ($query) use ($filtersModel) {
                 $query->where($filtersModel);
             })
-            ->where($filtersAd)
-            ->get();
+            ->where($filtersAd)->get();
+        //->paginate(20);
+
+        //dd($request->all(), $filters, $filtersAd, $filtersModel, $ads);
 
         /* $ads = DB::table('ads') // Ad::where($filters)
             ->join('bike_models', 'ads.model_id', '=', 'bike_models.id')
@@ -74,9 +79,6 @@ class AdController extends Controller
             ->select('ads.*', 'bike_models.*', 'users.*', 'images.*')
             ->where($filters)
             ->get(); */
-
-        // paginate ads
-        $ads = $ads->paginate(20);
 
         return Inertia::render('Ads/Index', [
             'ads' => $ads,
@@ -105,7 +107,7 @@ class AdController extends Controller
             $ad->images;
         }
 
-        $ads = $ads->paginate(20);
+        // TODO : add pagination
 
         return Inertia::render('Ads/MyAds', [
             'ads' => $ads,

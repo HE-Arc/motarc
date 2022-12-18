@@ -19,7 +19,7 @@ class FavouriteController extends Controller
             $favourite->images;
         }
 
-        $favourites = $favourites->paginate(20);
+        //$favourites = $favourites->paginate(20);
 
         return Inertia::render('Favourites/Index', [
             'favourites' => $favourites,

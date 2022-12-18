@@ -1,7 +1,7 @@
 <template>
 
     <!-- If no results, print error message -->
-    <div v-if="ads.length == 0">
+    <div v-if="ads.length == 0 || ads == null">
         <p>No results corresponding to your research :( </p>
     </div>
 
@@ -116,7 +116,8 @@
                             option-label="label"
                             clearable
                             @update:modelValue="submit()"
-
+                            multiple
+                            use-chips
                         > <!-- multiple
                             use-chips -->
                         <template v-slot:option="scope">
@@ -198,7 +199,7 @@ export default {
                 min: 0,
                 max: 2000,
             }),
-            color: null,
+            color: ref([]),
         })
         return { form }
     },
@@ -275,7 +276,9 @@ export default {
             });
         },
         submit() {
-            console.log("submit");
+            const colorValues = this.form.color.map((color) => color.value);
+            console.log(colorValues);
+
             this.form.transform((data) => ({
                 ...data,
                 minprice : data.price.min,
@@ -297,8 +300,12 @@ export default {
                 capacity: undefined,
                 model: data.model || undefined,
                 brand: data.brand || undefined,
-                color: data.color || undefined,
-            })).get('/ads');
+                color: colorValues || undefined,
+            })).get('/ads', {
+                preserveState: true,
+                preserveScroll: true,
+                only: ['ads'],
+            });
         },
     }
 }
