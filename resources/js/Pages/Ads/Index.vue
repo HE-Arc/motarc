@@ -128,6 +128,17 @@
                             <q-item-section>{{ scope.opt.label }}</q-item-section>
                             </q-item>
                         </template>
+                        <template v-slot:selected-item="scope">
+                            <q-chip
+                             removable
+                             @remove="scope.removeAtIndex(scope.index)"
+                             :tabIndex="scope.tabIndex"
+                             dense
+                            >
+                            <q-icon name="circle" :color="scope.opt.value" />
+                            {{scope.opt.label}}
+                            </q-chip>
+                        </template>
                     </q-select>
                     </form>
                 </q-card-section>
