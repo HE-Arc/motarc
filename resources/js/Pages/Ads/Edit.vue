@@ -2,7 +2,11 @@
     <div class="row justify-center items-center ">
         <div class="col-xs-12 col-md-8 q-mt-xl">
     <q-card class="q-pa-md">
-        <q-card-section class="q-gutter-md">
+        <q-card-section><!--</q-card-section> class="q-gutter-md">-->
+            <Link href="/ads/myads">
+                    <q-btn icon="arrow_back" flat round dense></q-btn>
+            </Link>
+
             <h2>Edit ad</h2>
 
             <form @submit.prevent="submit" enctype="multipart/form-data">
@@ -17,8 +21,10 @@
                         color="primary"
                         label-color="primary"
                         placeholder="9999.90"
+                        :error="isError(form.errors.inputPrice)"
+                        :error-message="form.errors.inputPrice"
                     />
-                    <div v-if="form.errors.inputPrice">{{ form.errors.inputPrice }}</div>
+                    <!--<div v-if="form.errors.inputPrice">{{ form.errors.inputPrice }}</div>-->
 
                     <q-input
                         class="col-grow q-ma-md"
@@ -30,8 +36,10 @@
                         color="primary"
                         label-color="primary"
                         placeholder="12345"
+                        :error="isError(form.errors.km)"
+                        :error-message="form.errors.km"
                     />
-                    <div v-if="form.errors.km">{{ form.errors.km }}</div>
+                    <!--<div v-if="form.errors.km">{{ form.errors.km }}</div>-->
 
                     <q-input
                         type="number"
@@ -44,13 +52,15 @@
                         color="primary"
                         label-color="primary"
                         placeholder="349.9"
+                        :error="isError(form.errors.power_kw)"
+                        :error-message="form.errors.power_kw"
                     />
-                    <div v-if="form.errors.power_kw">{{ form.errors.power_kw }}</div>
+                    <!--<div v-if="form.errors.power_kw">{{ form.errors.power_kw }}</div>-->
                 </div>
 
                 <div class="row">
                     <q-select
-                        v-model="form.color_hexa"
+                        v-model="form.color"
                         class="col-grow q-ma-md"
                         :options="colors"
                         label="Color"
@@ -60,6 +70,8 @@
                         option-value="value"
                         option-label="label"
                         clearable
+                        :error="isError(form.errors.color)"
+                        :error-message="form.errors.color"
                     >
                         <template v-slot:option="scope">
                             <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
@@ -71,9 +83,7 @@
                         </template>
                     </q-select>
 
-                    <div v-if="form.errors.color_hexa">
-                        {{ form.errors.color_hexa }}
-                    </div>
+                    <!--<div v-if="form.errors.color_hexa">{{ form.errors.color_hexa }}</div>-->
 
                     <q-select
                         v-model="form.brand"
@@ -96,11 +106,11 @@
                         color="primary"
                         label-color="primary"
                         :disable="!form.brand"
+                        :error="isError(form.errors.model_id)"
+                        :error-message="form.errors.model_id"
                     />
 
-                    <div v-if="form.errors.model_id">
-                        {{ form.errors.model_id }}
-                    </div>
+                    <!--<div v-if="form.errors.model_id">{{ form.errors.model_id }} </div>-->
                 </div>
 
                 <q-file
@@ -114,8 +124,10 @@
                     filled
                     multiple
                     color="primary" label-color="primary"
+                    :error="isError(form.errors.files)"
+                    :error-message="form.errors.files"
                 />
-                <div v-if="form.errors.files">{{ form.errors.files }}</div>
+                <!--<div v-if="form.errors.files">{{ form.errors.files }}</div>-->
 
                 <q-carousel
                     class="col-grow q-ma-md"
@@ -160,7 +172,10 @@ import { propsToAttrMap } from '@vue/shared'
 export default {
     layout : AppLayout,
     name: 'Edit ad',
-
+    components: {
+        Head,
+        Link,
+    },
     data() {
         return {
             urls: [],  // preview
@@ -200,7 +215,7 @@ export default {
             price: props.ad.price,
             km: props.ad.km,
             power_kw: props.ad.power_kw,
-            color_hexa: props.ad.color_hexa,
+            color: props.ad.color,
             user_id: props.ad.user_id,
             brand: props.ad.model.brand,
             model: props.ad.model.model,
@@ -266,12 +281,15 @@ export default {
                 price: data.price,
                 km: data.km,
                 power_kw: data.power_kw,
-                color_hexa: data.color_hexa.value,
+                color: data.color.value,
                 user_id: data.user_id,
                 model_id: this.getModelIdFromBrandAndModel(this.form.model, this.form.brand),
                 images: data.images,
             }))
             .post("/ads/" + this.$page.props.ad.id + "/update");
+        },
+        isError(field) {
+            return field ? true : false
         },
     },
 }

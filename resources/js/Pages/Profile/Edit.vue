@@ -19,10 +19,10 @@
                             </q-card-section>
 
                             <q-card-section>
-                                <q-input v-model="form.password" type="password" id="password" label="Password" placeholder="Your password" color="primary" label-color="primary" />
-                                <div v-if="form.errors.password" class="text-red-500">{{ form.errors.password }}</div>
-                                <q-input v-model="form.password_confirmation" type="password" id="password" label="Password confirmation" placeholder="Your password" color="primary" label-color="primary" />
-                                <div v-if="form.errors.password_confirmation" class="text-red-500">{{ form.errors.password_confirmation }}</div>
+                                <q-input :error="isErrorField(form.errors.password)" :error-message="form.errors.password" v-model="form.password" type="password" id="password" label="Password" placeholder="Your password" color="primary" label-color="primary" />
+                                <!--<div v-if="form.errors.password" class="text-red-500">{{ form.errors.password }}</div>-->
+                                <q-input :error="isErrorField(form.errors.password_confirmation)" :error-message="form.errors.password_confirmation" v-model="form.password_confirmation" type="password" id="password" label="Password confirmation" placeholder="Your password" color="primary" label-color="primary" />
+                                <!--<div v-if="form.errors.password_confirmation" class="text-red-500">{{ form.errors.password_confirmation }}</div>-->
                             </q-card-section>
 
                             <q-card-actions align="right">
@@ -54,12 +54,12 @@
                 </q-dialog>
 
                 <form @submit.prevent="form.put('/profile')">
-                    <q-input v-model="form.name" type="text" id="name" label="Name" placeholder="Your name" color="primary" label-color="primary" />
-                    <div v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</div>
-                    <q-input class="q-mt-sm" v-model="form.npa" type="number" id="npa" label="NPA" placeholder="Your NPA" color="dprimary" label-color="primary" />
-                    <div v-if="form.errors.npa" class="text-red-500">{{ form.errors.npa }}</div>
-                    <q-input class="q-mt-sm" v-model="form.email" type="email" id="email" label="E-mail" placeholder="Your e-mail adress" color="primary" label-color="primary" />
-                    <div v-if="form.errors.email" class="text-red-500">{{ form.errors.email }}</div>
+                    <q-input :error="isErrorField(form.errors.name)" :error-message="form.errors.name" v-model="form.name" type="text" id="name" label="Name" placeholder="Your name" color="primary" label-color="primary" />
+                    <!--<div v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</div>-->
+                    <q-input :error="isErrorField(form.errors.npa)" :error-message="form.errors.npa" class="q-mt-sm" v-model="form.npa" type="number" id="npa" label="NPA" placeholder="Your NPA" color="dprimary" label-color="primary" />
+                    <!--<div v-if="form.errors.npa" class="text-red-500">{{ form.errors.npa }}</div>-->
+                    <q-input :error="isErrorField(form.errors.email)" :error-message="form.errors.email" class="q-mt-sm" v-model="form.email" type="email" id="email" label="E-mail" placeholder="Your e-mail adress" color="primary" label-color="primary" />
+                    <!--<div v-if="form.errors.email" class="text-red-500">{{ form.errors.email }}</div>-->
 
                     <!-- Button to update passwork with lock icon -->
                     <div class="col">
@@ -104,6 +104,11 @@ export default {
 
         return { form, showPasswordPopup, showDeletePopup }
     },
+    methods: {
+        isErrorField(field){
+            return field ? true : false
+        }
+    }
 }
 
 </script>

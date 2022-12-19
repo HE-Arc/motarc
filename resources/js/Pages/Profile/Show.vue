@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-10">
                 <div class="row q-ma-sm q-mb-md">
                     <q-item-label caption>{{ user.name }}</q-item-label>
                 </div>
