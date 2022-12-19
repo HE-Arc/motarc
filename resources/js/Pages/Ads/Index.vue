@@ -151,12 +151,10 @@
                 <p>No results corresponding to your research :( </p>
             </div>
 
-            <div class="col-9">
-            <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">
-                <q-card-section horizontal>
-                    <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
-                    <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
-                    <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
+        <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">
+            <q-card-section horizontal>
+                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
+                <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
 
             <q-card-section>
                     <div class="col-8">
@@ -170,26 +168,26 @@
                             <p class="text-grey-8 ">{{ ad.power_kw }} kw </p>
                         </div>
 
-                    <h4  class="q-my-sm">{{ad.price}} .-</h4>
-                    <Link :href="'/ads/'+ ad.id">
-                        <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
-                    </Link>
+                        <h4  class="q-my-sm">{{ad.price}} .-</h4>
+                        <Link :href="'/ads/'+ ad.id">
+                            <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
+                        </Link>
 
-                        </div>
-                </q-card-section>
-            </q-card>
-        </div>
+                            <!-- if ad is in favourite, add button with icon -->
+                            <q-btn v-if="isInFavourites(ad.id)" class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(ad.id)"></q-btn>
+                            <!-- if ad is not in favourite, add button with icon -->
+                            <q-btn v-else class="q-mt-md"  text-color="black" color="white" icon="star_border" flat round @click="addFavourite(ad.id)"></q-btn>
 
                     </div>
             </q-card-section>
         </q-card-section>
         </q-card>
-    </div>
 
         <div class="q-pa-lg flex flex-center">
             <!-- <q-pagination v-model="current" :max="max" input /> -->
-
             <Pagination class="mt-6" :links="ads.links" :params="params" />
+        </div>
+
         </div>
     </div>
 </template>
