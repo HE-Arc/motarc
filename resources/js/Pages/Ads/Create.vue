@@ -1,4 +1,6 @@
 <template>
+        <div class="row justify-center items-center ">
+        <div class="col-xs-12 col-md-8 q-mt-xl">
     <q-card class="q-pa-md">
         <q-card-section class="q-gutter-md">
             <h2>Create ad</h2>
@@ -145,6 +147,8 @@
             </form>
         </q-card-section>
     </q-card>
+</div>
+</div>
 </template>
 
 <script>
