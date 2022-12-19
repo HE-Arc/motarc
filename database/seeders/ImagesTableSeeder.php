@@ -29,6 +29,7 @@ class ImagesTableSeeder extends Seeder
             ['image_url' => 'jeanne7.jpeg', 'ad_id' => 6],
             ['image_url' => 'titus1.jpg', 'ad_id' => 2],
             ['image_url' => 'jonas1.jpg', 'ad_id' => 4],
+            ['image_url' => 'moto_base.png', 'ad_id' => 3],
         ];
 
         foreach ($images as $image) {

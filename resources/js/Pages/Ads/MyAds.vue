@@ -1,30 +1,41 @@
 <template>
-    <h2>My ads</h2>
+<div class="row justify-center items-center">
+    <div class="col-6 ">
+        <h2>My ads</h2>
 
-    <!-- If no ads, print message -->
-    <div v-if="ads.length === 0">
-        <p>You have no ads yet :(</p>
-    </div>
+        <!-- If no ads, print message -->
+        <div v-if="ads.length === 0">
+            <p>You have no ads yet :(</p>
+        </div>
 
-    <q-card v-for="ad in ads" :key="ad.id">
-        <q-card-section>
-            <img v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
+        <q-card v-for="ad in ads" :key="ad.id">
+            <q-card-section>
+                <div class="row">
+                <div class="col-6">
+                <img v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
+                </div>
+                <div class="col-6">
+                <h3>{{ ad.model.brand + " " + ad.model.model }}</h3>
 
-            <h3>{{ ad.model.brand + " " + ad.model.model }}</h3>
+                <!--<div class="row-items">-->
+                <div class="row">
+                    <q-item-label caption class="text-weight-bold"> KM </q-item-label>
+                    <q-item-label caption>{{ ad.km }}</q-item-label>
+                    <q-item-label caption class="text-weight-bold"> Year </q-item-label>
+                    <q-item-label caption>{{ ad.model.year }}</q-item-label>
+                </div>
 
-            <div class="row-items">
-                <q-item-label caption class="text-weight-bold"> Price </q-item-label>
-                <q-item-label caption>{{ ad.price }}</q-item-label>
-                <q-item-label caption class="text-weight-bold"> KM </q-item-label>
-                <q-item-label caption>{{ ad.km }}</q-item-label>
-                <q-item-label caption class="text-weight-bold"> Year </q-item-label>
-                <q-item-label caption>{{ ad.model.year }}</q-item-label>
+                <h4>{{ad.price}}.-</h4>
 
-            <!-- Button modify -->
-            <q-btn class="q-mt-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
+                <!-- Button modify -->
+                    <q-btn class="q-mt-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
+                <!--</div>-->
+                </div>
             </div>
-        </q-card-section>
-    </q-card>
+            </q-card-section>
+        </q-card>
+    </div>
+</div>
 </template>
 
 <script>
