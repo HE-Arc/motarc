@@ -173,15 +173,16 @@
                             <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
                         </Link>
 
-                            <!-- if ad is in favourite, add button with icon -->
-                            <q-btn v-if="isInFavourites(ad.id)" class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(ad.id)"></q-btn>
-                            <!-- if ad is not in favourite, add button with icon -->
-                            <q-btn v-else class="q-mt-md"  text-color="black" color="white" icon="star_border" flat round @click="addFavourite(ad.id)"></q-btn>
+                        <!-- if ad is in favourite, add button with icon -->
+                        <q-btn v-if="isInFavourites(ad.id)" class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(ad.id)"></q-btn>
+                        <!-- if ad is not in favourite, add button with icon -->
+                        <q-btn v-else class="q-mt-md"  text-color="black" color="white" icon="star_border" flat round @click="addFavourite(ad.id)"></q-btn>
 
                     </div>
             </q-card-section>
         </q-card-section>
         </q-card>
+    </div>
 
         <div class="q-pa-lg flex flex-center">
             <!-- <q-pagination v-model="current" :max="max" input /> -->
