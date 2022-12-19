@@ -1,5 +1,7 @@
 <template>
-    <q-card>
+    <div class="row justify-center items-center ">
+        <div class="col-xs-12 col-md-6 q-mt-xl">
+    <q-card class="q-px-md">
         <q-card-section>
             <div class="column">
                 <h3>Register</h3>
@@ -16,10 +18,12 @@
                     <div class="alert alert-danger" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }} </div>
                     <q-btn type="submit" :disabled="form.processing" no-caps color="primary" label="Register" />
                 </form>
-                <p class="text-blue-grey-4">Have an account ? <Link id="login-link" href="/login">Login</Link></p>
+                <p class="text-blue-grey-4 q-mt-md">Have an account ? <Link id="login-link" href="/login">Login</Link></p>
             </div>
         </q-card-section>
     </q-card>
+    </div>
+    </div>
 </template>
 <script>
 
