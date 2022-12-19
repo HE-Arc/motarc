@@ -32,7 +32,7 @@
                     v-model="form.price"
                     suffix="CHF"
                     :min="0"
-                    :max="10000"
+                    :max="50000"
                     :step="100"
                     label-always
                     color="primary"
@@ -66,6 +66,7 @@
                     :step="1"
                     color="primary"
                     label-always
+                    class="q-mt-lg"
                 />
                 <!-- Button submit -->
                 <q-btn
@@ -102,16 +103,16 @@ export default {
             brand: null,
             model: null,
             price: ref({
-                min: 2000,
-                max: 5000
+                min: 0,
+                max: 50000
             }),
             year: ref({
-                min: 2018,
-                max: 2022
+                min: 1900,
+                max: 2023
             }),
             km: ref({
                 min: 0,
-                max: 20000,
+                max: 200000,
             })
         })
 
