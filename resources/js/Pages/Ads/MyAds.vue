@@ -45,7 +45,7 @@
         </q-card>
 
         <div class="q-pa-lg flex flex-center">
-            <q-pagination v-model="current" :max="max" input />
+            <q-pagination v-model="ads.current_page" :max="ads.last_page" input @input="changePage($event)" @change="changePage($event)" @update="changePage($event)" />
         </div>
     </div>
 </div>
@@ -77,11 +77,9 @@ export default {
             console.log(id)
             this.$inertia.get('/ads/' + id + '/edit');
         },
-    },
-    data() {
-        return {
-            current: 1,
-            max: 5,
+        changePage($event) {
+            console.log($event)
+            //this.$inertia.get('/ads/myads?page=' + this.ads.current_page);
         }
     },
 }
