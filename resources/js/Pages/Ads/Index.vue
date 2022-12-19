@@ -152,10 +152,11 @@
             </div>
 
             <div class="col-9">
-                <q-card v-for="ad in ads.data" :key="ad.id">
-                    <q-card-section>
-                        <div class="col-8">
-                        <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
+            <q-card v-for="ad in ads" :key="ad.id" class="q-my-md">
+                <q-card-section horizontal>
+                    <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
+                    <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
+                    <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
 
             <q-card-section>
                     <div class="col-8">
@@ -169,10 +170,10 @@
                             <p class="text-grey-8 ">{{ ad.power_kw }} kw </p>
                         </div>
 
-                        <h4  class="q-my-sm">{{ad.price}} .-</h4>
-                        <Link :href="'/ads/'+ ad.id">
-                            <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
-                        </Link>
+                    <h4  class="q-my-sm">{{ad.price}} .-</h4>
+                    <Link :href="'/ads/'+ ad.id">
+                        <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
+                    </Link>
 
                         </div>
                 </q-card-section>
@@ -200,7 +201,6 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { usePage } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination.vue'
-import { usePage } from '@inertiajs/inertia-vue3';
 
 export default {
     layout : AppLayout,
@@ -347,7 +347,7 @@ export default {
 
         updateParams()
         {
-            this.params = window.location.search; // .substring(1, window.location.search.length - 1)
+            this.params = window.location.search;
 
             // If the string contains 'page'
             if (this.params.includes('page')) {
@@ -361,8 +361,6 @@ export default {
             if (this.params.startsWith('?')) {
                 this.params = this.params.substring(1, this.params.length);
             }
-
-            console.log(this.params);
         }
     }
 }
