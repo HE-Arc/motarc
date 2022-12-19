@@ -152,7 +152,7 @@
             </div>
 
             <div class="col-9">
-            <q-card v-for="ad in ads" :key="ad.id" class="q-my-md">
+            <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">
                 <q-card-section horizontal>
                     <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
                     <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
@@ -205,7 +205,10 @@ import Pagination from '../../Components/Pagination.vue'
 export default {
     layout : AppLayout,
     name: 'Index ad',
-    setup(){
+    setup(props){
+        console.log("test");
+        console.log(props.ads);
+
         const form = useForm({
             brand: null,
             model: null,
@@ -291,7 +294,6 @@ export default {
         removeFavourite(id) {
             for(let i = 0; i < this.favourites.length; i++) {
                 if(this.favourites[i].id == id) {
-                    console.log(this.favourites[i].pivot.id)
                     this.deleteFavourite(this.favourites[i].pivot.id);
                 }
             }
