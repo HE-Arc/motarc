@@ -23,7 +23,7 @@ class AdController extends Controller
         }
 
         if (empty($request->all())) {
-            $ads = Ad::with(['model', 'user', 'images'])->get();
+            $ads = Ad::with(['model', 'user', 'images'])->paginate(4);
 
             return Inertia::render('Ads/Index', [
                 'ads' => $ads,
@@ -47,7 +47,7 @@ class AdController extends Controller
                 foreach ($value as $color) {
                     array_push($filters, ['color', '=', $color]);
                 }
-            } else {
+            } elseif (!str_contains($name, "page")) {
                 array_push($filters, [$name, '=', $value]);
             }
         }
@@ -71,7 +71,7 @@ class AdController extends Controller
                 foreach ($filtersColors as $filter) {
                     $query->orWhere($filter[0], $filter[1], $filter[2]);
                 }
-            })->get();
+            })->paginate(4);
 
         // First attempt with DB. It works but it's not as elegant as the query above. We asked a stackoverflow question about this.
         // https://stackoverflow.com/questions/74799272/multiple-where-clauses-on-multiple-tables-laravel-without-join
@@ -126,8 +126,6 @@ class AdController extends Controller
             'models' => $models,
             'user' => $user,
         ]);
-
-        //return view('ads.create', compact("models"), compact("user"));
     }
 
     public function store(Request $request)
@@ -146,7 +144,7 @@ class AdController extends Controller
         $ad->price = $request->price;
         $ad->km = $request->km;
         $ad->power_kw = $request->power_kw;
-        $ad->color_hexa = $request->color_hexa;
+        $ad->color = $request->color_hexa;
         $ad->model_id = $request->model_id;
         $ad->user_id = $request->user_id;
         $ad->save();
@@ -183,10 +181,6 @@ class AdController extends Controller
 
         // redirect where the user came from with inertia
         return redirect()->back()->with('success', 'Ad deleted successfully');
-
-        /* return redirect()
-            ->route("ads.index")
-            ->with("success", "Ad deleted successfully"); */
     }
 
     public function edit($id)
@@ -245,7 +239,6 @@ class AdController extends Controller
         }
 
         // redirect where the user came from with inertia
-        // return redirect()->back()->with('success', 'Ad updated successfully');
         return redirect()->route('ads.show', $id)->with('success', 'Ad updated successfully');
     }
 }

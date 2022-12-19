@@ -56,10 +56,16 @@ import { reactive } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 import { Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import Pagination from '../../Components/Pagination.vue'
 
 export default {
     layout : AppLayout,
     name: 'My ads',
+
+    components: {
+        Pagination,
+    },
+
     props: {
         ads: Object,
     },

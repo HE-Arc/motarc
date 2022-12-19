@@ -10,7 +10,7 @@ class Ad extends Model
     use HasFactory;
 
     protected $fillable = [
-        'price', 'km', 'power_kw', 'color_hexa', 'model_id', 'user_id'
+        'price', 'km', 'power_kw', 'color', 'model_id', 'user_id'
     ];
 
     public function user()

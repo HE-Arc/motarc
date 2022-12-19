@@ -184,7 +184,8 @@
         </q-card>
 
         <div class="q-pa-lg flex flex-center">
-            <q-pagination v-model="current" :max="max" input />
+            <!-- <q-pagination v-model="current" :max="max" input /> -->
+            <Pagination class="mt-6" :links="ads.links" />
         </div>
 
         </div>
@@ -197,6 +198,7 @@ import { Link } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { usePage } from '@inertiajs/inertia-vue3';
+import Pagination from '../../Components/Pagination.vue'
 
 export default {
     layout : AppLayout,
@@ -236,8 +238,11 @@ export default {
     },
     components: {
         Link,
+        Pagination
     },
     mounted() {
+        console.log(this.$page.props.ads);
+
         this.bikeModels.forEach(element => {
             if (!this.brands.includes(element.brand)){
                 this.brands.push(element.brand);
