@@ -1,7 +1,11 @@
 <template>
     <!-- form in a q-card -->
+    <div class="row justify-center items-center ">
+        <div class="col-xs-12 col-md-6 q-mt-xl">
     <q-card>
         <q-card-section>
+            <div class="q-px-md">
+            <h4>Find your dream bike</h4>
             <form @submit.prevent="submit">
                 <!-- brand drop down -->
                 <q-select
@@ -18,6 +22,7 @@
                     label="Model"
                     filled
                     :disable="!form.brand"
+                    class="q-mb-sm"
                 />
 
                 <!-- Label abow price range -->
@@ -31,6 +36,7 @@
                     :step="100"
                     label-always
                     color="primary"
+                    class="q-mt-lg"
                 >
                 </q-range>
 
@@ -46,6 +52,7 @@
                     :step="1000"
                     color="primary"
                     label-always
+                    class="q-mt-lg"
                 />
                 <!-- Year range -->
                 <q-label>Year</q-label>
@@ -66,15 +73,19 @@
                     type="submit"
                     color="primary"
                     @click="submit"
+                    class="q-my-md"
                 />
             </form>
 
             <!-- Advanced search link -->
-            <Link href="/ads" id="adv-search" >
+            <p class="text-blue-grey-4">Want more parameters ? <Link href="/ads" id="adv-search">
                 Advanced search
-            </Link>
+            </Link></p>
+        </div>
         </q-card-section>
     </q-card>
+        </div>
+    </div>
 </template>
 
 <script>
