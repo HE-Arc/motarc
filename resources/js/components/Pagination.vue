@@ -1,6 +1,6 @@
 <template>
     <div v-if="links.length > 3">
-        <div v-for="link in links">
+        <template v-for="link in links">
             <Link
                 v-if="link.url === null"
                 disable
@@ -12,7 +12,7 @@
             >
                 <q-btn class="q-mt-md" color="primary" v-html="link.label" />
             </Link>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -29,11 +29,5 @@ export default {
     {
         Link
     },
-
-    created() {
-        console.log(this.links);
-        console.log(this.params);
-        // console.log(this.$route.query);
-    }
 }
 </script>
