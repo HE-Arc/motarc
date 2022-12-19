@@ -29,6 +29,7 @@ class AdController extends Controller
                 'ads' => $ads,
                 'favourites' => $favourites,
                 'bikeModels' => $bikeModels,
+                'params' => '',
             ]);
         }
 
@@ -83,10 +84,19 @@ class AdController extends Controller
             ->where($filters)
             ->get(); */
 
+        // Create string from params
+        $params = '';
+        foreach ($request->all() as $name => $value) {
+            if (!str_contains($name, "page")) {
+                $params .= $name . '=' . $value . '&';
+            }
+        }
+
         return Inertia::render('Ads/Index', [
             'ads' => $ads,
             'favourites' => $favourites,
             'bikeModels' => $bikeModels,
+            "params" => $params,
         ]);
     }
 
