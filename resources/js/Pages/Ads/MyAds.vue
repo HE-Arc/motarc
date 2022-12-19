@@ -1,6 +1,9 @@
 <template>
 <div class="row justify-center items-center">
     <div class="col-7">
+
+        <p>{{ads}}</p>
+
         <h2>My ads</h2>
 
         <!-- If no ads, print message -->
@@ -8,7 +11,7 @@
             <p>You have no ads yet :(</p>
         </div>
 
-        <q-card v-for="ad in ads" :key="ad.id" class="q-my-sm">
+        <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-sm">
             <q-card-section horizontal>
                 <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" />
                 <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
@@ -67,7 +70,7 @@ export default {
     },
 
     props: {
-        ads: Object,
+        ads: Array,
     },
     methods: {
         modifyAd(id) {

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 
 class AdController extends Controller
 {
@@ -112,15 +114,16 @@ class AdController extends Controller
     public function myAds()
     {
         // get ads of current user
-        $ads = auth()->user()->ads;
+        //$ads = auth()->user()->ads;
 
-        foreach ($ads as $ad) {
-            $ad->user;
-            $ad->model;
-            $ad->images;
-        }
+        // with pagination
+        $user = User::findOrFail(auth()->user()->id);
+        $ads = $user->ads()->with(['model', 'images'])->paginate(1);
 
-        // TODO : add pagination
+        // convert pagination to json
+        $ads = json_decode($ads->toJson());
+
+        //dd($ads);
 
         return Inertia::render('Ads/MyAds', [
             'ads' => $ads,
