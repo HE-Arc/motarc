@@ -39,6 +39,11 @@
 
         </q-card-section>
     </q-card>
+
+    <div class="q-pa-lg flex flex-center">
+        <q-pagination v-model="current" :max="max" input />
+    </div>
+
     </div>
 </div>
 </template>
@@ -71,7 +76,13 @@ export default {
                 }
             }
         },
-    }
+    },
+    data() {
+        return {
+            current: 1,
+            max: 5,
+        }
+    },
 }
 
 </script>

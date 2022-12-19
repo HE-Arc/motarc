@@ -182,6 +182,11 @@
             </q-card-section>
         </q-card-section>
         </q-card>
+
+        <div class="q-pa-lg flex flex-center">
+            <q-pagination v-model="current" :max="max" input />
+        </div>
+
         </div>
     </div>
 </template>
@@ -191,6 +196,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/inertia-vue3';
 
 export default {
     layout : AppLayout,
@@ -240,6 +246,8 @@ export default {
     },
     data() {
         return {
+            current: ref(1),
+            max: ref(5),
             brands: [],
             models: [],
             colors: [
