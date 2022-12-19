@@ -241,7 +241,7 @@ export default {
         Pagination
     },
     mounted() {
-        console.log(this.$page.props.ads);
+        this.updateParams();
 
         this.bikeModels.forEach(element => {
             if (!this.brands.includes(element.brand)){
@@ -268,6 +268,7 @@ export default {
                 { label: 'Black', value: 'black' },
                 { label: 'White', value: 'white' },
             ],
+            params: [],
         }
     },
     methods: {
@@ -310,7 +311,8 @@ export default {
         },
         submit() {
             const colorValues = this.form.color.map((color) => color.value);
-            console.log(colorValues);
+
+            this.updateParams();
 
             this.form.transform((data) => ({
                 ...data,
@@ -340,6 +342,26 @@ export default {
                 only: ['ads'],
             });
         },
+
+        updateParams()
+        {
+            this.params = window.location.search; // .substring(1, window.location.search.length - 1)
+
+            // If the string contains 'page'
+            if (this.params.includes('page')) {
+                // Get the index of the first &
+                let index = this.params.indexOf('&');
+
+                this.params = this.params.substring(index + 1, this.params.length);
+            }
+
+            // If the string start with a '?', remove it
+            if (this.params.startsWith('?')) {
+                this.params = this.params.substring(1, this.params.length);
+            }
+
+            console.log(this.params);
+        }
     }
 }
 </script>
