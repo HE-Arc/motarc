@@ -151,10 +151,11 @@
                 <p>No results corresponding to your research :( </p>
             </div>
 
-        <q-card v-for="ad in ads" :key="ad.id" class="q-my-md">
-            <q-card-section horizontal>
-                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
-                <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
+            <div class="col-9">
+                <q-card v-for="ad in ads.data" :key="ad.id">
+                    <q-card-section>
+                        <div class="col-8">
+                        <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
 
             <q-card-section>
                     <div class="col-8">
@@ -173,10 +174,10 @@
                             <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
                         </Link>
 
-                        <!-- if ad is in favourite, add button with icon -->
-                        <q-btn v-if="isInFavourites(ad.id)" class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(ad.id)"></q-btn>
-                        <!-- if ad is not in favourite, add button with icon -->
-                        <q-btn v-else class="q-mt-md"  text-color="black" color="white" icon="star_border" flat round @click="addFavourite(ad.id)"></q-btn>
+                        </div>
+                </q-card-section>
+            </q-card>
+        </div>
 
                     </div>
             </q-card-section>
@@ -186,9 +187,8 @@
 
         <div class="q-pa-lg flex flex-center">
             <!-- <q-pagination v-model="current" :max="max" input /> -->
-            <Pagination class="mt-6" :links="ads.links" />
-        </div>
 
+            <Pagination class="mt-6" :links="ads.links" :params="params" />
         </div>
     </div>
 </template>
@@ -200,6 +200,7 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { usePage } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination.vue'
+import { usePage } from '@inertiajs/inertia-vue3';
 
 export default {
     layout : AppLayout,
