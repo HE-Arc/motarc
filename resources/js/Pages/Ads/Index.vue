@@ -1,10 +1,4 @@
 <template>
-
-    <!-- If no results, print error message -->
-    <div v-if="ads.length == 0 || ads == null">
-        <p>No results corresponding to your research :( </p>
-    </div>
-
     <!-- Left menu to change parameter -->
     <div class="row">
         <div class="col-3">
@@ -150,25 +144,34 @@
             </q-card>
         </div>
 
+        <div class="col-8 q-mx-xl">
 
-        <div class="col-9">
-        <q-card v-for="ad in ads" :key="ad.id">
+            <!-- If no results, print error message -->
+            <div v-if="ads.length == 0 || ads == null">
+                <p>No results corresponding to your research :( </p>
+            </div>
+
+        <q-card v-for="ad in ads" :key="ad.id" class="q-my-md">
+            <q-card-section horizontal>
+                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
+                <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
+
             <q-card-section>
-                <div class="row">
-                    <div class="col-5">
-                        <img v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
-                    </div>
-                    <div class="col-7">
-                        <h3>{{ ad.model.brand + " " + ad.model.model }}</h3>
+                    <div class="col-8">
+                        <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
 
-                        <div class="row">
-                            <q-item-label caption>{{ ad.km }} km | {{ad.model.year}} | {{ad.power_kw}} kw</q-item-label>
+                        <div class="row q-my-sm">
+                            <p class="text-grey-8 q-mr-md">{{ ad.km }} km </p>
+                            <q-icon color="grey-8" name="event" />
+                            <p class="text-grey-8 q-mr-md"> {{ ad.model.year }} </p>
+                            <q-icon color="grey-8" name="bolt"></q-icon>
+                            <p class="text-grey-8 ">{{ ad.power_kw }} kw </p>
                         </div>
-                            <h4>{{ad.price}} .-</h4>
-                            <Link :href="'/ads/'+ ad.id">
-                                <q-btn class="q-mt-md" color="primary" label="Show">
-                                </q-btn>
-                            </Link>
+
+                        <h4  class="q-my-sm">{{ad.price}} .-</h4>
+                        <Link :href="'/ads/'+ ad.id">
+                            <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
+                        </Link>
 
                             <!-- if ad is in favourite, add button with icon -->
                             <q-btn v-if="isInFavourites(ad.id)" class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(ad.id)"></q-btn>
@@ -176,12 +179,11 @@
                             <q-btn v-else class="q-mt-md"  text-color="black" color="white" icon="star_border" flat round @click="addFavourite(ad.id)"></q-btn>
 
                     </div>
-                </div>
             </q-card-section>
+        </q-card-section>
         </q-card>
         </div>
     </div>
-
 </template>
 
 <script>

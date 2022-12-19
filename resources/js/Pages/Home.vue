@@ -2,7 +2,7 @@
     <!-- form in a q-card -->
     <div class="row justify-center items-center ">
         <div class="col-xs-12 col-md-6 q-mt-xl">
-    <q-card>
+        <q-card>
         <q-card-section>
             <div class="q-px-md">
             <h4>Find your dream bike</h4>
