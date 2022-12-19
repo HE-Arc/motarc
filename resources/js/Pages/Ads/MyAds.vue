@@ -1,9 +1,6 @@
 <template>
 <div class="row justify-center items-center">
     <div class="col-7">
-
-        <p>{{ads}}</p>
-
         <h2>My ads</h2>
 
         <!-- If no ads, print message -->
@@ -45,7 +42,7 @@
         </q-card>
 
         <div class="q-pa-lg flex flex-center">
-            <q-pagination v-model="ads.current_page" :max="ads.last_page" input @input="changePage($event)" @change="changePage($event)" @update="changePage($event)" />
+            <q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />
         </div>
     </div>
 </div>
@@ -55,7 +52,7 @@
 
 import { Head } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 import { Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
@@ -72,16 +69,25 @@ export default {
     props: {
         ads: Array,
     },
+    data() {
+        return {
+            current : this.ads.current_page,
+        }
+    },
     methods: {
         modifyAd(id) {
             console.log(id)
             this.$inertia.get('/ads/' + id + '/edit');
         },
-        changePage($event) {
-            console.log($event)
-            //this.$inertia.get('/ads/myads?page=' + this.ads.current_page);
-        }
     },
+    // tigger on pagination change
+    watch: {
+        current : function (val) {
+            console.log('watch')
+            console.log(val)
+            this.$inertia.get('/ads/myads?page=' + val);
+        }
+    }
 }
 
 </script>
