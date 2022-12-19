@@ -150,6 +150,7 @@
             <div v-if="ads.length == 0 || ads == null">
                 <p>No results corresponding to your research :( </p>
             </div>
+            <div v-else>
 
         <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">
             <q-card-section horizontal>
@@ -185,8 +186,9 @@
 
         <div class="q-pa-lg flex flex-center">
             <!-- <q-pagination v-model="current" :max="max" input /> -->
-            <Pagination class="mt-6" :links="ads.links" :params="params" />
+            <q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />
         </div>
+    </div>
 
         </div>
     </div>
@@ -272,6 +274,7 @@ export default {
                 { label: 'White', value: 'white' },
             ],
             params: [],
+            current: this.ads.current_page,
         }
     },
     methods: {
@@ -361,6 +364,11 @@ export default {
             if (this.params.startsWith('?')) {
                 this.params = this.params.substring(1, this.params.length);
             }
+        }
+    },
+    watch: {
+        current: function (val) {
+            this.$inertia.get('/ads?page=' + val + '&' + this.params);
         }
     }
 }
