@@ -10,8 +10,11 @@
 
         <q-card v-for="ad in ads" :key="ad.id" class="q-my-sm">
             <q-card-section horizontal>
-                <img  v-if="ad.images[0] !== undefined" fit="fill" class="col-5" :src="'/storage/images/' + ad.images[0].image_url" />
-                <img v-else class="col-4" fit="fill" src="/storage/images/moto_base.png" />
+                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" />
+                <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
+
+                <!-- Image keeping ratio -->
+                <!-- <img v-if="ad.images[0] !== undefined" fit="contain" class="col-5" :src="'/storage/images/' + ad.images[0].image_url" />-->
 
                 <q-card-section>
                 <div class="col-8">
@@ -19,7 +22,7 @@
                     <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
 
                 <!--<div class="row-items">-->
-                    <div class="row q-my-sm">
+                    <div class="row q-my-md">
                         <!-- Grey text -->
                         <p class="text-grey-8 q-mr-md">{{ ad.km }} km </p>
                         <q-icon color="grey-8" name="event" />
