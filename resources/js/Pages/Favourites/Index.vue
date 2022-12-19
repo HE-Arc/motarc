@@ -3,11 +3,12 @@
     <div class="col-7">
     <h2>My favourites</h2>
 
-    <div v-if="favourites.length==0">
+    <div v-if="favourites.data.length==0">
         <p>You have no favourites yet</p>
     </div>
+    <div v-else>
 
-    <q-card v-for="fav in favourites" :key="fav.id" class="q-my-md">
+    <q-card v-for="fav in favourites.data" :key="fav.id" class="q-my-md">
         <q-card-section horizontal>
 
             <img class="col-4" fit="cover" v-if="fav.images[0] !== undefined" :src="'/storage/images/' + fav.images[0].image_url" />
@@ -41,10 +42,11 @@
     </q-card>
 
     <div class="q-pa-lg flex flex-center">
-        <q-pagination v-model="current" :max="max" input />
+        <q-pagination v-model="current" direction-links boundary-links :max="favourites.last_page" />
     </div>
 
     </div>
+</div>
 </div>
 </template>
 
@@ -67,10 +69,10 @@ export default {
     },
     methods: {
         removeFavourite(id) {
-            for(let i = 0; i < this.favourites.length; i++) {
-                if(this.favourites[i].id == id) {
-                    console.log(this.favourites[i].pivot.id)
-                    this.$inertia.delete('/favourites/' + this.favourites[i].pivot.id, {
+            for(let i = 0; i < this.favourites.data.length; i++) {
+                if(this.favourites.data[i].id == id) {
+                    console.log(this.favourites.data[i].pivot.id)
+                    this.$inertia.delete('/favourites/' + this.favourites.data[i].pivot.id, {
                         preserveScroll: true,
                     });
                 }
@@ -79,10 +81,14 @@ export default {
     },
     data() {
         return {
-            current: 1,
-            max: 5,
+            current: this.favourites.current_page,
         }
     },
+    watch: {
+        current: function (val) {
+            this.$inertia.get('/favourites?page=' + val);
+        }
+    }
 }
 
 </script>

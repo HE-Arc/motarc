@@ -4,9 +4,10 @@
         <h2>My ads</h2>
 
         <!-- If no ads, print message -->
-        <div v-if="ads.length === 0">
+        <div v-if="ads.data.length === 0">
             <p>You have no ads yet :(</p>
         </div>
+        <div v-else>
 
         <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-sm">
             <q-card-section horizontal>
@@ -44,6 +45,7 @@
         <div class="q-pa-lg flex flex-center">
             <q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />
         </div>
+    </div>
     </div>
 </div>
 </template>

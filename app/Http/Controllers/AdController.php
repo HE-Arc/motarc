@@ -25,7 +25,7 @@ class AdController extends Controller
         }
 
         if (empty($request->all())) {
-            $ads = Ad::with(['model', 'user', 'images'])->paginate(4);
+            $ads = Ad::with(['model', 'user', 'images'])->paginate(3);
 
             return Inertia::render('Ads/Index', [
                 'ads' => $ads,
@@ -74,7 +74,7 @@ class AdController extends Controller
                 foreach ($filtersColors as $filter) {
                     $query->orWhere($filter[0], $filter[1], $filter[2]);
                 }
-            })->paginate(4);
+            })->paginate(3);
 
         // First attempt with DB. It works but it's not as elegant as the query above. We asked a stackoverflow question about this.
         // https://stackoverflow.com/questions/74799272/multiple-where-clauses-on-multiple-tables-laravel-without-join
@@ -122,8 +122,6 @@ class AdController extends Controller
 
         // convert pagination to json
         $ads = json_decode($ads->toJson());
-
-        //dd($ads);
 
         return Inertia::render('Ads/MyAds', [
             'ads' => $ads,

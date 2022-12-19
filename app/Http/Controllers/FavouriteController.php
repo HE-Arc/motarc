@@ -5,26 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AdUser;
 use Inertia\Inertia;
+use App\Models\User;
 
 class FavouriteController extends Controller
 {
     public function index()
     {
-        $favourites = auth()->user()->favourites;
+        $user = User::findOrFail(auth()->user()->id);
+        $favourites = $user->favourites()->with(['user', 'model', 'images'])->paginate(2);
 
-        // get user and model data for each ad
-        foreach ($favourites as $favourite) {
-            $favourite->user;
-            $favourite->model;
-            $favourite->images;
-        }
-
-        //$favourites = $favourites->paginate(20);
+        $favourites = json_decode($favourites->toJson());
 
         return Inertia::render('Favourites/Index', [
             'favourites' => $favourites,
         ]);
-        //return view('favourites.index', compact('favourites'));
     }
 
     public function store(Request $request)
