@@ -1,11 +1,24 @@
 <template>
 <div class="row justify-center items-center">
-    <div class="col-7 col-xs-12">
+    <div class="col-md-7 col-xs-12">
         <h2>My ads</h2>
 
         <!-- If no ads, print message -->
-        <div v-if="ads.data.length === 0">
-            <p>You have no ads yet :(</p>
+        <div v-if="ads.data.length === 0" class="row justify-center items-center ">
+            <q-card class="col-12 q-pa-md bg-grey-1">
+                <q-card-section class="q-gutter-md flex flex-center">
+                    <div class="column flex flex-center">
+                        <!-- Grey title -->
+                        <h4 class="text-grey-8 q-ma-sm">You don't have any ads yet :(</h4>
+
+                        <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
+
+                        <Link href="/ads/create">
+                            <q-btn class="q-ma-sm col-12" color="primary">Create an ad</q-btn>
+                        </Link>
+                    </div>
+                </q-card-section>
+            </q-card>
         </div>
         <div v-else>
 
@@ -66,6 +79,7 @@ export default {
 
     components: {
         Pagination,
+        Link,
     },
 
     props: {

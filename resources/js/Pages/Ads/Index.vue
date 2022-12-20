@@ -147,9 +147,18 @@
         <div class="col-8 q-mx-xl">
 
             <!-- If no results, print error message -->
-            <div v-if="ads.length == 0 || ads == null">
-                <p>No results corresponding to your research :( </p>
-            </div>
+            <div v-if="ads.length == 0 || ads == null" class="row justify-center items-center ">
+            <q-card class="col-12 q-pa-md bg-grey-1">
+                <q-card-section class="q-gutter-md flex flex-center">
+                    <div class="column flex flex-center">
+                        <!-- Grey title -->
+                        <h4 class="text-grey-8 q-ma-sm">No ads corresponding to your research :(</h4>
+
+                        <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
+                    </div>
+                </q-card-section>
+            </q-card>
+        </div>
             <div v-else>
 
         <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">

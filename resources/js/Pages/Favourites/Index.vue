@@ -1,11 +1,24 @@
 <template>
 <div class="row justify-center items-center">
-    <div class="col-7 col-xs-12">
+    <div class="col-md-7 col-xs-12">
     <h2>My favourites</h2>
 
-    <div v-if="favourites.data.length==0">
-        <p>You have no favourites yet</p>
-    </div>
+    <div v-if="favourites.data.length==0" class="row justify-center items-center ">
+            <q-card class="col-12 q-pa-md bg-grey-1">
+                <q-card-section class="q-gutter-md flex flex-center">
+                    <div class="column flex flex-center">
+                        <!-- Grey title -->
+                        <h4 class="text-grey-8 q-ma-sm">You don't have any favourite yet :(</h4>
+
+                        <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
+
+                        <Link href="/ads">
+                            <q-btn class="q-ma-sm col-12" color="primary">Search ads</q-btn>
+                        </Link>
+                    </div>
+                </q-card-section>
+            </q-card>
+        </div>
     <div v-else>
 
     <q-card v-for="fav in favourites.data" :key="fav.id" class="q-my-md">
