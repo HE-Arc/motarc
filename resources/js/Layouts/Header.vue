@@ -25,15 +25,21 @@
                     <!-- if user not logged in, register and login pages -->
                     <div v-if="$page.props.auth.user">
                         <Link href="/profile">
-                        <q-item clickable v-ripple>
-                            <q-item-section>
-                                My profile
-                            </q-item-section>
-                        </q-item>
+                            <q-item clickable v-ripple>
+                                <q-item-section avatar>
+                                    <q-icon name="person" />
+                                </q-item-section>
+                                <q-item-section>
+                                    My profile
+                                </q-item-section>
+                            </q-item>
                         </Link>
 
                         <Link href="/ads/myads">
                         <q-item clickable v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="two_wheeler" />
+                            </q-item-section>
                             <q-item-section>
                                 My ads
                             </q-item-section>
@@ -42,6 +48,9 @@
 
                         <Link href="/favourites">
                         <q-item clickable v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="favorite" />
+                            </q-item-section>
                             <q-item-section>
                                 My favourites
                             </q-item-section>
@@ -50,6 +59,9 @@
 
                         <Link href="/logout">
                         <q-item clickable v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="logout" />
+                            </q-item-section>
                             <q-item-section>
                                 Logout
                             </q-item-section>
@@ -59,6 +71,9 @@
                     <div v-else>
                         <Link href="/login">
                         <q-item v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="login" />
+                            </q-item-section>
                             <q-item-section>
                                 Login
                             </q-item-section>
@@ -66,6 +81,9 @@
                         </Link>
                         <Link href="/register">
                         <q-item v-ripple>
+                            <q-item-section avatar>
+                                <q-icon name="how_to_reg" />
+                            </q-item-section>
                             <q-item-section>
                                 Register
                             </q-item-section>
