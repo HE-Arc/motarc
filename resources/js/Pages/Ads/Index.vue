@@ -144,8 +144,8 @@
             </q-card>
         </div>
 
-        <div class="col-8 q-mx-xl">
-            <div v-if="ads.length == 0 || ads == null" class="row justify-center items-center ">
+        <div class="col-8 q-ma-xl">
+            <div v-if="ads.data.length == 0 || ads.data == null" class="row justify-center items-center ">
                 <q-card class="col-12 q-pa-md bg-grey-1">
                     <q-card-section class="q-gutter-md flex flex-center">
                         <div class="column flex flex-center">
@@ -162,52 +162,45 @@
                 <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/public/storage/images/' + ad.images[0].image_url" />
                 <img class="col-4" fit="cover" v-else  src="/public/storage/images/moto_base.png" />
 
-            <q-card-section>
-                    <div class="col-8">
-                        <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
+                    <q-card-section>
+                        <div class="col-8">
+                            <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
 
-                        <div class="row q-my-sm">
-                            <p class="text-grey-8 q-mr-md">{{ ad.km }} km </p>
-                            <q-icon color="grey-8" name="event" />
-                            <p class="text-grey-8 q-mr-md"> {{ ad.model.year }} </p>
-                            <q-icon color="grey-8" name="bolt"></q-icon>
-                            <p class="text-grey-8 ">{{ ad.power_kw }} kw </p>
-                        </div>
+                            <div class="row q-my-sm">
+                                <p class="text-grey-8 q-mr-md">{{ ad.km }} km </p>
+                                <q-icon color="grey-8" name="event" />
+                                <p class="text-grey-8 q-mr-md"> {{ ad.model.year }} </p>
+                                <q-icon color="grey-8" name="bolt"></q-icon>
+                                <p class="text-grey-8 ">{{ ad.power_kw }} kw </p>
+                            </div>
 
-                        <h4  class="q-my-sm">{{ad.price}} .-</h4>
-                        <Link :href="'/ads/'+ ad.id">
-                            <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
-                        </Link>
+                            <h4  class="q-my-sm">{{ad.price}} .-</h4>
+                            <Link :href="'/ads/'+ ad.id">
+                                <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
+                            </Link>
 
                             <!-- if ad is in favourite, add button with icon -->
                             <q-btn v-if="isInFavourites(ad.id)" class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(ad.id)"></q-btn>
                             <!-- if ad is not in favourite, add button with icon -->
                             <q-btn v-else class="q-mt-md"  text-color="black" color="white" icon="star_border" flat round @click="addFavourite(ad.id)"></q-btn>
+                        </div>
+                    </q-card-section>
+                </q-card-section>
+            </q-card>
 
-                    </div>
-            </q-card-section>
-        </q-card-section>
-        </q-card>
-
-        <div class="q-pa-lg flex flex-center">
-            <Pagination :paginate="ads" :params="params" />
-            <!-- <q-pagination v-model="current" :max="max" input /> -->
-            <!--<q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />-->
+            <div class="q-pa-lg flex flex-center">
+                <Pagination :paginate="ads" :params="params" />
+            </div>
         </div>
     </div>
-
-        </div>
-    </div>
+</div>
 </template>
 
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Link } from '@inertiajs/inertia-vue3';
+import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/inertia-vue3';
-import { usePage } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination.vue'
-import { useRemember } from '@inertiajs/inertia-vue3';
 
 export default {
     layout : AppLayout,

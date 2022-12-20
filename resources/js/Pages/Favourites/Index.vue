@@ -1,13 +1,13 @@
 <template>
 <div class="row justify-center items-center">
     <div class="col-md-7 col-xs-12">
-    <h2>My favourites</h2>
+        <h2>My favourites</h2>
 
-    <div v-if="favourites.data.length==0" class="row justify-center items-center ">
+        <!-- Display message if no favourites -->
+        <div v-if="favourites.data.length==0" class="row justify-center items-center ">
             <q-card class="col-12 q-pa-md bg-grey-1">
                 <q-card-section class="q-gutter-md flex flex-center">
                     <div class="column flex flex-center">
-                        <!-- Grey title -->
                         <h4 class="text-grey-8 q-ma-sm">You don't have any favourite yet :(</h4>
 
                         <img class="q-ma-sm" src="/public/storage/images/moto_empty.png" width="200" />
@@ -19,55 +19,47 @@
                 </q-card-section>
             </q-card>
         </div>
-    <div v-else>
+        <div v-else>
+            <!-- Display favourites -->
+            <q-card v-for="fav in favourites.data" :key="fav.id" class="q-my-md">
+                <q-card-section horizontal>
+                    <!-- Display image if exists -->
+                    <img class="col-4" fit="cover" v-if="fav.images[0] !== undefined" :src="'/public/storage/images/' + fav.images[0].image_url" />
+                    <img class="col-4" fit="cover" v-else  src="/public/storage/images/moto_base.png" />
 
-    <q-card v-for="fav in favourites.data" :key="fav.id" class="q-my-md">
-        <q-card-section horizontal>
-
-            <img class="col-4" fit="cover" v-if="fav.images[0] !== undefined" :src="'/public/storage/images/' + fav.images[0].image_url" />
-            <img class="col-4" fit="cover" v-else  src="/public/storage/images/moto_base.png" />
-
-            <q-card-section>
-                <div class="col-8">
-
-                <h3 class="q-my-md">{{ fav.model.brand + " " + fav.model.model }}</h3>
-
-                <div class="row q-my-sm">
-                    <p class="text-grey-8 q-mr-md">{{ fav.km }} km </p>
-                        <q-icon color="grey-8" name="event" />
-                        <p class="text-grey-8 q-mr-md"> {{ fav.model.year }} </p>
-                        <q-icon color="grey-8" name="bolt"></q-icon>
-                        <p class="text-grey-8 ">{{ fav.power_kw }} kw </p>
-                </div>
-
-                <h4 class="q-my-sm">{{fav.price}}.-</h4>
-
-                <Link :href="'/ads/'+ fav.id">
-                <q-btn class="q-mt-md" color="primary">Show</q-btn>
-                </Link>
-                <q-btn class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(fav.id)"></q-btn>
-
+                    <q-card-section>
+                        <div class="col-8">
+                            <h3 class="q-my-md">{{ fav.model.brand + " " + fav.model.model }}</h3>
+                            <div class="row q-my-sm">
+                                <p class="text-grey-8 q-mr-md">{{ fav.km }} km </p>
+                                <q-icon color="grey-8" name="event" />
+                                <p class="text-grey-8 q-mr-md"> {{ fav.model.year }} </p>
+                                <q-icon color="grey-8" name="bolt"></q-icon>
+                                <p class="text-grey-8 ">{{ fav.power_kw }} kw </p>
+                            </div>
+                            <h4 class="q-my-sm">{{fav.price}}.-</h4>
+                            <!-- Show ad button -->
+                            <Link :href="'/ads/'+ fav.id">
+                                <q-btn class="q-mt-md" color="primary">Show</q-btn>
+                            </Link>
+                            <!-- Remove favourite button -->
+                            <q-btn class="q-mt-md" color="white" text-color="primary" icon="star" flat round @click="removeFavourite(fav.id)"></q-btn>
+                        </div>
+                    </q-card-section>
+                </q-card-section>
+            </q-card>
+            <!--Pagination component-->
+            <div class="q-pa-lg flex flex-center">
+                <q-pagination v-model="current" direction-links boundary-links :max="favourites.last_page" />
             </div>
-            </q-card-section>
-
-
-        </q-card-section>
-    </q-card>
-
-    <div class="q-pa-lg flex flex-center">
-        <q-pagination v-model="current" direction-links boundary-links :max="favourites.last_page" />
+        </div>
     </div>
-
-    </div>
-</div>
 </div>
 </template>
 
 <script>
-
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { Link } from '@inertiajs/inertia-vue3'
-import ListAds from '../../Components/ListAds.vue';
 
 export default {
     layout : AppLayout,
@@ -78,7 +70,6 @@ export default {
     },
     components: {
         Link,
-        ListAds
     },
     methods: {
         removeFavourite(id) {
@@ -102,7 +93,6 @@ export default {
         }
     }
 }
-
 </script>
 
 <style>

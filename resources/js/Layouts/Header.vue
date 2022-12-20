@@ -1,24 +1,20 @@
 <template>
-        <q-header elevated class="bg-grey-3 q-pa-sm">
+    <q-header elevated class="bg-grey-3 q-pa-sm">
         <q-toolbar>
             <q-btn v-if="$q.screen.lt.md" flat round dense icon="menu" @click="drawer = !drawer" color="black" class="q-mr-md" />
             <img src="/public/storage/images/moto.png" height="30" />
             <q-toolbar-title>
                 <Link href="/" id="link-title">
-                <q-btn flat label="Motarc">
-                </q-btn>
+                    <q-btn flat label="Motarc"></q-btn>
                 </Link>
             </q-toolbar-title>
             <q-space />
-             <!-- To put in a dropdown menu is small screen -->
-            <!--<q-tabs v-model="tab" shrink>-->
                 <Link href="/" v-if="$q.screen.gt.sm">
                     <q-btn name="tab1" label="Search" flat icon="search" />
                 </Link>
                 <Link href="/ads/create" v-if="$q.screen.gt.sm"> <!--v-if="$page.props.auth.user">-->
                     <q-btn name="tab2" label="New ad" flat icon="add" />
                 </Link>
-            <!--</q-tabs>-->
             <q-space />
             <q-btn-dropdown stretch flat label="Mon compte" color="black" icon="account_circle " v-if="$q.screen.gt.sm">
                 <q-list>
@@ -92,16 +88,8 @@
                     </div>
                 </q-list>
             </q-btn-dropdown>
-
-
-            <!-- div if small screen -->
-
-
         </q-toolbar>
     </q-header>
-
-
-
         <q-drawer
         v-model="drawer"
         :width="200"
@@ -203,11 +191,9 @@
           </q-list>
         </q-scroll-area>
       </q-drawer>
-
 </template>
 
 <script>
-
 import { Link } from '@inertiajs/inertia-vue3';
 
 export default {

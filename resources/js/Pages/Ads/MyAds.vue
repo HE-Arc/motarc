@@ -8,7 +8,6 @@
             <q-card class="col-12 q-pa-md bg-grey-1">
                 <q-card-section class="q-gutter-md flex flex-center">
                     <div class="column flex flex-center">
-                        <!-- Grey title -->
                         <h4 class="text-grey-8 q-ma-sm">You don't have any ads yet :(</h4>
 
                         <img class="q-ma-sm" src="/public/storage/images/moto_empty.png" width="200" />
@@ -21,6 +20,10 @@
             </q-card>
         </div>
         <div v-else>
+            <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-sm">
+                <q-card-section horizontal>
+                    <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" />
+                    <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
 
         <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-sm">
             <q-card-section horizontal>
@@ -30,62 +33,38 @@
                 <!-- Image keeping ratio -->
                 <!-- <img v-if="ad.images[0] !== undefined" fit="contain" class="col-5" :src="'/public/storage/images/' + ad.images[0].image_url" />-->
 
-                <q-card-section>
-                <div class="col-8">
+                            <h4 class="q-my-sm">{{ad.price}}.-</h4>
 
-                    <h3 class="q-my-md">{{ ad.model.brand + " " + ad.model.model }}</h3>
+                            <q-btn class="q-my-md q-mr-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
+                            <q-btn class="q-my-md" color="negative" icon="delete" @click="deletePopup = true">Delete</q-btn>
 
-                <!--<div class="row-items">-->
-                    <div class="row q-my-md">
-                        <!-- Grey text -->
-                        <p class="text-grey-8 q-mr-md">{{ ad.km }} km </p>
-                        <q-icon color="grey-8" name="event" />
-                        <p class="text-grey-8 q-mr-md"> {{ ad.model.year }} </p>
-                        <q-icon color="grey-8" name="bolt"></q-icon>
-                        <p class="text-grey-8 ">{{ ad.power_kw }} kw </p>
-                    </div>
+                            <q-dialog v-model="deletePopup" persistent>
+                                <q-card>
+                                    <q-card-section class="row items-center">
+                                        <span class="q-ml-sm">Are you sure you want to delete this ad?</span>
+                                    </q-card-section>
 
-                    <h4 class="q-my-sm">{{ad.price}}.-</h4>
+                                    <q-card-actions align="right">
+                                        <q-btn flat label="Cancel" color="primary" v-close-popup />
+                                        <q-btn label="Delete" color="negative" v-close-popup @click="deleteAd(ad.id)" />
+                                    </q-card-actions>
+                                </q-card>
+                            </q-dialog>
 
-                <!-- Button modify -->
-                    <q-btn class="q-my-md q-mr-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
-                <!--</div>-->
-                    <!-- Delete ad button that opens a popup -->
-                    <q-btn class="q-my-md" color="negative" icon="delete" @click="deletePopup = true">Delete</q-btn>
-
-                    <!-- Delete popup -->
-                    <q-dialog v-model="deletePopup" persistent>
-                        <q-card>
-                            <q-card-section class="row items-center">
-                                <span class="q-ml-sm">Are you sure you want to delete this ad?</span>
-                            </q-card-section>
-
-                            <q-card-actions align="right">
-                                <q-btn flat label="Cancel" color="primary" v-close-popup />
-                                <q-btn label="Delete" color="negative" v-close-popup @click="deleteAd(ad.id)" />
-                            </q-card-actions>
-                        </q-card>
-                    </q-dialog>
-
-                </div>
+                        </div>
+                    </q-card-section>
                 </q-card-section>
-            </q-card-section>
-        </q-card>
+            </q-card>
 
-        <div class="q-pa-lg flex flex-center">
-            <q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />
+            <div class="q-pa-lg flex flex-center">
+                <q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />
+            </div>
         </div>
-    </div>
     </div>
 </div>
 </template>
 
 <script>
-
-import { Head } from '@inertiajs/inertia-vue3'
-import { Inertia } from '@inertiajs/inertia'
-import { reactive, ref } from 'vue'
-import { useForm } from '@inertiajs/inertia-vue3'
 import { Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import Pagination from '../../Components/Pagination.vue'
