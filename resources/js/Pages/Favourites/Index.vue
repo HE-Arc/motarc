@@ -78,14 +78,6 @@ export default {
                     this.$inertia.delete('/favourites/' + this.favourites.data[i].pivot.id, {
                         preserveScroll: true,
                         preserveState: true,
-                    }).then(() => {
-                        // if no favourites, an current page is greater than 1, then go to previous page
-                        console.log("after delete");
-                        console.log(this.favourites.current_page);
-                        console.log(this.favourites.data.length);
-                        if(this.favourites.data.length == 0 && this.favourites.current_page > 1) {
-                            this.current = this.favourites.current_page - 1;
-                        }
                     })
                 }
             }
@@ -101,7 +93,6 @@ export default {
             this.$inertia.get('/favourites?page=' + val);
         }
     },
-    // on page update
     updated() {
         console.log("updated");
         // if no favourites, an current page is greater than 1, then go to previous page
