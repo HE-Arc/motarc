@@ -150,7 +150,7 @@
                     <q-card-section class="q-gutter-md flex flex-center">
                         <div class="column flex flex-center">
                             <h4 class="text-grey-8 q-ma-sm">No ads corresponding to your research :(</h4>
-                            <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
+                            <img class="q-ma-sm" src="/public/storage/images/moto_empty.png" width="200" />
                         </div>
                     </q-card-section>
                 </q-card>
@@ -159,8 +159,8 @@
 
         <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">
             <q-card-section horizontal>
-                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" />
-                <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
+                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/public/storage/images/' + ad.images[0].image_url" />
+                <img class="col-4" fit="cover" v-else  src="/public/storage/images/moto_base.png" />
 
             <q-card-section>
                     <div class="col-8">

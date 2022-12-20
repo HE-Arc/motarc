@@ -11,7 +11,7 @@
                         <!-- Grey title -->
                         <h4 class="text-grey-8 q-ma-sm">You don't have any ads yet :(</h4>
 
-                        <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
+                        <img class="q-ma-sm" src="/public/storage/images/moto_empty.png" width="200" />
 
                         <Link href="/ads/create">
                             <q-btn class="q-ma-sm col-12" color="primary">Create an ad</q-btn>
@@ -24,11 +24,11 @@
 
         <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-sm">
             <q-card-section horizontal>
-                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" />
-                <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
+                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/public/storage/images/' + ad.images[0].image_url" />
+                <img class="col-4" fit="cover" v-else  src="/public/storage/images/moto_base.png" />
 
                 <!-- Image keeping ratio -->
-                <!-- <img v-if="ad.images[0] !== undefined" fit="contain" class="col-5" :src="'/storage/images/' + ad.images[0].image_url" />-->
+                <!-- <img v-if="ad.images[0] !== undefined" fit="contain" class="col-5" :src="'/public/storage/images/' + ad.images[0].image_url" />-->
 
                 <q-card-section>
                 <div class="col-8">
