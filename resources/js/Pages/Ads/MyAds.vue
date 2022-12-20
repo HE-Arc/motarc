@@ -48,7 +48,7 @@
                     <h4 class="q-my-sm">{{ad.price}}.-</h4>
 
                 <!-- Button modify -->
-                    <q-btn class="q-my-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
+                    <q-btn class="q-my-md q-mr-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
                 <!--</div>-->
                     <!-- Delete ad button that opens a popup -->
                     <q-btn class="q-my-md" color="negative" icon="delete" @click="deletePopup = true">Delete</q-btn>

@@ -146,20 +146,20 @@
 
         <div class="col-8 q-mx-xl">
             <div v-if="ads.length == 0 || ads == null" class="row justify-center items-center ">
-            <q-card class="col-12 q-pa-md bg-grey-1">
-                <q-card-section class="q-gutter-md flex flex-center">
-                    <div class="column flex flex-center">
-                        <h4 class="text-grey-8 q-ma-sm">No ads corresponding to your research :(</h4>
-                        <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
-                    </div>
-                </q-card-section>
-            </q-card>
+                <q-card class="col-12 q-pa-md bg-grey-1">
+                    <q-card-section class="q-gutter-md flex flex-center">
+                        <div class="column flex flex-center">
+                            <h4 class="text-grey-8 q-ma-sm">No ads corresponding to your research :(</h4>
+                            <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
+                        </div>
+                    </q-card-section>
+                </q-card>
             </div>
             <div v-else>
 
         <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">
             <q-card-section horizontal>
-                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
+                <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" />
                 <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
 
             <q-card-section>
@@ -190,7 +190,7 @@
         </q-card>
 
         <div class="q-pa-lg flex flex-center">
-            <Pagination :links="ads.links" :params="params" />
+            <Pagination :paginate="ads" :params="params" />
             <!-- <q-pagination v-model="current" :max="max" input /> -->
             <!--<q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />-->
         </div>
