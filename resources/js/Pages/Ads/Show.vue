@@ -13,11 +13,11 @@
         <q-card-section>
             <h3 class="q-my-sm">{{ ad.model.brand + " " + ad.model.model }}</h3>
 
-            <h4 class="q-my-md">{{ad.price}} .-</h4>
+            <h4 class="q-my-md">{{ad.price}}.-</h4>
 
             <q-separator />
 
-            <h5 class="q-my-md">Données du véhicule</h5>
+            <h5 class="q-my-md">Vehicle data</h5>
             <div class="row">
                 <div class="col">
                     <q-icon name="directions_car" />
@@ -34,7 +34,7 @@
                     <p> {{ad.color}}</p>
                 </div>
                 <div class="col">
-                    <q-icon name="power" />
+                    <q-icon name="bolt" />
                     <p> {{ad.power_kw}} kW</p>
 
                     <q-icon name="category" />
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <q-separator />
-            <h5 class="q-my-md">Vendeur</h5>
+            <h5 class="q-my-md">Seller</h5>
             <div class="row">
                 <div class="col">
                 <q-icon name="person" />
