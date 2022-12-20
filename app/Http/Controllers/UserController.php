@@ -37,7 +37,7 @@ class UserController extends Controller
 
         User::create($request->all());
 
-        return redirect()->route('/')->with('success', 'User created successfully.');
+        return redirect()->route('/login')->with('success', 'User created successfully.');
         //return Inertia::render('Auth/Login');
         //return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
