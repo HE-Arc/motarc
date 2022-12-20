@@ -50,6 +50,23 @@
                 <!-- Button modify -->
                     <q-btn class="q-my-md" color="primary" icon="edit" @click="modifyAd(ad.id)">Edit</q-btn>
                 <!--</div>-->
+                    <!-- Delete ad button that opens a popup -->
+                    <q-btn class="q-my-md" color="negative" icon="delete" @click="deletePopup = true">Delete</q-btn>
+
+                    <!-- Delete popup -->
+                    <q-dialog v-model="deletePopup" persistent>
+                        <q-card>
+                            <q-card-section class="row items-center">
+                                <span class="q-ml-sm">Are you sure you want to delete this ad?</span>
+                            </q-card-section>
+
+                            <q-card-actions align="right">
+                                <q-btn flat label="Cancel" color="primary" v-close-popup />
+                                <q-btn label="Delete" color="negative" v-close-popup @click="deleteAd(ad.id)" />
+                            </q-card-actions>
+                        </q-card>
+                    </q-dialog>
+
                 </div>
                 </q-card-section>
             </q-card-section>
@@ -88,6 +105,7 @@ export default {
     data() {
         return {
             current : this.ads.current_page,
+            deletePopup : false,
         }
     },
     methods: {
@@ -95,6 +113,10 @@ export default {
             console.log(id)
             this.$inertia.get('/ads/' + id + '/edit');
         },
+        deleteAd(id) {
+            console.log(id)
+            this.$inertia.delete('/ads/' + id);
+        }
     },
     // tigger on pagination change
     watch: {

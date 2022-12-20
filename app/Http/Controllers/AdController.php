@@ -163,7 +163,7 @@ class AdController extends Controller
         $ad->price = $request->price;
         $ad->km = $request->km;
         $ad->power_kw = $request->power_kw;
-        $ad->color = $request->color_hexa;
+        $ad->color = $request->color;
         $ad->model_id = $request->model_id;
         $ad->user_id = $request->user_id;
         $ad->save();
