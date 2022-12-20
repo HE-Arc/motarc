@@ -90,7 +90,15 @@ class AdController extends Controller
         $params = '';
         foreach ($request->all() as $name => $value) {
             if (!str_contains($name, "page")) {
-                $params .= $name . '=' . $value . '&';
+                //dd($name, $value);
+                if (is_array($value)) {
+                    foreach ($value as $v) {
+                        $params .= $name . '[]=' . $v . '&';
+                    }
+                } else {
+                    $params .= $name . '=' . $value . '&';
+                }
+                //$params .= $name . '=' . $value . '&';
             }
         }
 

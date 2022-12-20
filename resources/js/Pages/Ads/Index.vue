@@ -32,7 +32,7 @@
                             v-model="form.price"
                             suffix="CHF"
                             :min="0"
-                            :max="10000"
+                            :max="50000"
                             :step="100"
                             label-always
                             color="primary"
@@ -145,20 +145,16 @@
         </div>
 
         <div class="col-8 q-mx-xl">
-
-            <!-- If no results, print error message -->
             <div v-if="ads.length == 0 || ads == null" class="row justify-center items-center ">
             <q-card class="col-12 q-pa-md bg-grey-1">
                 <q-card-section class="q-gutter-md flex flex-center">
                     <div class="column flex flex-center">
-                        <!-- Grey title -->
                         <h4 class="text-grey-8 q-ma-sm">No ads corresponding to your research :(</h4>
-
                         <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
                     </div>
                 </q-card-section>
             </q-card>
-        </div>
+            </div>
             <div v-else>
 
         <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">
@@ -194,8 +190,9 @@
         </q-card>
 
         <div class="q-pa-lg flex flex-center">
+            <Pagination :links="ads.links" :params="params" />
             <!-- <q-pagination v-model="current" :max="max" input /> -->
-            <q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />
+            <!--<q-pagination v-model="current" direction-links boundary-links :max="ads.last_page" />-->
         </div>
     </div>
 
@@ -210,28 +207,29 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { usePage } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination.vue'
+import { useRemember } from '@inertiajs/inertia-vue3';
 
 export default {
     layout : AppLayout,
     name: 'Index ad',
     setup(props){
-        console.log("test");
+        console.log("setup");
         console.log(props.ads);
 
-        const form = useForm({
+        const form = useRemember(useForm({
             brand: null,
             model: null,
             price: ref({
-                min: 2000,
-                max: 5000
+                min: 0,
+                max: 50000
             }),
             year: ref({
-                min: 2018,
-                max: 2022
+                min: 1900,
+                max: 2023
             }),
             km: ref({
                 min: 0,
-                max: 20000,
+                max: 200000,
             }),
             power: ref({
                 min: 0,
@@ -242,7 +240,7 @@ export default {
                 max: 2000,
             }),
             color: ref([]),
-        })
+        }));
         return { form }
     },
     props: {
@@ -255,6 +253,7 @@ export default {
         Pagination
     },
     mounted() {
+        console.log("mounted");
         this.updateParams();
 
         this.bikeModels.forEach(element => {
@@ -265,8 +264,6 @@ export default {
     },
     data() {
         return {
-            current: ref(1),
-            max: ref(5),
             brands: [],
             models: [],
             colors: [
@@ -284,6 +281,9 @@ export default {
             ],
             params: [],
             current: this.ads.current_page,
+            isFromSearch: false,
+            lastMaxPage: this.ads.last_page,
+            lastPage: 1,
         }
     },
     methods: {
@@ -324,9 +324,10 @@ export default {
             });
         },
         submit() {
-            const colorValues = this.form.color.map((color) => color.value);
+            console.log("submit");
+            this.isFromSearch = true;
 
-            this.updateParams();
+            const colorValues = this.form.color.map((color) => color.value);
 
             this.form.transform((data) => ({
                 ...data,
@@ -354,9 +355,14 @@ export default {
                 preserveState: true,
                 preserveScroll: true,
                 only: ['ads'],
+            }).then(() => {
+                console.log("submit then");
+                this.updateParams();
+                this.isFromSearch = false;
             });
+            this.isFromSearch = false;
+            this.current = 0;
         },
-
         updateParams()
         {
             this.params = window.location.search;
@@ -373,11 +379,82 @@ export default {
             if (this.params.startsWith('?')) {
                 this.params = this.params.substring(1, this.params.length);
             }
+            console.log("params : " + this.params)
+
+            // extract the params and fill the form with them
+            let params = this.params.split('&');
+
+            params.forEach(element => {
+                let param = element.split('=');
+
+                if (param[0] == 'brand') {
+                    this.form.brand = param[1];
+                }
+                if (param[0] == 'model') {
+                    this.form.model = param[1];
+                }
+                if (param[0] == 'minprice') {
+                    this.form.price.min = param[1];
+                }
+                if (param[0] == 'maxprice') {
+                    this.form.price.max = param[1];
+                }
+                if (param[0] == 'minyear') {
+                    this.form.year.min = param[1];
+                }
+                if (param[0] == 'maxyear') {
+                    this.form.year.max = param[1];
+                }
+                if (param[0] == 'minkm') {
+                    this.form.km.min = param[1];
+                }
+                if (param[0] == 'maxkm') {
+                    this.form.km.max = param[1];
+                }
+                if (param[0] == 'minpower_kw') {
+                    this.form.power.min = param[1];
+                }
+                if (param[0] == 'maxpower_kw') {
+                    this.form.power.max = param[1];
+                }
+                if (param[0] == 'mincapacity') {
+                    this.form.capacity.min = param[1];
+                }
+                if (param[0] == 'maxcapacity') {
+                    this.form.capacity.max = param[1];
+                }
+                if (param[0] == 'color') {
+                    this.form.color = param[1].split(',');
+                }
+            });
+
         }
     },
     watch: {
         current: function (val) {
-            this.$inertia.get('/ads?page=' + val + '&' + this.params);
+            console.log("watch" + val);
+            console.log("is from search : " + this.isFromSearch);
+            console.log("last max page : " + this.lastMaxPage);
+            console.log("current max page : " + this.ads.last_page);
+            console.log("last page : " + this.lastPage);
+
+            if (this.isFromSearch) {
+                this.isFromSearch = false;
+                console.log("is from search : " + this.isFromSearch);
+                return;
+            }
+            this.lastPage = val;
+            console.log("last page' : " + this.lastPage);
+
+            this.$inertia.get('/ads?page=' + val + '&' + this.params, {
+                //preserveState: true,
+                //preserveScroll: true,
+                //only: ['ads'],
+            }).then(() => {
+                console.log("watch then");
+                this.updateParams();
+            });
+
         }
     }
 }
