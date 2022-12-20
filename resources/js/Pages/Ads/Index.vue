@@ -214,7 +214,7 @@ export default {
     name: 'Index ad',
 
     setup(props){
-        const form = useRemember(useForm({
+        const form = useForm({
             brand: null,
             model: null,
             price: ref({
@@ -238,7 +238,7 @@ export default {
                 max: 2000,
             }),
             color: ref([]),
-        }));
+        });
         return { form }
     },
 
