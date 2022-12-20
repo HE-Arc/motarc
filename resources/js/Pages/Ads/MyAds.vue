@@ -1,6 +1,6 @@
 <template>
 <div class="row justify-center items-center">
-    <div class="col-7">
+    <div class="col-7 col-xs-12">
         <h2>My ads</h2>
 
         <!-- If no ads, print message -->
