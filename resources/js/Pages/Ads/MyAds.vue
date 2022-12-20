@@ -102,6 +102,12 @@ export default {
         current : function (val) {
             this.$inertia.get('/ads/myads?page=' + val);
         }
+    },
+    // on update page, if ads is empty but current page is not 1, go to previous page
+    updated() {
+        if (this.ads.data.length === 0 && this.ads.current_page !== 1) {
+            this.$inertia.get('/ads/myads?page=' + (this.ads.current_page - 1));
+        }
     }
 }
 
