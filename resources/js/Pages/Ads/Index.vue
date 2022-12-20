@@ -327,7 +327,9 @@ export default {
             console.log("submit");
             this.isFromSearch = true;
 
-            const colorValues = this.form.color.map((color) => color.value);
+            var colorValues = undefined;
+            if(this.form.color !== null)
+                colorValues = this.form.color.map((color) => color.value);
 
             this.form.transform((data) => ({
                 ...data,
