@@ -1,7 +1,7 @@
 <template>
         <q-header elevated class="bg-grey-3 q-pa-sm">
         <q-toolbar>
-            <q-btn v-if="$q.screen.lt.sm" flat round dense icon="menu" @click="drawer = !drawer" color="black" class="q-mr-md" />
+            <q-btn v-if="$q.screen.lt.md" flat round dense icon="menu" @click="drawer = !drawer" color="black" class="q-mr-md" />
             <img src="/storage/images/moto.png" height="30" />
             <q-toolbar-title>
                 <Link href="/" id="link-title">
@@ -86,7 +86,7 @@
 
         <q-drawer
         v-model="drawer"
-        :width="150"
+        :width="200"
         :breakpoint="200"
         overlay
         bordered
