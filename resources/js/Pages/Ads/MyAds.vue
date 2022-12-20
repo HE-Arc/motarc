@@ -110,19 +110,15 @@ export default {
     },
     methods: {
         modifyAd(id) {
-            console.log(id)
             this.$inertia.get('/ads/' + id + '/edit');
         },
         deleteAd(id) {
-            console.log(id)
             this.$inertia.delete('/ads/' + id);
         }
     },
     // tigger on pagination change
     watch: {
         current : function (val) {
-            console.log('watch')
-            console.log(val)
             this.$inertia.get('/ads/myads?page=' + val);
         }
     }

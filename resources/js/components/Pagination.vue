@@ -50,11 +50,5 @@ export default {
     {
         Link
     },
-
-    created() {
-        console.log(this.links);
-        console.log(this.params);
-        // console.log(this.$route.query);
-    }
 }
 </script>

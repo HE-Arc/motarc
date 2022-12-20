@@ -140,13 +140,13 @@ export default {
         getModels() { // get models from api
             this.form.model = null;
             this.models = [];
-            //console.log(this.form.brand)
+
             this.bikeModels.forEach(element => {
                 if (element.brand == this.form.brand && !this.models.includes(element.model)){
                     this.models.push(element.model);
                 }
             });
-            //console.log(this.models)
+
             return this.models;
         },
         submit() {

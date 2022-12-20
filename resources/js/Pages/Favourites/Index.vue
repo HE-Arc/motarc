@@ -84,7 +84,6 @@ export default {
         removeFavourite(id) {
             for(let i = 0; i < this.favourites.data.length; i++) {
                 if(this.favourites.data[i].id == id) {
-                    console.log(this.favourites.data[i].pivot.id)
                     this.$inertia.delete('/favourites/' + this.favourites.data[i].pivot.id, {
                         preserveScroll: true,
                     });

@@ -54,7 +54,6 @@ export default {
         removeFavourite(id) {
             for(let i = 0; i < this.favourites.length; i++) {
                 if(this.favourites[i].id == id) {
-                    console.log(this.favourites[i].pivot.id)
                     this.deleteFavourite(this.favourites[i].pivot.id);
                 }
             }

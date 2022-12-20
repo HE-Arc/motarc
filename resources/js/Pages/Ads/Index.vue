@@ -212,10 +212,8 @@ import { useRemember } from '@inertiajs/inertia-vue3';
 export default {
     layout : AppLayout,
     name: 'Index ad',
-    setup(props){
-        console.log("setup");
-        console.log(props.ads);
 
+    setup(props){
         const form = useRemember(useForm({
             brand: null,
             model: null,
@@ -243,17 +241,19 @@ export default {
         }));
         return { form }
     },
+
     props: {
         ads: Object,
         favourites: Object,
         bikeModels: Array,
     },
+
     components: {
         Link,
         Pagination
     },
+
     mounted() {
-        console.log("mounted");
         this.updateParams();
 
         this.bikeModels.forEach(element => {
@@ -262,6 +262,7 @@ export default {
             }
         });
     },
+
     data() {
         return {
             brands: [],
@@ -297,10 +298,13 @@ export default {
             });
             this.submit();
         },
+
         addFavourite(id) {
             this.$inertia.post('/favourites', {ad_id: id}, {
+                preserveScroll: true,
             });
         },
+
         removeFavourite(id) {
             for(let i = 0; i < this.favourites.length; i++) {
                 if(this.favourites[i].id == id) {
@@ -308,6 +312,7 @@ export default {
                 }
             }
         },
+
         isInFavourites(id) {
             if (this.favourites !== undefined){
                 for (let i = 0; i < this.favourites.length; i++) {
@@ -318,13 +323,14 @@ export default {
             }
             return false;
         },
+
         deleteFavourite(id) {
             this.$inertia.delete('/favourites/' + id, {
                 preserveScroll: true,
             });
         },
+
         submit() {
-            console.log("submit");
             this.isFromSearch = true;
 
             var colorValues = undefined;
@@ -358,13 +364,13 @@ export default {
                 preserveScroll: true,
                 only: ['ads'],
             }).then(() => {
-                console.log("submit then");
                 this.updateParams();
                 this.isFromSearch = false;
             });
             this.isFromSearch = false;
             this.current = 0;
         },
+
         updateParams()
         {
             this.params = window.location.search;
@@ -381,7 +387,6 @@ export default {
             if (this.params.startsWith('?')) {
                 this.params = this.params.substring(1, this.params.length);
             }
-            console.log("params : " + this.params)
 
             // extract the params and fill the form with them
             let params = this.params.split('&');
@@ -432,31 +437,21 @@ export default {
 
         }
     },
+
     watch: {
         current: function (val) {
-            console.log("watch" + val);
-            console.log("is from search : " + this.isFromSearch);
-            console.log("last max page : " + this.lastMaxPage);
-            console.log("current max page : " + this.ads.last_page);
-            console.log("last page : " + this.lastPage);
-
             if (this.isFromSearch) {
                 this.isFromSearch = false;
-                console.log("is from search : " + this.isFromSearch);
+
                 return;
             }
             this.lastPage = val;
-            console.log("last page' : " + this.lastPage);
 
             this.$inertia.get('/ads?page=' + val + '&' + this.params, {
-                //preserveState: true,
-                //preserveScroll: true,
-                //only: ['ads'],
+                preserveScroll: true,
             }).then(() => {
-                console.log("watch then");
                 this.updateParams();
             });
-
         }
     }
 }
