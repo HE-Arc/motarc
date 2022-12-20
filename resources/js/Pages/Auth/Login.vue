@@ -1,9 +1,4 @@
 <template>
-
-    <!--<AppLayout>-->
-
-    <Head title="Login"></Head>
-
     <div class="row justify-center items-center ">
         <div class="col-xs-12 col-md-6 q-mt-xl">
             <q-card>
@@ -21,17 +16,10 @@
             </q-card>
         </div>
     </div>
-
-    <!--</AppLayout>-->
 </template>
 <script>
-import { Head } from '@inertiajs/inertia-vue3'
-import { Inertia } from '@inertiajs/inertia'
-import { reactive } from 'vue'
-import { useForm } from '@inertiajs/inertia-vue3'
-import { Link } from '@inertiajs/inertia-vue3'
+import { Head, useForm, Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
-import { EMPTY_ARR } from '@vue/shared'
 
 export default {
     layout : AppLayout,

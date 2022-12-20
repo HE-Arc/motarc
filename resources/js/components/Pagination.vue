@@ -15,22 +15,6 @@
             <q-btn class="q-mt-md" color="primary" icon="chevron_right" flat :disable="paginate.next_page_url === null"/>
         </Link>
 
-        <!--
-        <template v-for="link in paginate.links">
-            <Link
-                v-if="link.url === null"
-                disable
-            >
-                <q-btn class="q-mt-md" color="primary" v-html="link.label" flat/>
-            </Link>
-            <Link v-else
-                :href="link.url + '&' + params"
-            >
-                <q-btn class="q-mt-md" color="primary" v-html="link.label" flat />
-            </Link>
-        </template>-->
-
-
         <Link :href="paginate.links.last_page_url + '&' + params" :disable="paginate.next_page_url === null" >
             <q-btn class="q-mt-md" color="primary" icon="last_page" flat :disable="paginate.next_page_url === null" />
         </Link>

@@ -1,5 +1,4 @@
 <template>
-    <!-- form in a q-card -->
     <div class="row justify-center items-center ">
         <div class="col-xs-12 col-md-6 q-mt-xl">
         <q-card>
@@ -25,9 +24,8 @@
                     class="q-mb-sm"
                 />
 
-                <!-- Label abow price range -->
-                <q-label>Price</q-label>
                 <!-- Price range -->
+                <q-label>Price</q-label>
                 <q-range
                     v-model="form.price"
                     suffix="CHF"
@@ -40,8 +38,8 @@
                 >
                 </q-range>
 
-                <q-label>KM</q-label>
                 <!-- KM range -->
+                <q-label>KM</q-label>
                 <q-range
                     v-model="form.km"
                     filled
@@ -54,6 +52,7 @@
                     label-always
                     class="q-mt-lg"
                 />
+
                 <!-- Year range -->
                 <q-label>Year</q-label>
                 <q-range
@@ -68,7 +67,8 @@
                     label-always
                     class="q-mt-lg"
                 />
-                <!-- Button submit -->
+
+                <!-- Submit button -->
                 <q-btn
                     label="Search"
                     type="submit"
@@ -91,11 +91,8 @@
 
 <script>
 import { ref } from 'vue';
-import { reactive } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
-import { Inertia } from '@inertiajs/inertia';
-import { Link } from '@inertiajs/inertia-vue3';
+import { useForm, Link } from '@inertiajs/inertia-vue3';
 
 export default {
     setup(){
@@ -137,7 +134,7 @@ export default {
         }
     },
     methods: {
-        getModels() { // get models from api
+        getModels() { // get models for selected brand
             this.form.model = null;
             this.models = [];
 

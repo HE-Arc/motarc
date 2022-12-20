@@ -1,6 +1,6 @@
 <template>
     <q-layout>
-    <Header />
+    <Header></Header>
     <q-page-container>
         <q-page>
         <slot></slot>
