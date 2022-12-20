@@ -4,8 +4,8 @@
     <q-card class="q-pa-md">
         <q-card-section class="q-gutter-md">
             <Link href="/home">
-                    <q-btn icon="arrow_back" flat round dense></q-btn>
-                </Link>
+                <q-btn icon="arrow_back" flat round dense></q-btn>
+            </Link>
 
             <h2>Create ad</h2>
 
@@ -21,8 +21,8 @@
                         color="primary"
                         label-color="primary"
                         placeholder="9999.90"
-                        :error="isError(form.errors.inputPrice)"
-                        :error-message="form.errors.inputPrice"
+                        :error="isError(form.errors.price)"
+                        :error-message="form.errors.price"
                     />
                     <!--<div v-if="form.errors.inputPrice">{{ form.errors.inputPrice }}</div>-->
 
@@ -183,7 +183,7 @@ export default {
             price: null,
             km: null,
             power_kw: null,
-            color: null,
+            color: '',
             user_id: props.user.id,
             brand: null,
             model: null,
@@ -235,7 +235,7 @@ export default {
                     price: data.price,
                     km: data.km,
                     power_kw: data.power_kw,
-                    color: data.color.value,
+                    color: data.color != null ? data.color.value : undefined,
                     user_id: data.user_id,
                     model_id: this.getModelIdFromBrandAndModel(this.form.model, this.form.brand),
                     images: data.images,

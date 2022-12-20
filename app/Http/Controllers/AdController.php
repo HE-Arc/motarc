@@ -121,7 +121,7 @@ class AdController extends Controller
         $ads = $user->ads()->with(['model', 'images'])->paginate(1);
 
         // convert pagination to json
-        $ads = json_decode($ads->toJson());
+        //$ads = json_decode($ads->toJson());
 
         return Inertia::render('Ads/MyAds', [
             'ads' => $ads,
@@ -145,7 +145,7 @@ class AdController extends Controller
             'price' => 'required|integer',
             'km' => 'required|integer',
             'power_kw' => 'required|numeric',
-            'color_hexa' => 'required',
+            'color' => 'required',
             'model_id' => 'required|integer',
             'user_id' => 'required|integer',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000' // max : Max size in KB = 10MB

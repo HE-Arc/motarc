@@ -14,7 +14,7 @@ class FavouriteController extends Controller
         $user = User::findOrFail(auth()->user()->id);
         $favourites = $user->favourites()->with(['user', 'model', 'images'])->paginate(2);
 
-        $favourites = json_decode($favourites->toJson());
+        //$favourites = json_decode($favourites->toJson());
 
         return Inertia::render('Favourites/Index', [
             'favourites' => $favourites,
