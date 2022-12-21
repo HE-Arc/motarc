@@ -26,7 +26,7 @@ import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
     props: {
-        paginate: Array,
+        paginate: Object,
         params: String
     },
 
