@@ -76,5 +76,13 @@ class BikeModelsTableSeeder extends Seeder
             'capacity' => 1049,
             'category' => 'Sportive'
         ]);
+
+        DB::table('bike_models')->insert([
+            'brand' => 'BMW',
+            'model' => 'S 1000 RR',
+            'year' => 2020,
+            'capacity' => 948,
+            'category' => 'Sportive'
+        ]);
     }
 }
