@@ -20,7 +20,6 @@
                 <q-separator />
 
                 <h5 class="q-my-md">Vehicle data</h5>
-
                 <div class="row">
                     <div class="col">
                         <q-icon name="directions_car" />
