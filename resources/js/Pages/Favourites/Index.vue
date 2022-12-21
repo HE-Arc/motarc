@@ -9,13 +9,9 @@
                 <q-card-section class="q-gutter-md flex flex-center">
                     <div class="column flex flex-center">
                         <h4 class="text-grey-8 q-ma-sm">You don't have any favourite yet :(</h4>
-<<<<<<< HEAD
 
                         <img class="q-ma-sm" src="/public/storage/images/moto_empty.png" width="200" />
 
-=======
-                        <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
->>>>>>> a3e36f6 (clean code and small changes)
                         <Link href="/ads">
                             <q-btn class="q-ma-sm col-12" color="primary">Search ads</q-btn>
                         </Link>
