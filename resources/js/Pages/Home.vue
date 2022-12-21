@@ -4,7 +4,7 @@
         <q-card>
         <q-card-section>
             <div class="q-px-md">
-            <h4>Find your dream bike ✨</h4>
+            <h4>Find your dream motorcycle ✨</h4>
             <form @submit.prevent="submit">
                 <!-- brand drop down -->
                 <q-select
