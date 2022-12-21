@@ -1,4 +1,9 @@
 <template>
+    <head>
+        <!-- add favicons -->
+        <link rel="icon" type="image/png" sizes="32x32" href="/public/storage/images/moto_pink_32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/public/storage/images/moto_pink_16x16.png">
+    </head>
     <q-layout>
     <Header></Header>
     <q-page-container>
