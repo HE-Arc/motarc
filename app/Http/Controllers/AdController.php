@@ -172,7 +172,7 @@ class AdController extends Controller
             foreach ($request->file('images') as $image) {
                 $imageName = time() . Str::random(40) . '.' . $image->extension();
 
-                $image->move(public_path('storage/images'), $imageName);
+                $image->move(public_path('public/storage/images'), $imageName);
 
                 $ad->images()->create(['image_url' => $imageName]);
             }
@@ -189,7 +189,7 @@ class AdController extends Controller
 
         // Delete images from public/images folder
         foreach ($ad->images as $image) {
-            $image_path = public_path("storage/images") . '\\' . $image->image_url;
+            $image_path = public_path("public/storage/images") . '\\' . $image->image_url;
 
             if (File::exists($image_path)) {
                 File::delete($image_path);
@@ -237,7 +237,7 @@ class AdController extends Controller
         if ($request->hasFile('images')) {
             // Remove old images
             foreach ($ad->images as $image) {
-                $image_path = public_path("storage/images") . '\\' . $image->image_url;
+                $image_path = public_path("public/storage/images") . '\\' . $image->image_url;
 
                 if (File::exists($image_path)) {
                     File::delete($image_path);
@@ -251,7 +251,7 @@ class AdController extends Controller
             foreach ($request->file('images') as $image) {
                 $imageName = time() . Str::random(40) . '.' . $image->extension();
 
-                $image->move(public_path('storage/images'), $imageName);
+                $image->move(public_path('public/storage/images'), $imageName);
 
                 $ad->images()->create(['image_url' => $imageName]);
             }
