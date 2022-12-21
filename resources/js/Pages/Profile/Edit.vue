@@ -13,7 +13,7 @@
                 <!-- Update password dialog -->
                 <q-dialog v-model="showPasswordPopup" persistent>
                     <q-card>
-                        <form @submit.prevent="form.put('/profile')">
+                        <form @submit.prevent="()=>{ showPasswordPopup=false; form.put('/profile')}">
                             <q-card-section class="row items-center">
                                 <div class="text-h6">Update password</div>
                             </q-card-section>

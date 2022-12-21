@@ -271,7 +271,7 @@ export default {
     },
     updated() {
         //console.log("updated");
-        this.updateParams();
+        //this.updateParams();
     },
     data() {
         return {
