@@ -2,7 +2,7 @@
     <q-header elevated class="bg-grey-3 q-pa-sm">
         <q-toolbar>
             <q-btn v-if="$q.screen.lt.md" flat round dense icon="menu" @click="drawer = !drawer" color="black" class="q-mr-md" />
-            <img src="/storage/images/moto.png" height="30" />
+            <img src="/public/storage/images/moto.png" height="30" />
             <q-toolbar-title>
                 <Link href="/" id="link-title">
                     <q-btn flat label="Motarc"></q-btn>

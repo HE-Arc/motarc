@@ -1,16 +1,15 @@
 <template>
 <div class="row justify-center items-center">
     <div class="col-md-7 col-xs-12">
-        <!-- Back button -->
         <Link :href="'/ads/'+params">
             <q-btn icon="arrow_back" flat round dense></q-btn>
         </Link>
         <q-card class="q-ma-md q-px-md">
             <q-carousel class="q-py-md" swipeable animated v-model="slide" thumbnails infinite v-if="ad.images[0] !== undefined">
-                <q-carousel-slide v-for="(image, index) in ad.images" :key="index" :name="index" :img-src="'/storage/images/' + image.image_url" />
+                <q-carousel-slide v-for="(image, index) in ad.images" :key="index" :name="index" :img-src="'/public/storage/images/' + image.image_url" />
             </q-carousel>
             <q-carousel swipeable animated v-model="slide" thumbnails infinite v-else>
-                <q-carousel-slide :key="0" :name="0" img-src="/storage/images/moto_base.png" />
+                <q-carousel-slide :key="0" :name="0" img-src="/public/storage/images/moto_base.png" />
             </q-carousel>
 
             <q-card-section>

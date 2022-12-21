@@ -9,7 +9,9 @@
                 <q-card-section class="q-gutter-md flex flex-center">
                     <div class="column flex flex-center">
                         <h4 class="text-grey-8 q-ma-sm">You don't have any favourite yet :(</h4>
-                        <img class="q-ma-sm" src="/storage/images/moto_empty.png" width="200" />
+
+                        <img class="q-ma-sm" src="/public/storage/images/moto_empty.png" width="200" />
+
                         <Link href="/ads">
                             <q-btn class="q-ma-sm col-12" color="primary">Search ads</q-btn>
                         </Link>
@@ -22,8 +24,8 @@
             <q-card v-for="fav in favourites.data" :key="fav.id" class="q-my-md">
                 <q-card-section horizontal>
                     <!-- Display image if exists -->
-                    <img class="col-4" fit="cover" v-if="fav.images[0] !== undefined" :src="'/storage/images/' + fav.images[0].image_url" />
-                    <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
+                    <img class="col-4" fit="cover" v-if="fav.images[0] !== undefined" :src="'/public/storage/images/' + fav.images[0].image_url" />
+                    <img class="col-4" fit="cover" v-else  src="/public/storage/images/moto_base.png" />
 
                     <q-card-section>
                         <div class="col-8">

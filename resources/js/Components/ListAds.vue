@@ -1,7 +1,7 @@
 <template>
     <q-card v-for="ad in ads" :key="ad.id">
         <q-card-section>
-            <img v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" width="200" />
+            <img v-if="ad.images[0] !== undefined" :src="'/public/storage/images/' + ad.images[0].image_url" width="200" />
 
             <h3>{{ ad.model.brand + " " + ad.model.model }}</h3>
 

@@ -221,7 +221,7 @@ export default {
         var urls = [];
         let cpt = 1;
         props.ad.images.forEach(image => {
-            urls.push([cpt, "/storage/images/" + image.image_url]);
+            urls.push([cpt, "/public/storage/images/" + image.image_url]);
             cpt += 1;
         });
 
