@@ -72,6 +72,15 @@
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue'
+import { useMeta } from 'quasar'
+
+const metaData = {
+    title: 'Update profile',
+    meta: [
+        { name: 'description', content: 'Profile page update' },
+        { name: 'keywords', content: 'profile, user, account, update' }
+    ]
+}
 
 export default {
     layout : AppLayout,
@@ -83,6 +92,7 @@ export default {
         Link
     },
     setup(props) {
+        useMeta(metaData);
         const form = useForm({
             name: props.user.name,
             npa: props.user.npa,

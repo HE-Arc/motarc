@@ -70,6 +70,15 @@
 import { Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import Pagination from '../../Components/Pagination.vue'
+import {useMeta} from 'quasar'
+
+const metaData = {
+    title: 'My ads',
+    meta: [
+        { name: 'description', content: 'My ads' },
+        { name: 'keywords', content: 'my ads, bike' }
+    ]
+}
 
 export default {
     layout : AppLayout,
@@ -82,6 +91,9 @@ export default {
 
     props: {
         ads: Array,
+    },
+    setup(props) {
+        useMeta(metaData)
     },
     data() {
         return {

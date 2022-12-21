@@ -16,7 +16,7 @@
                     <q-btn name="tab2" label="New ad" flat icon="add" />
                 </Link>
             <q-space />
-            <q-btn-dropdown stretch flat label="Mon compte" color="black" icon="account_circle " v-if="$q.screen.gt.sm">
+            <q-btn-dropdown stretch flat label="My account" color="black" icon="account_circle " v-if="$q.screen.gt.sm">
                 <q-list>
                     <!-- if user not logged in, register and login pages -->
                     <div v-if="$page.props.auth.user">

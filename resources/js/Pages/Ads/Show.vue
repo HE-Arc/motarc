@@ -73,6 +73,15 @@ import { Link } from '@inertiajs/inertia-vue3';
 
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { SessionStorage } from 'quasar';
+import { useMeta } from 'quasar';
+
+const metaData = {
+    title: 'Show Ad',
+    meta: [
+        { name: 'description', content: 'Show Ad' },
+        { name: 'keywords', content: 'ad,bike' }
+    ]
+}
 
 export default {
     layout : AppLayout,
@@ -108,7 +117,9 @@ export default {
 
     },
     setup(){
+        useMeta(metaData);
         return {
+
             slide: ref(0),
         }
     },

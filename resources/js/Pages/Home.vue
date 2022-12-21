@@ -93,9 +93,25 @@
 import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm, Link } from '@inertiajs/inertia-vue3';
+import { useMeta } from 'quasar';
+
+const metaData = {
+    title: 'Home',
+    meta: [
+        {
+            name: 'description',
+            content: 'Home page'
+        },
+        {
+            name: 'keywords',
+            content: 'home, page, search, bike'
+        }
+    ]
+}
 
 export default {
     setup(){
+        useMeta(metaData);
         const form = useForm({
             brand: null,
             model: null,

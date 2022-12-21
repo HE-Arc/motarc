@@ -202,14 +202,24 @@ import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 import Pagination from '../../Components/Pagination.vue'
 import { scroll } from 'quasar';
+import {useMeta} from 'quasar';
 
 const {getVerticalScrollPosition, setVerticalScrollPosition} = scroll;
+
+const metaData = {
+    title: 'Ads',
+    meta: [
+        { name: 'description', content: 'Ads search result' },
+        { name: 'keywords', content: 'Ads, search, results, bike' },
+    ]
+}
 
 export default {
     layout : AppLayout,
     name: 'Index ad',
 
     setup(props){
+        useMeta(metaData);
         const form = useForm({
             brand: null,
             model: null,

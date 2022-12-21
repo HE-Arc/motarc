@@ -162,6 +162,21 @@ import { Head } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue'
 import { useForm, Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { useMeta } from 'quasar'
+
+const metaData = {
+    title: 'Edit ad',
+    meta: [
+        {
+            name: 'description',
+            content: 'Edit ad'
+        },
+        {
+            name: 'keywords',
+            content: 'edit, ad, bike'
+        }
+    ]
+}
 
 export default {
     layout : AppLayout,
@@ -207,6 +222,7 @@ export default {
     },
 
     setup (props) {
+        useMeta(metaData);
         const form = useForm({
             price: props.ad.price,
             km: props.ad.km,

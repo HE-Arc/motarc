@@ -60,6 +60,15 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { Link } from '@inertiajs/inertia-vue3'
+import { useMeta } from 'quasar'
+
+const metaData = {
+    title: 'Update profile',
+    meta: [
+        { name: 'description', content: 'Favourite page' },
+        { name: 'keywords', content: 'favourites, ads, bikes' },
+    ]
+}
 
 export default {
     layout : AppLayout,
@@ -70,6 +79,9 @@ export default {
     },
     components: {
         Link,
+    },
+    setup() {
+        useMeta(metaData)
     },
     methods: {
         removeFavourite(id) {

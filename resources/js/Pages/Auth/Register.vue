@@ -23,6 +23,21 @@
 <script>
 import { useForm, Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { useMeta } from 'quasar'
+
+const metaData = {
+    title: 'Register',
+    meta: [
+        {
+            name: 'description',
+            content: 'Register page'
+        },
+        {
+            name: 'keywords',
+            content: 'register, page'
+        }
+    ]
+}
 
 export default {
     layout : AppLayout,
@@ -30,6 +45,7 @@ export default {
         Link
     },
     setup(){
+        useMeta(metaData);
         const form = useForm({
             name: '',
             npa: '',

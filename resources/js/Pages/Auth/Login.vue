@@ -20,6 +20,21 @@
 <script>
 import { Head, useForm, Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { useMeta } from 'quasar'
+
+const metaData = {
+    title: 'Login',
+    meta: [
+        {
+            name: 'description',
+            content: 'Login page'
+        },
+        {
+            name: 'keywords',
+            content: 'login, page'
+        }
+    ]
+}
 
 export default {
     layout : AppLayout,
@@ -28,6 +43,7 @@ export default {
         Head
     },
     setup(){
+        useMeta(metaData);
         const form = useForm({
             email: '',
             password: '',

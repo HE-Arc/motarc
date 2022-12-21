@@ -18,6 +18,15 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { Link } from '@inertiajs/inertia-vue3';
+import { useMeta } from 'quasar'
+
+const metaData = {
+    title: 'Error 404',
+    meta: [
+        { name: 'description', content: 'Error 404 page' },
+        { name: 'keywords', content: 'error, 404' }
+    ]
+}
 
 export default {
     layout : AppLayout,
@@ -26,6 +35,9 @@ export default {
     components: {
         Link
     },
+    setup() {
+        useMeta(metaData)
+    }
 }
 </script>
 
