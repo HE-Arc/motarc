@@ -224,7 +224,7 @@ class AdController extends Controller
             'price' => 'required|integer',
             'km' => 'required|integer',
             'power_kw' => 'required|numeric',
-            'color_hexa' => 'required',
+            'color' => 'required',
             'model_id' => 'required|integer',
             'user_id' => 'required|integer',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000' // max : Max size in KB = 10MB

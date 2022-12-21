@@ -1,6 +1,6 @@
 import './bootstrap';
 import { createApp, h } from 'vue';
-import { Quasar } from 'quasar';
+import { Quasar, Meta } from 'quasar';
 import quasarLang from 'quasar/lang/fr';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
@@ -17,7 +17,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(Quasar, {
-                plugins: { Notify },
+                plugins: { Notify, Meta },
                 lang: quasarLang,
                 config: {
                     notify: {

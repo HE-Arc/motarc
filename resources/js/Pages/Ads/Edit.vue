@@ -9,7 +9,7 @@
 
                 <h2>Edit ad</h2>
 
-                <form @submit.prevent="submit" enctype="multipart/form-data">
+                <form @submit.prevent="submit()" enctype="multipart/form-data">
                     <div class="row">
                         <q-input
                             class="col-grow q-ma-md"
@@ -202,6 +202,8 @@ export default {
 
         this.form.model = this.$page.props.ad.model.model;
 
+        console.log(props.ad.color);
+
     },
 
     setup (props) {
@@ -271,11 +273,13 @@ export default {
 
         submit()
         {
+            console.log("submit");
+            console.log(this.form.power_kw);
             this.form.transform((data) => ({
                 price: data.price,
                 km: data.km,
                 power_kw: data.power_kw,
-                color: data.color.value,
+                color: data.color,
                 user_id: data.user_id,
                 model_id: this.getModelIdFromBrandAndModel(this.form.model, this.form.brand),
                 images: data.images,

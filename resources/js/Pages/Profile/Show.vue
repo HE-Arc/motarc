@@ -1,4 +1,5 @@
 <template>
+    <Head title="Profile"></Head>
     <div class="row justify-center items-center ">
         <div class="col-xs-12 col-md-6 q-mt-xl">
             <q-card>
@@ -58,16 +59,30 @@
 
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/inertia-vue3';
+import { Head } from '@inertiajs/inertia-vue3';
+import { useMeta } from 'quasar'
+
+const metaData = {
+    title: 'Profile',
+    meta: [
+        { name: 'description', content: 'Profile page' },
+        { name: 'keywords', content: 'profile, user, account' }
+    ]
+}
 
 export default {
     layout : AppLayout,
     name: 'Show profile',
+    title: 'Profile',
     props: {
         user: Object,
     },
     components: {
         Link
     },
+    setup() {
+        useMeta(metaData)
+    }
 }
 
 </script>
