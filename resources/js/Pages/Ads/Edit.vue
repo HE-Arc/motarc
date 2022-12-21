@@ -217,7 +217,7 @@ export default {
 
         this.form.model = this.$page.props.ad.model.model;
 
-        console.log(props.ad.color);
+        //console.log(props.ad.color);
 
     },
 
@@ -290,7 +290,7 @@ export default {
         submit()
         {
             console.log("submit");
-            console.log(this.form.power_kw);
+            //console.log(this.form.power_kw);
             this.form.transform((data) => ({
                 price: data.price,
                 km: data.km,
