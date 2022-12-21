@@ -222,6 +222,7 @@ a:hover {
 
 a {
     text-decoration: none;
+    color: black;
 }
 
 #link-title:hover {
