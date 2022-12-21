@@ -157,7 +157,7 @@
             </div>
             <div v-else>
 
-           <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md">
+           <q-card v-for="ad in ads.data" :key="ad.id" class="q-my-md" :id="ad.id">
                <q-card-section horizontal>
                     <img class="col-4" fit="cover" v-if="ad.images[0] !== undefined" :src="'/storage/images/' + ad.images[0].image_url" />
                     <img class="col-4" fit="cover" v-else  src="/storage/images/moto_base.png" />
@@ -175,7 +175,7 @@
                             </div>
 
                             <h4  class="q-my-sm">{{ad.price}} .-</h4>
-                            <Link :href="'/ads/'+ ad.id">
+                            <Link :href="'/ads/'+ ad.id" @click="getUrl(ad.id)">
                                 <q-btn class="q-mt-md" color="primary" label="Show"></q-btn>
                             </Link>
 
@@ -201,6 +201,9 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 import Pagination from '../../Components/Pagination.vue'
+import { scroll } from 'quasar';
+
+const {getVerticalScrollPosition, setVerticalScrollPosition} = scroll;
 
 export default {
     layout : AppLayout,
@@ -247,6 +250,7 @@ export default {
     },
 
     mounted() {
+        console.log("mounted");
         this.updateParams();
 
         this.bikeModels.forEach(element => {
@@ -255,7 +259,10 @@ export default {
             }
         });
     },
-
+    updated() {
+        //console.log("updated");
+        this.updateParams();
+    },
     data() {
         return {
             brands: [],
@@ -383,6 +390,7 @@ export default {
 
             // extract the params and fill the form with them
             let params = this.params.split('&');
+            this.form.color = [];
 
             params.forEach(element => {
                 let param = element.split('=');
@@ -423,12 +431,22 @@ export default {
                 if (param[0] == 'maxcapacity') {
                     this.form.capacity.max = param[1];
                 }
-                if (param[0] == 'color') {
-                    this.form.color = param[1].split(',');
+                if (param[0] == 'color[]') {
+                    let colors_ = param[1].split(',');
+                    colors_ = colors_.map((color) => ({value: color, label: color}))
+                    this.form.color.push(colors_[0]);
+                    //console.log(this.form.color);
                 }
             });
 
-        }
+        },
+        getUrl(id){
+            sessionStorage.setItem('url', window.location.search);
+
+            var scroll_ = document.body.scrollTop || document.documentElement.scrollTop;
+            sessionStorage.setItem('scroll', scroll_);
+            sessionStorage.setItem('lastAdId', id);
+        },
     },
 
     watch: {
