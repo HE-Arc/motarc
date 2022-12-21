@@ -31,8 +31,8 @@ export default {
                 $q.notify({
                 message: mess,
                 color: 'green-2',
-                textColor: 'green-7',
-                actions: [{ icon: 'close', color: 'green-7' }]
+                textColor: 'green-8',
+                actions: [{ icon: 'close', color: 'green-8' }]
                 })
             }
         }
